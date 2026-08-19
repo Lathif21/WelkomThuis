@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welkom Thuis — Samen naar een nieuw thuis</title>
+<meta name="description" content="Interieuradvies en verhuisbegeleiding voor ouderen. Samen bepalen we wat meeverhuist, en ik richt uw nieuwe woning opnieuw in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,400..700;1,400..600&family=Instrument+Sans:ital,wght@0,400..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F4F0;
+    --white:#FFFFFF;
+    --haze:#E3E8E1;
+    --pine:#2F4A3C;
+    --pine-deep:#22382D;
+    --ink:#1C2620;
+    --muted:#5A6960;
+    --brass:#B08A3E;
+    --line:#CBD4C9;
+
+    --display:"Faustina",Georgia,serif;
+    --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+    --wrap:1180px;
+    --gap:clamp(4.5rem,9vw,8rem);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+
+  html{scroll-behavior:smooth;scroll-padding-top:7rem}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:1.25rem;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{font-family:var(--display);color:var(--pine-deep);line-height:1.15;margin:0;font-weight:600}
+  h1{font-size:clamp(2.7rem,6vw,4.5rem);letter-spacing:-.01em}
+  h2{font-size:clamp(2rem,4vw,2.9rem);letter-spacing:-.005em}
+  h3{font-size:clamp(1.4rem,2.2vw,1.7rem)}
+  p{margin:0 0 1.25rem}
+  p:last-child{margin-bottom:0}
+
+  a{color:var(--pine);text-underline-offset:.25em;text-decoration-thickness:1.5px}
+  a:hover{color:var(--pine-deep)}
+
+  :focus-visible{outline:3px solid var(--brass);outline-offset:3px;border-radius:2px}
+
+  .wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(1.25rem,5vw,3rem)}
+  .eyebrow{
+    font-size:.9rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--pine);margin:0 0 1rem;display:block;
+  }
+
+  .skip{
+    position:absolute;left:-9999px;top:0;background:var(--pine);color:#fff;
+    padding:1rem 1.5rem;z-index:100;
+  }
+  .skip:focus{left:0}
+
+  /* ---------- header ---------- */
+  .site-head{
+    position:sticky;top:0;z-index:50;background:rgba(242,244,240,.94);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  .head-inner{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    gap:1rem 2rem;padding-block:1rem;
+  }
+  .brand{display:flex;align-items:center;gap:.85rem;text-decoration:none;color:inherit}
+  .brand svg{width:44px;height:44px;flex:none}
+  .brand-name{font-family:var(--display);font-size:1.6rem;font-weight:600;color:var(--pine-deep);line-height:1.1;display:block}
+  .brand-sub{display:block;font-family:var(--body);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+  .site-nav ul{display:flex;flex-wrap:wrap;gap:.25rem;list-style:none;margin:0;padding:0}
+  .site-nav a{
+    display:block;padding:.75rem 1.05rem;font-size:1.1rem;font-weight:500;
+    text-decoration:none;color:var(--ink);
+  }
+  .site-nav a:hover{background:var(--haze);color:var(--pine-deep)}
+
+  /* burgerknop — alleen zichtbaar op smalle schermen */
+  .nav-toggle{
+    display:none;align-items:center;justify-content:center;
+    width:56px;height:56px;flex:none;padding:0;cursor:pointer;
+    background:var(--white);border:2px solid var(--line);border-radius:3px;
+    transition:background .18s ease,border-color .18s ease;
+  }
+  .nav-toggle:hover{border-color:var(--pine);background:var(--haze)}
+  .nav-toggle__bars{display:grid;gap:5px;width:26px}
+  .nav-toggle__bars span{
+    display:block;height:3px;border-radius:2px;background:var(--pine);
+    transition:transform .22s ease,opacity .18s ease;
+  }
+  .nav-toggle[aria-expanded="true"]{background:var(--pine);border-color:var(--pine)}
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars span{background:#fff}
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2){opacity:0}
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+    min-height:60px;padding:.9rem 1.9rem;font-family:var(--body);font-size:1.15rem;
+    font-weight:600;text-decoration:none;border:2px solid var(--pine);border-radius:3px;
+    cursor:pointer;transition:background .18s ease,color .18s ease;
+  }
+  .btn-primary{background:var(--pine);color:#fff}
+  .btn-primary:hover{background:var(--pine-deep);border-color:var(--pine-deep);color:#fff}
+  .btn-ghost{background:transparent;color:var(--pine)}
+  .btn-ghost:hover{background:var(--haze);color:var(--pine-deep)}
+  .btn-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.25rem}
+
+  /* ---------- hero ---------- */
+  .hero{padding-block:clamp(3rem,7vw,6rem) var(--gap)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+  .hero h1{margin-bottom:1.5rem}
+  .hero-lead{font-size:clamp(1.28rem,1.9vw,1.45rem);max-width:46ch}
+  .hero-note{margin-top:1.75rem;font-size:1.05rem;color:var(--muted)}
+
+  /* ---------- interactive plans ---------- */
+  .plans{
+    position:relative;margin:0;
+    background:radial-gradient(120% 100% at 50% 0%,#fff 0%,#FCFDFB 45%,#EEF2EC 100%);
+    border:1px solid var(--line);border-radius:6px;
+    padding:clamp(1.35rem,2.6vw,1.9rem);
+    box-shadow:0 1px 2px rgba(28,38,32,.05),0 18px 34px -22px rgba(28,38,32,.32);
+  }
+  /* brass hairline along the top edge of the frame */
+  .plans::before{
+    content:"";position:absolute;inset:0 0 auto;height:3px;border-radius:6px 6px 0 0;
+    background:linear-gradient(90deg,transparent,var(--brass) 22%,var(--brass) 78%,transparent);
+    opacity:.55;
+  }
+
+  .plans__pair{
+    display:grid;grid-template-columns:1fr auto 1fr;
+    gap:clamp(.5rem,1.6vw,1.1rem);align-items:center;
+  }
+  .plan__cap{
+    margin:0 0 .55rem;text-align:center;font-size:.8rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  }
+  .plans svg{width:100%;height:auto;display:block;overflow:visible}
+  .plans__arrow{
+    display:flex;align-items:center;justify-content:center;
+    color:var(--brass);padding-top:1.5rem;
+  }
+  /* de pijl houdt zijn eigen maat, ook naast .plans svg{width:100%} */
+  .plans__arrow svg{width:34px;height:16px;flex:none}
+  .plans__arrow.is-nudging svg{animation:nudge .7s ease 2}
+  @keyframes nudge{50%{transform:translateX(5px)}}
+
+  /* plan drawing */
+  .plans .wall{fill:var(--white);stroke:var(--pine);stroke-width:2.6;stroke-linejoin:round}
+  .plans .inner{fill:none;stroke:var(--pine);stroke-width:1.6;opacity:.5}
+  .plans .window{fill:none;stroke:var(--brass);stroke-width:4;stroke-linecap:round}
+  .plans .room{font-family:var(--body);font-size:9.5px;fill:var(--muted);letter-spacing:.02em}
+  .plans__pair>div:last-of-type .room{font-size:8px}
+
+  /* numbered furniture markers */
+  .plans .mark{
+    cursor:pointer;transform-box:fill-box;transform-origin:center;
+    transition:opacity .25s ease,transform .25s ease;
+  }
+  .plans .mark circle{
+    fill:var(--white);stroke:var(--pine);stroke-width:1.8;
+    transition:fill .2s ease,stroke .2s ease;
+  }
+  .plans .mark text{
+    font-family:var(--body);font-size:12px;font-weight:600;fill:var(--pine-deep);
+    text-anchor:middle;dominant-baseline:central;pointer-events:none;
+    transition:fill .2s ease;
+  }
+  .plans .mark:hover circle,.plans .mark.is-hint circle{stroke:var(--brass);stroke-width:2.4}
+  .plans.is-active .mark{opacity:.25}
+  .plans.is-active .mark.is-on{opacity:1;transform:scale(1.25)}
+  .plans .mark.is-on circle{fill:var(--brass);stroke:var(--pine-deep);stroke-width:2.2}
+  .plans .mark.is-on text{fill:#fff}
+  .plans .mark.is-on[data-absent] circle{fill:var(--white);stroke:var(--muted);stroke-dasharray:4 4}
+  .plans .mark.is-on[data-absent] text{fill:var(--muted)}
+  .plans .mark:focus-visible{outline:none}
+  .plans .mark:focus-visible circle{stroke:var(--brass);stroke-width:3.4}
+
+  .plans__note{
+    margin:1.15rem 0 0;padding-top:1.05rem;border-top:1px solid var(--line);
+    font-size:1.02rem;line-height:1.55;color:var(--muted);min-height:4.7em;
+  }
+  .plans__note strong{color:var(--pine-deep);font-weight:600}
+
+  .picker{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.35rem}
+  .chip{
+    display:inline-flex;align-items:center;gap:.55rem;min-height:52px;
+    padding:.55rem 1.05rem .55rem .55rem;border-radius:999px;cursor:pointer;
+    font-family:var(--body);font-size:1.02rem;font-weight:600;color:var(--pine-deep);
+    background:var(--white);border:2px solid var(--line);
+    transition:background .18s ease,border-color .18s ease,color .18s ease;
+  }
+  .chip:hover{border-color:var(--pine);background:var(--haze)}
+  .chip__n{
+    width:30px;height:30px;flex:none;border-radius:50%;background:var(--haze);
+    color:var(--pine-deep);display:grid;place-items:center;font-size:.92rem;
+  }
+  .chip[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:#fff}
+  .chip[aria-pressed="true"] .chip__n{background:var(--brass);color:#fff}
+
+  /* ---------- bands ---------- */
+  .band{padding-block:var(--gap)}
+  .band-white{background:var(--white);border-block:1px solid var(--line)}
+  .band-head{max-width:52ch;margin-bottom:clamp(2.5rem,5vw,3.5rem)}
+  .band-head p{color:var(--muted);margin-top:1rem;font-size:1.2rem}
+
+  /* ---------- services ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .card{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;
+    padding:2.25rem 2rem;display:flex;flex-direction:column;gap:1rem;
+  }
+  .card svg{width:46px;height:46px;color:var(--pine)}
+  .card p{font-size:1.15rem;color:var(--muted)}
+
+  /* ---------- steps ---------- */
+  .steps{list-style:none;margin:0;padding:0;position:relative;max-width:62ch}
+  .steps::before{content:"";position:absolute;left:13px;top:14px;bottom:14px;width:2px;background:var(--brass);opacity:.45}
+  .step{position:relative;padding-left:4rem;padding-bottom:3rem}
+  .step:last-child{padding-bottom:0}
+  .step::before{
+    content:"";position:absolute;left:6px;top:11px;width:16px;height:16px;
+    background:var(--brass);border-radius:50%;box-shadow:0 0 0 6px var(--paper);
+  }
+  .step-no{display:block;font-size:.88rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+  .step p{margin-top:.6rem;color:var(--muted);font-size:1.15rem}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+  .portrait{
+    aspect-ratio:4/5;background:var(--haze);border:1px solid var(--line);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:var(--muted);font-size:1rem;padding:2rem;
+  }
+  .about-body p{color:var(--muted)}
+  .about-body p:first-of-type{margin-top:1.5rem}
+
+  /* ---------- quote ---------- */
+  .quote{background:var(--pine);padding-block:clamp(4rem,7vw,6rem)}
+  .quote blockquote{
+    margin:0;font-family:var(--display);font-size:clamp(1.7rem,3.4vw,2.5rem);
+    line-height:1.3;max-width:24ch;font-style:italic;font-weight:400;color:#fff;
+  }
+  .quote cite{
+    display:block;margin-top:2rem;font-family:var(--body);font-style:normal;
+    font-size:1.02rem;letter-spacing:.1em;text-transform:uppercase;color:#C3D3C6;
+  }
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2.5rem,5vw,4.5rem);align-items:start}
+  .contact-intro{margin-top:1.25rem;color:var(--muted)}
+  .contact-list{margin:2.25rem 0 0;padding:0;display:grid;gap:1.75rem}
+  .contact-list dt{font-size:.88rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .contact-list dd{margin:.25rem 0 0}
+  .c-value{font-family:var(--display);font-size:clamp(1.5rem,2.6vw,1.9rem);color:var(--pine-deep);display:block;line-height:1.25}
+  a.c-value{text-decoration:none}
+  a.c-value:hover{text-decoration:underline}
+
+  .form{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:clamp(1.75rem,3vw,2.5rem)}
+  .field{margin-bottom:1.5rem}
+  .field label{display:block;font-size:1.05rem;font-weight:600;margin-bottom:.5rem;color:var(--ink)}
+  .optional{font-weight:400;color:var(--muted)}
+  .field input,.field textarea{
+    width:100%;font-family:var(--body);font-size:1.15rem;color:var(--ink);
+    padding:.95rem 1rem;min-height:58px;background:var(--paper);
+    border:2px solid var(--line);border-radius:3px;
+  }
+  .field textarea{min-height:150px;resize:vertical;line-height:1.6}
+  .field input:focus,.field textarea:focus{border-color:var(--pine);background:#fff}
+  .form button{width:100%}
+  .form-note{font-size:1rem;color:var(--muted);margin-top:1.25rem}
+  .form-done{display:none;background:var(--haze);border:2px solid var(--pine);border-radius:3px;padding:2rem;text-align:center}
+  .form-done p{color:var(--muted);margin-top:.5rem}
+  .is-sent .form-fields{display:none}
+  .is-sent .form-done{display:block}
+
+  /* ---------- footer ---------- */
+  .site-foot{background:var(--pine-deep);color:#C3D3C6;padding-block:3rem;font-size:1.05rem}
+  .foot-inner{display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem;align-items:center;justify-content:space-between}
+  .site-foot a{color:#fff}
+  .site-foot .brand-name{color:#fff;font-size:1.35rem}
+  .site-foot .brand-sub{color:#8FA694}
+
+  /* ---------- load animation ---------- */
+  .rise{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.7,.3,1) forwards}
+  .d1{animation-delay:.05s}.d2{animation-delay:.18s}.d3{animation-delay:.31s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .rise{animation:none;opacity:1;transform:none}
+    .plans__arrow.is-nudging svg{animation:none}
+    .plans .mark,.plans .mark circle,.plans .mark text{transition:none}
+    .plans.is-active .mark.is-on{transform:none}
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:960px){
+    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr}
+    .hero-grid .plans{order:-1}
+    .portrait{max-width:340px}
+  }
+  @media (max-width:700px){
+    body{font-size:1.18rem}
+    .head-inner{justify-content:center;text-align:center}
+    .site-nav ul{justify-content:center}
+    .btn{width:100%}
+  }
+  @media (max-width:560px){
+    .plans__pair{grid-template-columns:1fr;gap:1.25rem}
+    .plans__arrow{
+      width:34px;height:34px;padding:0;margin-inline:auto;
+      transform:rotate(90deg);
+    }
+    .plans__pair>div:last-of-type .room{font-size:9.5px}
+    .chip{width:100%}
+  }
+  /* vanaf hier klapt het menu achter de burgerknop (425px, 320px, …) */
+  @media (max-width:480px){
+    /* merk en knop blijven op één regel; het menu valt eronder uit */
+    .head-inner{
+      flex-wrap:nowrap;justify-content:space-between;text-align:left;
+      gap:.75rem;padding-block:.85rem;
+    }
+    .brand{min-width:0}
+    .brand svg{width:38px;height:38px}
+    .brand-name{font-size:1.35rem}
+    .brand-sub{font-size:.7rem;letter-spacing:.12em}
+    .nav-toggle{display:inline-flex}
+
+    /* dichtgeklapt is de hoogte 0; open groeit hij naar zijn eigen hoogte */
+    .site-nav{
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--paper);border-bottom:1px solid var(--line);
+      display:grid;grid-template-rows:0fr;
+      transition:grid-template-rows .25s ease;
+    }
+    .site-nav.is-open{grid-template-rows:1fr}
+    .site-nav>ul{
+      display:flex;flex-direction:column;flex-wrap:nowrap;gap:0;
+      overflow:hidden;min-height:0;padding-inline:clamp(1.25rem,5vw,3rem);
+      visibility:hidden;transition:visibility 0s .25s;
+    }
+    .site-nav.is-open>ul{visibility:visible;transition:visibility 0s 0s}
+    .site-nav li{border-top:1px solid var(--line)}
+    .site-nav li:first-child{border-top:0}
+    .site-nav a{display:flex;align-items:center;min-height:56px;padding:.9rem .5rem;font-size:1.15rem}
+  }
+  @media (max-width:360px){
+    /* op de smalste schermen wijkt de ondertitel, zodat de knop naast het merk past */
+    .brand-sub{display:none}
+  }
+  /* staat na de mediaquery hierboven, anders wint die van deze regels */
+  @media (prefers-reduced-motion:reduce){
+    .nav-toggle,.nav-toggle__bars span,.site-nav{transition:none}
+    .site-nav>ul,.site-nav.is-open>ul{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Direct naar de inhoud</a>
+
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="brand" href="#top" aria-label="Welkom Thuis — naar boven">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M6 22 24 7l18 15" stroke="#2F4A3C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 21v19h28V21" stroke="#2F4A3C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M24 34c-4.6-3.2-7-5.4-7-8.2a3.6 3.6 0 0 1 7-1.5 3.6 3.6 0 0 1 7 1.5c0 2.8-2.4 5-7 8.2Z" fill="#B08A3E"/>
+      </svg>
+      <span>
+        <span class="brand-name">Welkom Thuis</span>
+        <span class="brand-sub">Interieur &amp; verhuizing</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" id="navToggle"
+            aria-controls="hoofdmenu" aria-expanded="false" aria-label="Menu openen">
+      <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav class="site-nav" id="hoofdmenu" aria-label="Hoofdmenu">
+      <ul>
+        <li><a href="#diensten">Wat ik doe</a></li>
+        <li><a href="#werkwijze">Werkwijze</a></li>
+        <li><a href="#over">Over mij</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow rise d1">Samen naar een nieuw thuis</span>
+        <h1 class="rise d1">Uw vertrouwde<br>spullen, een<br>nieuwe woning.</h1>
+        <p class="hero-lead rise d2">Ik help ouderen om van een grote woning naar een kleinere woning of serviceflat te verhuizen. Samen bepalen we wat mee verhuist, en ik richt vervolgens uw nieuwe thuis opnieuw in met een combinatie van vertrouwde spullen en nieuwe elementen.</p>
+        <div class="btn-row rise d3">
+          <a class="btn btn-ghost" href="#contact">Stuur een bericht</a>
+        </div>
+        <p class="hero-note rise d3">Kennismaking bij u thuis is gratis en vrijblijvend.</p>
+      </div>
+
+      <div class="plans rise d2">
+        <div class="plans__pair">
+          <div>
+            <p class="plan__cap">Uw huidige woning</p>
+            <svg viewBox="0 0 320 260" role="img" aria-label="Plattegrond van de huidige, grotere woning met genummerde meubels">
+              <path class="wall" d="M20 20h280v220H20Z"/>
+              <path class="inner" d="M190 20v120M20 140h280M140 140v100M210 140v100"/>
+              <path class="window" d="M20 55v40M20 105v25M110 20h50M300 60v45"/>
+              <text class="room" x="32" y="38">Woonkamer</text>
+              <text class="room" x="202" y="38">Eetkamer</text>
+              <text class="room" x="32" y="158">Slaapkamer</text>
+              <text class="room" x="152" y="158">Hal</text>
+              <text class="room" x="222" y="158">Keuken</text>
+              <g class="mark" data-obj="1"><circle cx="52" cy="72" r="11"/><text x="52" y="72">1</text></g>
+              <g class="mark" data-obj="2"><circle cx="155" cy="52" r="11"/><text x="155" y="52">2</text></g>
+              <g class="mark" data-obj="3"><circle cx="175" cy="205" r="11"/><text x="175" y="205">3</text></g>
+              <g class="mark" data-obj="4"><circle cx="245" cy="82" r="11"/><text x="245" y="82">4</text></g>
+              <g class="mark" data-obj="5"><circle cx="95" cy="40" r="11"/><text x="95" y="40">5</text></g>
+              <g class="mark" data-obj="6"><circle cx="48" cy="122" r="11"/><text x="48" y="122">6</text></g>
+            </svg>
+          </div>
+
+          <div class="plans__arrow" aria-hidden="true">
+            <svg width="34" height="16" viewBox="0 0 34 16"><path d="M0 8h30M23 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+
+          <div>
+            <p class="plan__cap">Uw nieuwe woning</p>
+            <svg viewBox="0 0 240 200" role="img" aria-label="Plattegrond van de nieuwe, kleinere woning met dezelfde genummerde meubels">
+              <path class="wall" d="M20 20h200v160H20Z"/>
+              <path class="inner" d="M150 20v160M150 108h70"/>
+              <path class="window" d="M20 48v42M62 20h46M220 44v38"/>
+              <text class="room" x="30" y="36">Woon- en eetkamer</text>
+              <text class="room" x="158" y="36">Slaapkamer</text>
+              <text class="room" x="158" y="124">Badkamer</text>
+              <g class="mark" data-obj="1"><circle cx="44" cy="66" r="11"/><text x="44" y="66">1</text></g>
+              <g class="mark" data-obj="2"><circle cx="112" cy="52" r="11"/><text x="112" y="52">2</text></g>
+              <g class="mark" data-obj="3"><circle cx="134" cy="160" r="11"/><text x="134" y="160">3</text></g>
+              <g class="mark" data-obj="4"><circle cx="72" cy="132" r="11"/><text x="72" y="132">4</text></g>
+              <g class="mark" data-obj="5"><circle cx="86" cy="38" r="11"/><text x="86" y="38">5</text></g>
+              <g class="mark" data-obj="6" data-absent="true"><circle cx="196" cy="160" r="11"/><text x="196" y="160">6</text></g>
+            </svg>
+          </div>
+        </div>
+
+        <p class="plans__note" id="planNote" role="status">Kies hieronder een meubelstuk om te zien waar het in uw nieuwe woning terechtkomt.</p>
+
+        <div class="picker" role="group" aria-label="Kies een meubelstuk">
+          <button class="chip" type="button" data-obj="1" aria-pressed="false"><span class="chip__n">1</span>Fauteuil</button>
+          <button class="chip" type="button" data-obj="2" aria-pressed="false"><span class="chip__n">2</span>Dressoir</button>
+          <button class="chip" type="button" data-obj="3" aria-pressed="false"><span class="chip__n">3</span>Staande klok</button>
+          <button class="chip" type="button" data-obj="4" aria-pressed="false"><span class="chip__n">4</span>Eettafel</button>
+          <button class="chip" type="button" data-obj="5" aria-pressed="false"><span class="chip__n">5</span>Schilderij</button>
+          <button class="chip" type="button" data-obj="6" aria-pressed="false"><span class="chip__n">6</span>Boekenkast</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-white" id="diensten">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="eyebrow">Wat ik doe</span>
+        <h2>Van het eerste kopje koffie tot het opgemaakte bed</h2>
+        <p>Alles in één hand. U hoeft geen partijen aan te sturen en geen dozen te tillen.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 34h28M10 34V16l10-8 10 8v18"/><path d="M17 34v-9h6v9"/>
+          </svg>
+          <h3>Kiezen wat meegaat</h3>
+          <p>We lopen samen door uw woning, rustig en kamer voor kamer. U beslist wat meegaat. Ik denk mee over wat past en wat werkt in de nieuwe ruimte.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="6" y="8" width="28" height="24" rx="2"/><path d="M6 20h12v12M18 8v6M26 20h8M26 20v12"/>
+          </svg>
+          <h3>Plattegrond en planning</h3>
+          <p>Ik meet uw nieuwe woning op en teken precies waar alles komt te staan. Zo weet u vooraf of de kast past en waar uw stoel bij het raam komt.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 32h24M10 32V20h20v12"/><path d="M12 20v-7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v7M12 25h16M11 32v3M29 32v3"/>
+          </svg>
+          <h3>Inrichten van uw nieuwe thuis</h3>
+          <p>Uw vertrouwde spullen krijgen een goede plek, aangevuld met nieuwe elementen waar dat nodig is. Passend bij u, niet bij een catalogus.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="werkwijze">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="eyebrow">Werkwijze</span>
+        <h2>Vier stappen, in uw tempo</h2>
+        <p>Een verhuizing op leeftijd is geen logistieke klus, maar een afscheid en een begin. Daar nemen we de tijd voor.</p>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-no">Stap 1</span>
+          <h3>Kennismaking bij u thuis</h3>
+          <p>Een kop koffie en een rondgang door uw woning. We bespreken wat er speelt en wat u nodig heeft. Gratis en vrijblijvend, ook als u er daarna van afziet.</p>
+        </li>
+        <li class="step">
+          <span class="step-no">Stap 2</span>
+          <h3>Opmeten en plan maken</h3>
+          <p>Ik meet de nieuwe woning op en maak een plattegrond met uw eigen meubels erin. U ziet vooraf hoe het wordt, en we passen aan tot het klopt.</p>
+        </li>
+        <li class="step">
+          <span class="step-no">Stap 3</span>
+          <h3>Kiezen en afscheid nemen</h3>
+          <p>Kamer voor kamer bepalen we wat meegaat. Voor de rest zoek ik een goede bestemming: familie, kringloop, veiling of opslag. Niets verdwijnt zonder uw akkoord.</p>
+        </li>
+        <li class="step">
+          <span class="step-no">Stap 4</span>
+          <h3>Verhuizen en inrichten</h3>
+          <p>Ik regel de verhuizers en ben er de hele dag bij. 's Avonds hangt uw schilderij aan de muur, staat het bed opgemaakt en is de keukenkast ingeruimd.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="quote">
+    <div class="wrap">
+      <blockquote>
+        Ik zag er vreselijk tegenop. Nu zit ik in mijn eigen stoel, bij mijn eigen schilderij, in een huis dat past.
+        <cite>Mevrouw Van Dijk (84) — Hilversum</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="band band-white" id="over">
+    <div class="wrap about-grid">
+      <div class="portrait">Hier komt uw foto<br>(staand, 4:5)</div>
+      <div class="about-body">
+        <span class="eyebrow">Over mij</span>
+        <h2>Kato Vermeulen</h2>
+        <p>Ik ben interieuradviseur en begeleid ouderen bij de stap naar een kleinere woning of serviceflat. Wat mij opvalt: mensen zien niet op tegen de dozen, maar tegen het kiezen. Dáár zit mijn werk.</p>
+        <p>Ik werk met een paar klanten tegelijk, zodat er tijd is voor een gesprek en voor een tweede kop koffie. Elk traject is maatwerk: geen standaardpakketten, geen vaste stijl. Uw huis moet op u lijken.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#contact">Neem contact op</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Neem contact op</span>
+        <h2>Even bellen mag altijd</h2>
+        <p class="contact-intro">Heeft u een vraag, of wilt u vrijblijvend kennismaken? Bel gerust, of laat uw gegevens achter. Ik neem binnen twee werkdagen contact op.</p>
+        <dl class="contact-list">
+          <div>
+            <dt>E-mail</dt>
+            <dd><a class="c-value" href="mailto:welkomthuis@outlook.be">welkomthuis@outlook.be</a></dd>
+          </div>
+        </dl>
+      </div>
+
+      <form class="form" id="contactForm" novalidate>
+        <div class="form-fields">
+          <div class="field">
+            <label for="naam">Uw naam</label>
+            <input id="naam" name="naam" type="text" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="tel">Telefoonnummer</label>
+            <input id="tel" name="tel" type="tel" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="mail">E-mailadres <span class="optional">(niet verplicht)</span></label>
+            <input id="mail" name="mail" type="email" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="bericht">Waar kan ik u mee helpen?</label>
+            <textarea id="bericht" name="bericht"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Stuur uw bericht</button>
+          <p class="form-note">Uw gegevens gebruik ik alleen om contact met u op te nemen.</p>
+        </div>
+        <div class="form-done" role="status">
+          <h3>Bericht verstuurd</h3>
+          <p>Dank u wel. Ik neem binnen twee werkdagen contact met u op.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <span>
+      <span class="brand-name">Welkom Thuis</span>
+      <span class="brand-sub">Samen naar een nieuw thuis</span>
+    </span>
+    <span><a href="mailto:welkomthuis@outlook.be">welkomthuis@outlook.be</a></span>
+    <span>Demo-website</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    this.classList.add('is-sent');
+  });
+
+  /* mobiel menu: de burgerknop klapt de navigatie open en dicht */
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var nav    = document.getElementById('hoofdmenu');
+    if (!toggle || !nav) return;
+
+    function setOpen(open) {
+      nav.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+    }
+
+    function isOpen() {
+      return toggle.getAttribute('aria-expanded') === 'true';
+    }
+
+    toggle.addEventListener('click', function () { setOpen(!isOpen()); });
+
+    /* na het kiezen van een bestemming klapt het menu weer dicht */
+    nav.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') setOpen(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    /* terug naar een breed scherm: de balk toont het menu weer zelf */
+    var wide = window.matchMedia('(min-width:481px)');
+    var reset = function (e) { if (e.matches) setOpen(false); };
+    if (wide.addEventListener) wide.addEventListener('change', reset);
+    else if (wide.addListener) wide.addListener(reset);
+  })();
+
+  /* interactive plans: kies een meubelstuk, zie waar het terechtkomt */
+  (function () {
+    var plans = document.querySelector('.plans');
+    if (!plans) return;
+
+    var note   = document.getElementById('planNote');
+    var arrow  = plans.querySelector('.plans__arrow');
+    var chips  = Array.prototype.slice.call(plans.querySelectorAll('.chip'));
+    var marks  = Array.prototype.slice.call(plans.querySelectorAll('.mark'));
+    var intro  = note.innerHTML;
+    var names  = {};
+    var current = null;
+
+    var messages = {
+      '1': 'De <strong>fauteuil</strong> krijgt weer een plek bij het raam, nu in de woon- en eetkamer.',
+      '2': 'Het <strong>dressoir</strong> past langs de lange wand van de woon- en eetkamer.',
+      '3': 'De <strong>staande klok</strong> komt naast de doorgang te staan, zichtbaar vanuit uw stoel.',
+      '4': 'De <strong>eettafel</strong> staat straks midden in de woon- en eetkamer, met het licht van opzij.',
+      '5': 'Het <strong>schilderij</strong> hangt weer op ooghoogte, links van het raam.',
+      '6': 'De <strong>boekenkast</strong> past niet in de nieuwe woning. Samen zoeken we er een goede bestemming voor: familie, kringloop of opslag.'
+    };
+
+    chips.forEach(function (chip) {
+      names[chip.dataset.obj] = chip.textContent.replace(/^\s*\d+\s*/, '');
+    });
+
+    function each(id, fn) {
+      marks.forEach(function (m) { if (m.dataset.obj === id) fn(m); });
+    }
+
+    function hint(id, on) {
+      if (current) return;
+      each(id, function (m) { m.classList.toggle('is-hint', on); });
+    }
+
+    function select(id) {
+      current = (current === id) ? null : id;
+
+      chips.forEach(function (c) {
+        c.setAttribute('aria-pressed', String(c.dataset.obj === current));
+      });
+      marks.forEach(function (m) {
+        m.classList.remove('is-hint');
+        m.classList.toggle('is-on', m.dataset.obj === current);
+      });
+
+      plans.classList.toggle('is-active', current !== null);
+      note.innerHTML = current ? messages[current] : intro;
+
+      if (current) {
+        arrow.classList.remove('is-nudging');
+        void arrow.offsetWidth; /* herstart de animatie */
+        arrow.classList.add('is-nudging');
+      }
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () { select(chip.dataset.obj); });
+      chip.addEventListener('mouseenter', function () { hint(chip.dataset.obj, true); });
+      chip.addEventListener('mouseleave', function () { hint(chip.dataset.obj, false); });
+      chip.addEventListener('focus', function () { hint(chip.dataset.obj, true); });
+      chip.addEventListener('blur', function () { hint(chip.dataset.obj, false); });
+    });
+
+    /* de nummers in de plattegrond zijn zelf ook knoppen */
+    marks.forEach(function (m) {
+      var id = m.dataset.obj;
+      m.setAttribute('role', 'button');
+      m.setAttribute('tabindex', '0');
+      m.setAttribute('aria-label', names[id] || ('Meubelstuk ' + id));
+      m.addEventListener('click', function () { select(id); });
+      m.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(id); }
+      });
+      m.addEventListener('mouseenter', function () { hint(id, true); });
+      m.addEventListener('mouseleave', function () { hint(id, false); });
+    });
+
+    arrow.addEventListener('animationend', function () {
+      arrow.classList.remove('is-nudging');
+    });
+  })();
+</script>
+</body>
+</html>

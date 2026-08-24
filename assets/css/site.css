@@ -207,8 +207,22 @@ a:hover{color:var(--pine-deep)}
 .plans .wall{fill:var(--white);stroke:var(--pine);stroke-width:2.6;stroke-linejoin:round}
 .plans .inner{fill:none;stroke:var(--pine);stroke-width:1.6;opacity:.5}
 .plans .window{fill:none;stroke:var(--brass);stroke-width:4;stroke-linecap:round}
-.plans .room{font-family:var(--body);font-size:9.5px;fill:var(--muted);letter-spacing:.02em}
-.plans__pair>div:last-of-type .room{font-size:8px}
+/* Kamerlabels.
+   Let op bij het wijzigen van deze twee maten: de plattegronden hebben een
+   verschillende viewBox (320 en 240 breed) maar worden even breed getoond,
+   naast elkaar én onder elkaar. Eén unit in plan 2 is daardoor altijd
+   320/240 = 1,33x zo groot op het scherm. Plan 2 moet dus op 0,75 van plan 1
+   staan om even groot te ogen — verander je de ene, verander dan de andere mee. */
+.plans .room{font-family:var(--body);font-size:10.5px;fill:var(--muted);letter-spacing:.02em}
+.plans__pair>div:last-of-type .room{font-size:7.875px}
+
+/* Witte rand achter de labels. De clearance is doorgerekend, maar tot het
+   eigen lettertype geladen is tekent de browser een systeemfont dat breder
+   kan uitvallen; dan blijft het label leesbaar in plaats van te versmelten
+   met een muur of een marker. */
+@supports (paint-order: stroke){
+  .plans .room{paint-order:stroke;stroke:#fff;stroke-width:2px;stroke-linejoin:round}
+}
 
 /* numbered furniture markers */
 .plans .mark{
@@ -272,14 +286,21 @@ a:hover{color:var(--pine-deep)}
 .card p{font-size:1.15rem;color:var(--muted)}
 
 /* ---------- about ---------- */
-.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,5vw,4rem);align-items:start}
-.portrait{
-  aspect-ratio:4/5;background:var(--haze);border:1px solid var(--line);border-radius:4px;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  color:var(--muted);font-size:1rem;padding:2rem;
+/* Kolom 1 is precies zo breed als de foto. Met .85fr bleef er naast de foto
+   een strook over die op een fout leek in plaats van op witruimte. */
+.about-grid{
+  display:grid;grid-template-columns:minmax(0,340px) 1fr;
+  gap:clamp(2rem,5vw,4rem);align-items:start;
 }
 .about-body p{color:var(--muted)}
 .about-body p:first-of-type{margin-top:1.5rem}
+
+/* het kader blijft bescheiden naast de tekstkolom; de foto zelf is ruim scherp genoeg */
+.portrait{
+  aspect-ratio:4/5;max-width:340px;overflow:hidden;
+  background:var(--haze);border:1px solid var(--line);border-radius:4px;
+}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;display:block}
 
 /* ---------- quote ---------- */
 .quote{background:var(--pine);padding-block:clamp(4rem,7vw,6rem)}
@@ -447,19 +468,26 @@ a.c-value:hover{text-decoration:underline}
 .tailor strong{color:var(--pine-deep);font-weight:600}
 
 /* ---------- oorsprong / verhaal ---------- */
-.origin{margin-top:clamp(3rem,6vw,4.5rem);display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,5vw,4rem)}
-.origin>div:first-child h2{font-size:clamp(1.7rem,3vw,2.2rem)}
+/* Eén kolom op leesbreedte. Dit stond in twee kolommen met alleen de kop
+   links, wat als een gat las; en de regels liepen door tot ver voorbij de
+   60 tekens die je op 20px nog comfortabel volgt. */
+.origin{
+  max-width:60ch;margin-top:clamp(3.5rem,7vw,5rem);
+  padding-top:clamp(2.5rem,5vw,3.5rem);border-top:1px solid var(--line);
+}
+.origin h2{font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:1.5rem}
 .origin p{color:var(--muted)}
-.origin p:first-of-type{margin-top:0}
 
-/* ---------- portret ---------- */
-/* het kader blijft bescheiden naast de tekstkolom; de foto zelf is ruim scherp genoeg */
-.portrait{overflow:hidden;padding:0;max-width:340px}
-.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;display:block}
+/* haalt één zin uit de lopende tekst, zodat het verhaal niet één blok wordt */
+.origin .origin-pull{
+  margin:2rem 0;padding:.4rem 0 .4rem 1.75rem;border-left:4px solid var(--brass);
+  font-family:var(--display);font-size:clamp(1.25rem,2.2vw,1.5rem);
+  line-height:1.4;color:var(--pine-deep);
+}
 
 @media (max-width:960px){
   .phases{grid-template-columns:1fr}
-  .audience,.origin{grid-template-columns:1fr}
+  .audience{grid-template-columns:1fr}
 }
 .prose-after{margin-top:clamp(2.5rem,5vw,3.5rem)}
 
@@ -479,7 +507,6 @@ a.c-value:hover{text-decoration:underline}
   .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr}
   .hero-grid .plans{order:-1}
-  .portrait{max-width:340px}
 }
 @media (max-width:700px){
   body{font-size:1.18rem}
@@ -493,7 +520,10 @@ a.c-value:hover{text-decoration:underline}
     width:34px;height:34px;padding:0;margin-inline:auto;
     transform:rotate(90deg);
   }
-  .plans__pair>div:last-of-type .room{font-size:9.5px}
+  /* onder elkaar is elke plattegrond schermbreed, dus mag het label groter;
+     de verhouding 0,75 tussen beide blijft gelijk */
+  .plans .room{font-size:12px}
+  .plans__pair>div:last-of-type .room{font-size:9px}
   .chip{width:100%}
 }
 /* vanaf hier klapt het menu achter de burgerknop (425px, 320px, …) */

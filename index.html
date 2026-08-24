@@ -75,7 +75,7 @@
               <g class="mark" data-obj="2"><circle cx="155" cy="52" r="11"/><text x="155" y="52">2</text></g>
               <g class="mark" data-obj="3"><circle cx="175" cy="205" r="11"/><text x="175" y="205">3</text></g>
               <g class="mark" data-obj="4"><circle cx="245" cy="82" r="11"/><text x="245" y="82">4</text></g>
-              <g class="mark" data-obj="5"><circle cx="95" cy="40" r="11"/><text x="95" y="40">5</text></g>
+              <g class="mark" data-obj="5"><circle cx="95" cy="62" r="11"/><text x="95" y="62">5</text></g>
               <g class="mark" data-obj="6"><circle cx="48" cy="122" r="11"/><text x="48" y="122">6</text></g>
             </svg>
           </div>
@@ -90,7 +90,9 @@
               <path class="wall" d="M20 20h200v160H20Z"/>
               <path class="inner" d="M150 20v160M150 108h70"/>
               <path class="window" d="M20 48v42M62 20h46M220 44v38"/>
-              <text class="room" x="30" y="36">Woon- en eetkamer</text>
+              <!-- op twee regels: op één regel loopt dit label tot tegen de
+                   meubelmarkers, en SVG-tekst breekt niet vanzelf af -->
+              <text class="room" x="30" y="34"><tspan x="30">Woon- en</tspan><tspan x="30" dy="1.15em">eetkamer</tspan></text>
               <text class="room" x="158" y="36">Slaapkamer</text>
               <text class="room" x="158" y="124">Badkamer</text>
               <g class="mark" data-obj="1"><circle cx="44" cy="66" r="11"/><text x="44" y="66">1</text></g>
@@ -283,16 +285,11 @@
       </div>
 
       <div class="origin">
-        <div>
-          <h2>Hoe WelkomThuis ontstond</h2>
-        </div>
-        <div>
-          <p>Het idee voor WelkomThuis ontstond vanuit een heel persoonlijke ervaring. Toen mijn grootmoeder de overstap maakte van haar vertrouwde, ouderlijke woning naar een kleinere woning, begeleidde en coördineerde ik zelf haar volledige verhuistraject.</p>
-          <p>Ik merkte van dichtbij dat zo&rsquo;n verhuis veel meer is dan alleen een praktische verandering. Afscheid nemen van een vertrouwde woning kan emotioneel en ingrijpend zijn. Het is een hoofdstuk afsluiten en tegelijkertijd proberen om van een nieuwe plek opnieuw een thuis te maken.</p>
-          <p>Juist daarom vond ik het zo bijzonder om te zien hoe gelukkig mijn grootmoeder uiteindelijk was met haar nieuwe woning. Door vertrouwde meubels, persoonlijke spullen en herkenbare elementen mee te nemen, bleef een stukje van haar oude thuis behouden. In combinatie met enkele nieuwe, eigentijdse meubels en elementen ontstond er een mooi geheel: vertrouwd én nieuw tegelijk.</p>
-          <p>Die ervaring deed me beseffen hoeveel verschil een goede begeleiding kan maken. Niet alleen door te helpen met de praktische kant van een verhuis, maar ook door aandacht te hebben voor wat iemand wil behouden, waar iemand afscheid van wil nemen en hoe een nieuwe woning opnieuw als thuis kan voelen.</p>
-          <p>Vanuit die ervaring is WelkomThuis ontstaan: een persoonlijke service die het volledige traject begeleidt en ervoor zorgt dat een nieuwe woning niet alleen een nieuwe plek wordt, maar opnieuw een echte thuis.</p>
-        </div>
+        <h2>Hoe WelkomThuis ontstond</h2>
+        <p>Het idee voor WelkomThuis ontstond vanuit een heel persoonlijke ervaring. Toen mijn grootmoeder de overstap maakte van haar vertrouwde, ouderlijke woning naar een kleinere woning, begeleidde en coördineerde ik haar volledige verhuistraject.</p>
+        <p class="origin-pull">Afscheid nemen van een vertrouwde woning is een hoofdstuk afsluiten. En tegelijk proberen om van een nieuwe plek opnieuw een thuis te maken.</p>
+        <p>Juist daarom vond ik het zo bijzonder om te zien hoe gelukkig mijn grootmoeder uiteindelijk was met haar nieuwe woning. Door vertrouwde meubels, persoonlijke spullen en herkenbare elementen mee te nemen, bleef een stukje van haar oude thuis behouden. Samen met enkele nieuwe, eigentijdse stukken werd het een geheel: vertrouwd én nieuw tegelijk.</p>
+        <p>Die ervaring deed me beseffen hoeveel verschil een goede begeleiding maakt. Niet alleen bij de praktische kant van een verhuis, maar ook bij wat iemand wil behouden en waar iemand afscheid van neemt. Vanuit die ervaring is WelkomThuis ontstaan.</p>
       </div>
     </div>
   </section>

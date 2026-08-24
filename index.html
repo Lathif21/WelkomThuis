@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Welkom Thuis — Samen naar een nieuw thuis</title>
-<meta name="description" content="Interieuradvies en verhuisbegeleiding voor ouderen. Samen bepalen we wat meeverhuist, en ik richt uw nieuwe woning opnieuw in.">
+<title>WelkomThuis — Niet alleen verhuizen, maar opnieuw thuiskomen</title>
+<meta name="description" content="WelkomThuis begeleidt het volledige traject bij een verhuis naar een kleinere woning of serviceflat: van bepalen wat meegaat tot het inrichten van je nieuwe thuis.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,400..700;1,400..600&family=Instrument+Sans:ital,wght@0,400..700&display=swap" rel="stylesheet">
@@ -227,18 +227,6 @@
   .card svg{width:46px;height:46px;color:var(--pine)}
   .card p{font-size:1.15rem;color:var(--muted)}
 
-  /* ---------- steps ---------- */
-  .steps{list-style:none;margin:0;padding:0;position:relative;max-width:62ch}
-  .steps::before{content:"";position:absolute;left:13px;top:14px;bottom:14px;width:2px;background:var(--brass);opacity:.45}
-  .step{position:relative;padding-left:4rem;padding-bottom:3rem}
-  .step:last-child{padding-bottom:0}
-  .step::before{
-    content:"";position:absolute;left:6px;top:11px;width:16px;height:16px;
-    background:var(--brass);border-radius:50%;box-shadow:0 0 0 6px var(--paper);
-  }
-  .step-no{display:block;font-size:.88rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
-  .step p{margin-top:.6rem;color:var(--muted);font-size:1.15rem}
-
   /* ---------- about ---------- */
   .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,5vw,4rem);align-items:start}
   .portrait{
@@ -294,6 +282,106 @@
   .site-foot a{color:#fff}
   .site-foot .brand-name{color:#fff;font-size:1.35rem}
   .site-foot .brand-sub{color:#8FA694}
+
+  /* ---------- vergelijking: wat WelkomThuis anders maakt ---------- */
+  .card--accent{background:var(--haze);border-color:var(--pine)}
+  .card--accent h3{color:var(--pine-deep)}
+  .card--accent p{color:var(--ink)}
+  .card__tag{
+    font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .card--accent .card__tag{color:var(--pine)}
+  /* de tag hoort bij de kop eronder, dus die twee staan dichter bij elkaar */
+  .card__tag+h3{margin-top:-.55rem}
+
+  .prose{max-width:62ch}
+  .prose p{color:var(--muted);font-size:1.15rem}
+  .prose+.prose{margin-top:1.25rem}
+
+  /* ---------- traject: drie fases ---------- */
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:start}
+  .phase{
+    background:var(--white);border:1px solid var(--line);border-radius:4px;
+    padding:2rem 1.85rem 2.25rem;height:100%;
+  }
+  .band-white .phase{background:var(--paper)}
+  .phase__n{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:44px;height:44px;border-radius:50%;margin-bottom:1.1rem;
+    background:var(--pine);color:#fff;font-family:var(--display);
+    font-size:1.35rem;font-weight:600;
+  }
+  .phase h3{margin-bottom:.4rem}
+  .phase__when{
+    display:block;font-size:.85rem;font-weight:600;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:1.35rem;
+  }
+  .phase__list{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
+  .phase__list li{position:relative;padding-left:1.9rem;font-size:1.08rem;line-height:1.45;color:var(--ink)}
+  .phase__list li::before{
+    content:"";position:absolute;left:.2rem;top:.42em;width:.6rem;height:.32rem;
+    border-left:2.5px solid var(--brass);border-bottom:2.5px solid var(--brass);
+    border-radius:1px;transform:rotate(-45deg);
+  }
+  .phase__list .is-optional{color:var(--muted)}
+  .phase__foot{
+    margin:1.6rem 0 0;padding-top:1.25rem;border-top:1px solid var(--line);
+    font-size:1.05rem;color:var(--muted);
+  }
+
+  /* ---------- voor wie ---------- */
+  .audience{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+  .audience p{color:var(--muted)}
+  .questions{
+    background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--brass);
+    border-radius:4px;padding:clamp(1.6rem,3vw,2.25rem);
+  }
+  .band .questions{background:var(--white)}
+  .questions p{
+    margin:0 0 1rem;font-family:var(--display);font-size:clamp(1.15rem,1.8vw,1.3rem);
+    color:var(--pine-deep);line-height:1.35;
+  }
+  .questions ul{list-style:none;margin:0;padding:0;display:grid;gap:.85rem}
+  .questions li{
+    position:relative;padding-left:1.6rem;font-size:1.1rem;line-height:1.45;color:var(--ink);
+  }
+  .questions li::before{
+    content:"?";position:absolute;left:0;top:0;font-family:var(--display);
+    font-weight:600;color:var(--brass);
+  }
+  .questions__note{
+    margin:1.5rem 0 0;padding-top:1.25rem;border-top:1px solid var(--line);
+    font-family:var(--body);font-size:1.08rem;color:var(--muted);
+  }
+
+  /* ---------- op maat / budget ---------- */
+  .tailor{
+    background:var(--white);border:1px solid var(--line);border-radius:6px;
+    padding:clamp(2rem,4vw,3.25rem);max-width:74ch;
+    box-shadow:0 1px 2px rgba(28,38,32,.05),0 18px 34px -24px rgba(28,38,32,.28);
+  }
+  .band-white .tailor{background:var(--paper)}
+  .tailor h2{margin-bottom:1.25rem}
+  .tailor p{color:var(--muted)}
+  .tailor strong{color:var(--pine-deep);font-weight:600}
+
+  /* ---------- oorsprong / verhaal ---------- */
+  .origin{margin-top:clamp(3rem,6vw,4.5rem);display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(2rem,5vw,4rem)}
+  .origin>div:first-child h2{font-size:clamp(1.7rem,3vw,2.2rem)}
+  .origin p{color:var(--muted)}
+  .origin p:first-of-type{margin-top:0}
+
+  /* ---------- portret ---------- */
+  /* de foto is klein aangeleverd (230px breed), dus blijft het kader bescheiden */
+  .portrait{overflow:hidden;padding:0;max-width:340px}
+  .portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;display:block}
+
+  @media (max-width:960px){
+    .phases{grid-template-columns:1fr}
+    .audience,.origin{grid-template-columns:1fr}
+  }
+  .prose-after{margin-top:clamp(2.5rem,5vw,3.5rem)}
 
   /* ---------- load animation ---------- */
   .rise{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.7,.3,1) forwards}
@@ -376,15 +464,15 @@
 
 <header class="site-head">
   <div class="wrap head-inner">
-    <a class="brand" href="#top" aria-label="Welkom Thuis — naar boven">
+    <a class="brand" href="#top" aria-label="WelkomThuis — naar boven">
       <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
         <path d="M6 22 24 7l18 15" stroke="#2F4A3C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M10 21v19h28V21" stroke="#2F4A3C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M24 34c-4.6-3.2-7-5.4-7-8.2a3.6 3.6 0 0 1 7-1.5 3.6 3.6 0 0 1 7 1.5c0 2.8-2.4 5-7 8.2Z" fill="#B08A3E"/>
       </svg>
       <span>
-        <span class="brand-name">Welkom Thuis</span>
-        <span class="brand-sub">Interieur &amp; verhuizing</span>
+        <span class="brand-name">WelkomThuis</span>
+        <span class="brand-sub">Opnieuw thuiskomen</span>
       </span>
     </a>
     <button class="nav-toggle" type="button" id="navToggle"
@@ -393,8 +481,9 @@
     </button>
     <nav class="site-nav" id="hoofdmenu" aria-label="Hoofdmenu">
       <ul>
-        <li><a href="#diensten">Wat ik doe</a></li>
-        <li><a href="#werkwijze">Werkwijze</a></li>
+        <li><a href="#verschil">Verschil</a></li>
+        <li><a href="#traject">Traject</a></li>
+        <li><a href="#voor-wie">Voor wie</a></li>
         <li><a href="#over">Over mij</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -407,19 +496,19 @@
   <section class="hero" id="top">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow rise d1">Samen naar een nieuw thuis</span>
-        <h1 class="rise d1">Uw vertrouwde<br>spullen, een<br>nieuwe woning.</h1>
-        <p class="hero-lead rise d2">Ik help ouderen om van een grote woning naar een kleinere woning of serviceflat te verhuizen. Samen bepalen we wat mee verhuist, en ik richt vervolgens uw nieuwe thuis opnieuw in met een combinatie van vertrouwde spullen en nieuwe elementen.</p>
+        <span class="eyebrow rise d1">Verhuisbegeleiding &amp; interieur</span>
+        <h1 class="rise d1">Niet alleen<br>verhuizen, maar<br>opnieuw thuiskomen.</h1>
+        <p class="hero-lead rise d2">WelkomThuis begeleidt het volledige traject wanneer je van een grote, vertrouwde woning naar een kleinere woning, appartement of serviceflat verhuist. Van bepalen wat meegaat tot het volledig inrichten van je nieuwe woning, zodat die opnieuw als een warme, vertrouwde thuis aanvoelt.</p>
         <div class="btn-row rise d3">
-          <a class="btn btn-ghost" href="#contact">Stuur een bericht</a>
+          <a class="btn btn-primary" href="#contact">Plan een vrijblijvend telefoongesprek</a>
         </div>
-        <p class="hero-note rise d3">Kennismaking bij u thuis is gratis en vrijblijvend.</p>
+        <p class="hero-note rise d3">Een eerste telefoongesprek is gratis en vrijblijvend.</p>
       </div>
 
       <div class="plans rise d2">
         <div class="plans__pair">
           <div>
-            <p class="plan__cap">Uw huidige woning</p>
+            <p class="plan__cap">Je huidige woning</p>
             <svg viewBox="0 0 320 260" role="img" aria-label="Plattegrond van de huidige, grotere woning met genummerde meubels">
               <path class="wall" d="M20 20h280v220H20Z"/>
               <path class="inner" d="M190 20v120M20 140h280M140 140v100M210 140v100"/>
@@ -443,7 +532,7 @@
           </div>
 
           <div>
-            <p class="plan__cap">Uw nieuwe woning</p>
+            <p class="plan__cap">Je nieuwe woning</p>
             <svg viewBox="0 0 240 200" role="img" aria-label="Plattegrond van de nieuwe, kleinere woning met dezelfde genummerde meubels">
               <path class="wall" d="M20 20h200v160H20Z"/>
               <path class="inner" d="M150 20v160M150 108h70"/>
@@ -461,7 +550,7 @@
           </div>
         </div>
 
-        <p class="plans__note" id="planNote" role="status">Kies hieronder een meubelstuk om te zien waar het in uw nieuwe woning terechtkomt.</p>
+        <p class="plans__note" id="planNote" role="status">Bestaande meubels koppelen aan de nieuwe woning. Kies hieronder een meubelstuk om te zien waar het terechtkomt.</p>
 
         <div class="picker" role="group" aria-label="Kies een meubelstuk">
           <button class="chip" type="button" data-obj="1" aria-pressed="false"><span class="chip__n">1</span>Fauteuil</button>
@@ -475,90 +564,181 @@
     </div>
   </section>
 
-  <section class="band band-white" id="diensten">
+  <section class="band band-white" id="verschil">
     <div class="wrap">
       <div class="band-head">
-        <span class="eyebrow">Wat ik doe</span>
-        <h2>Van het eerste kopje koffie tot het opgemaakte bed</h2>
-        <p>Alles in één hand. U hoeft geen partijen aan te sturen en geen dozen te tillen.</p>
+        <span class="eyebrow">Ons verschil</span>
+        <h2>Geen verhuisfirma en geen interieurarchitect</h2>
+        <p>Waar een verhuisfirma vooral instaat voor het verhuizen van de inboedel en een interieurarchitect zich richt op de inrichting, brengen wij alles samen in één persoonlijk traject.</p>
       </div>
       <div class="cards">
         <article class="card">
           <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M6 34h28M10 34V16l10-8 10 8v18"/><path d="M17 34v-9h6v9"/>
+            <path d="M4 26V14h18v12M22 18h7l5 5v3H22"/><circle cx="12" cy="29" r="3"/><circle cx="27" cy="29" r="3"/><path d="M15 26h9"/>
           </svg>
-          <h3>Kiezen wat meegaat</h3>
-          <p>We lopen samen door uw woning, rustig en kamer voor kamer. U beslist wat meegaat. Ik denk mee over wat past en wat werkt in de nieuwe ruimte.</p>
+          <span class="card__tag">Een verhuisfirma</span>
+          <h3>Verhuist je inboedel</h3>
+          <p>Dozen, meubels en transport van deur tot deur. Dat is de praktische kant van de verhuis, maar niet de keuzes die eraan voorafgaan of de inrichting die erna komt.</p>
         </article>
         <article class="card">
           <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="6" y="8" width="28" height="24" rx="2"/><path d="M6 20h12v12M18 8v6M26 20h8M26 20v12"/>
           </svg>
-          <h3>Plattegrond en planning</h3>
-          <p>Ik meet uw nieuwe woning op en teken precies waar alles komt te staan. Zo weet u vooraf of de kast past en waar uw stoel bij het raam komt.</p>
+          <span class="card__tag">Een interieurarchitect</span>
+          <h3>Ontwerpt je inrichting</h3>
+          <p>Een plan en een stijl voor de nieuwe ruimte. Maar wie bepaalt wat meegaat, wie vergelijkt de offertes en wie zet alles op zijn plek op de dag van de verhuis?</p>
         </article>
-        <article class="card">
+        <article class="card card--accent">
           <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M8 32h24M10 32V20h20v12"/><path d="M12 20v-7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v7M12 25h16M11 32v3M29 32v3"/>
+            <path d="M6 22 20 10l14 12"/><path d="M9 21v13h22V21"/><path d="M20 31c-3.4-2.4-5.2-4-5.2-6a2.6 2.6 0 0 1 5.2-1.1 2.6 2.6 0 0 1 5.2 1.1c0 2-1.8 3.6-5.2 6Z"/>
           </svg>
-          <h3>Inrichten van uw nieuwe thuis</h3>
-          <p>Uw vertrouwde spullen krijgen een goede plek, aangevuld met nieuwe elementen waar dat nodig is. Passend bij u, niet bij een catalogus.</p>
+          <span class="card__tag">WelkomThuis</span>
+          <h3>Begeleidt het volledige traject</h3>
+          <p>Van bepalen wat meegaat en wat een nieuwe bestemming krijgt, tot het inrichten van de nieuwe woning en ervoor zorgen dat die opnieuw als een warme, vertrouwde thuis aanvoelt.</p>
         </article>
+      </div>
+      <div class="prose prose-after">
+        <p>Je hoeft niet zelf op zoek te gaan naar verschillende partijen of alles afzonderlijk te regelen: WelkomThuis neemt de coördinatie en begeleiding van het volledige traject op zich.</p>
+        <p>We zorgen ervoor dat de overgang naar de nieuwe woning niet alleen praktisch vlot verloopt, maar ook persoonlijk, overzichtelijk en met aandacht voor wat van de oude thuis behouden moet blijven.</p>
       </div>
     </div>
   </section>
 
-  <section class="band" id="werkwijze">
+  <section class="band" id="traject">
     <div class="wrap">
       <div class="band-head">
-        <span class="eyebrow">Werkwijze</span>
-        <h2>Vier stappen, in uw tempo</h2>
-        <p>Een verhuizing op leeftijd is geen logistieke klus, maar een afscheid en een begin. Daar nemen we de tijd voor.</p>
+        <span class="eyebrow">Het traject</span>
+        <h2>Drie fases, in jouw tempo</h2>
+        <p>Een verhuis is veel meer dan een praktische verandering. Daarom lopen we het volledige traject samen, van de eerste kennismaking tot de laatste accessoire.</p>
       </div>
-      <ol class="steps">
-        <li class="step">
-          <span class="step-no">Stap 1</span>
-          <h3>Kennismaking bij u thuis</h3>
-          <p>Een kop koffie en een rondgang door uw woning. We bespreken wat er speelt en wat u nodig heeft. Gratis en vrijblijvend, ook als u er daarna van afziet.</p>
-        </li>
-        <li class="step">
-          <span class="step-no">Stap 2</span>
-          <h3>Opmeten en plan maken</h3>
-          <p>Ik meet de nieuwe woning op en maak een plattegrond met uw eigen meubels erin. U ziet vooraf hoe het wordt, en we passen aan tot het klopt.</p>
-        </li>
-        <li class="step">
-          <span class="step-no">Stap 3</span>
-          <h3>Kiezen en afscheid nemen</h3>
-          <p>Kamer voor kamer bepalen we wat meegaat. Voor de rest zoek ik een goede bestemming: familie, kringloop, veiling of opslag. Niets verdwijnt zonder uw akkoord.</p>
-        </li>
-        <li class="step">
-          <span class="step-no">Stap 4</span>
-          <h3>Verhuizen en inrichten</h3>
-          <p>Ik regel de verhuizers en ben er de hele dag bij. 's Avonds hangt uw schilderij aan de muur, staat het bed opgemaakt en is de keukenkast ingeruimd.</p>
-        </li>
-      </ol>
+      <div class="phases">
+        <article class="phase">
+          <span class="phase__n" aria-hidden="true">1</span>
+          <h3>Voor de verhuis</h3>
+          <span class="phase__when">Kennismaken, kiezen en plannen</span>
+          <ul class="phase__list">
+            <li>Kennismaking</li>
+            <li>Wensen en verwachtingen bespreken</li>
+            <li>Stijl en smaak bepalen</li>
+            <li>Moodboard maken</li>
+            <li>Huidige woning bekijken</li>
+            <li>Inventaris van de meubels en persoonlijke spullen</li>
+            <li>Bepalen wat zeker meegaat</li>
+            <li>Nieuwe woning bezoeken</li>
+            <li>Afmetingen en mogelijkheden bekijken</li>
+            <li>Bestaande meubels koppelen aan de nieuwe woning</li>
+          </ul>
+        </article>
+        <article class="phase">
+          <span class="phase__n" aria-hidden="true">2</span>
+          <h3>Tijdens het traject</h3>
+          <span class="phase__when">Zoeken, aankopen en coördineren</span>
+          <ul class="phase__list">
+            <li>Nieuwe meubels zoeken</li>
+            <li class="is-optional">Verlichting en raamdecoratie selecteren (optioneel)</li>
+            <li>Accessoires zoeken</li>
+            <li>Volledig decoreren</li>
+            <li>Aankopen begeleiden</li>
+            <li>Leveringen opvolgen</li>
+            <li>Opslag organiseren</li>
+            <li>Verhuisfirma zoeken en offertes vergelijken</li>
+            <li>Verhuisdatum en planning coördineren</li>
+          </ul>
+        </article>
+        <article class="phase">
+          <span class="phase__n" aria-hidden="true">3</span>
+          <h3>Na de verhuis</h3>
+          <span class="phase__when">Plaatsen, stylen en afwerken</span>
+          <ul class="phase__list">
+            <li>Meubels volgens het plan plaatsen</li>
+            <li>Decoratie uitpakken</li>
+            <li>Foto&rsquo;s, kunst en persoonlijke spullen plaatsen</li>
+            <li>Accessoires stylen</li>
+            <li>De ruimtes afwerken</li>
+            <li>Zorgen dat de woning echt als een thuis voelt</li>
+          </ul>
+          <p class="phase__foot">Dit laatste is de kern van WelkomThuis.</p>
+        </article>
+      </div>
     </div>
   </section>
 
   <section class="quote">
     <div class="wrap">
       <blockquote>
-        Ik zag er vreselijk tegenop. Nu zit ik in mijn eigen stoel, bij mijn eigen schilderij, in een huis dat past.
-        <cite>Mevrouw Van Dijk (84) — Hilversum</cite>
+        Van een nieuwe woning opnieuw een vertrouwde, persoonlijke thuis maken.
+        <cite>De kern van WelkomThuis</cite>
       </blockquote>
     </div>
   </section>
 
-  <section class="band band-white" id="over">
-    <div class="wrap about-grid">
-      <div class="portrait">Hier komt uw foto<br>(staand, 4:5)</div>
-      <div class="about-body">
-        <span class="eyebrow">Over mij</span>
-        <h2>Kato Vermeulen</h2>
-        <p>Ik ben interieuradviseur en begeleid ouderen bij de stap naar een kleinere woning of serviceflat. Wat mij opvalt: mensen zien niet op tegen de dozen, maar tegen het kiezen. Dáár zit mijn werk.</p>
-        <p>Ik werk met een paar klanten tegelijk, zodat er tijd is voor een gesprek en voor een tweede kop koffie. Elk traject is maatwerk: geen standaardpakketten, geen vaste stijl. Uw huis moet op u lijken.</p>
+  <section class="band band-white" id="voor-wie">
+    <div class="wrap">
+      <div class="band-head">
+        <span class="eyebrow">Voor wie</span>
+        <h2>Voor wie is WelkomThuis?</h2>
+      </div>
+      <div class="audience">
+        <div>
+          <p>WelkomThuis is er voor iedereen die voor de uitdaging staat om van een grote, vertrouwde woning naar een kleinere woning, appartement of serviceflat te verhuizen.</p>
+          <p>Dat kan iemand zijn die zelf verhuist, maar evengoed een zoon, dochter, familielid of goede kennis die graag helpt, maar merkt dat het volledige traject moeilijk te overzien is.</p>
+          <p>We begeleiden zowel de persoon die verhuist als de mensen rondom hem of haar. Zo kunnen kinderen of familieleden betrokken blijven bij de belangrijke keuzes, zonder dat ze zelf het volledige traject moeten organiseren en opvolgen.</p>
+          <p>Een nieuwe thuis creëren doen we samen, op een manier die past bij de persoon, de woning én het budget.</p>
+        </div>
+        <div class="questions">
+          <p>Misschien is er simpelweg te veel om zelf te regelen.</p>
+          <ul>
+            <li>Welke spullen gaan mee?</li>
+            <li>Wat kan weg?</li>
+            <li>Welke meubels passen in de nieuwe woning?</li>
+            <li>Hoe maak je van een kleinere ruimte opnieuw een gezellige thuis?</li>
+            <li>En wie coördineert de verhuis?</li>
+          </ul>
+          <p class="questions__note">WelkomThuis neemt die zorgen uit handen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="op-maat">
+    <div class="wrap">
+      <div class="tailor">
+        <span class="eyebrow">Op maat</span>
+        <h2>Op maat van jou, zonder dat maatwerk onbetaalbaar hoeft te zijn</h2>
+        <p>Elke verhuis en elke woning is anders. Daarom stemmen we onze begeleiding volledig af op jouw wensen, behoeften en budget. Van een praktische basisbegeleiding tot een volledig ontzorgd traject: <strong>jij bepaalt wat je nodig hebt, wij zorgen voor een oplossing op maat.</strong></p>
+        <p>Benieuwd wat WelkomThuis voor jou kan betekenen? Aarzel dan niet om vrijblijvend contact op te nemen. Tijdens een eerste telefoongesprek luister ik naar jouw verhaal, beantwoord ik je vragen en bekijken we samen wat ik voor jou kan betekenen.</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="#contact">Neem contact op</a>
+          <a class="btn btn-primary" href="#contact">Plan een vrijblijvend telefoongesprek</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-white" id="over">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="portrait">
+          <img src="39861048172.png" alt="Kato Vermeulen, de persoon achter WelkomThuis" width="230" height="172" loading="lazy">
+        </div>
+        <div class="about-body">
+          <span class="eyebrow">Over mij</span>
+          <h2>Kato Vermeulen</h2>
+          <p>Ik ben Kato Vermeulen, de persoon achter WelkomThuis.</p>
+          <p>Vanuit mijn ervaring als maatschappelijk werker weet ik hoe belangrijk het is om mensen goed te begeleiden wanneer er grote veranderingen op hun pad komen. Daarnaast heb ik altijd een sterke passie gehad voor interieur, styling en mode.</p>
+          <p>Die combinatie van mensen begeleiden én oog hebben voor sfeer, stijl en persoonlijke details vormt de basis van WelkomThuis.</p>
+        </div>
+      </div>
+
+      <div class="origin">
+        <div>
+          <h2>Hoe WelkomThuis ontstond</h2>
+        </div>
+        <div>
+          <p>Het idee voor WelkomThuis ontstond vanuit een heel persoonlijke ervaring. Toen mijn grootmoeder de overstap maakte van haar vertrouwde, ouderlijke woning naar een kleinere woning, begeleidde en coördineerde ik zelf haar volledige verhuistraject.</p>
+          <p>Ik merkte van dichtbij dat zo&rsquo;n verhuis veel meer is dan alleen een praktische verandering. Afscheid nemen van een vertrouwde woning kan emotioneel en ingrijpend zijn. Het is een hoofdstuk afsluiten en tegelijkertijd proberen om van een nieuwe plek opnieuw een thuis te maken.</p>
+          <p>Juist daarom vond ik het zo bijzonder om te zien hoe gelukkig mijn grootmoeder uiteindelijk was met haar nieuwe woning. Door vertrouwde meubels, persoonlijke spullen en herkenbare elementen mee te nemen, bleef een stukje van haar oude thuis behouden. In combinatie met enkele nieuwe, eigentijdse meubels en elementen ontstond er een mooi geheel: vertrouwd én nieuw tegelijk.</p>
+          <p>Die ervaring deed me beseffen hoeveel verschil een goede begeleiding kan maken. Niet alleen door te helpen met de praktische kant van een verhuis, maar ook door aandacht te hebben voor wat iemand wil behouden, waar iemand afscheid van wil nemen en hoe een nieuwe woning opnieuw als thuis kan voelen.</p>
+          <p>Vanuit die ervaring is WelkomThuis ontstaan: een persoonlijke service die het volledige traject begeleidt en ervoor zorgt dat een nieuwe woning niet alleen een nieuwe plek wordt, maar opnieuw een echte thuis.</p>
         </div>
       </div>
     </div>
@@ -567,9 +747,9 @@
   <section class="band" id="contact">
     <div class="wrap contact-grid">
       <div>
-        <span class="eyebrow">Neem contact op</span>
-        <h2>Even bellen mag altijd</h2>
-        <p class="contact-intro">Heeft u een vraag, of wilt u vrijblijvend kennismaken? Bel gerust, of laat uw gegevens achter. Ik neem binnen twee werkdagen contact op.</p>
+        <span class="eyebrow">Contact</span>
+        <h2>Plan een vrijblijvend telefoongesprek</h2>
+        <p class="contact-intro">Tijdens een eerste telefoongesprek luister ik naar jouw verhaal, beantwoord ik je vragen en bekijken we samen wat ik voor jou kan betekenen. Laat je gegevens achter, dan neem ik binnen twee werkdagen contact op.</p>
         <dl class="contact-list">
           <div>
             <dt>E-mail</dt>
@@ -581,7 +761,7 @@
       <form class="form" id="contactForm" novalidate>
         <div class="form-fields">
           <div class="field">
-            <label for="naam">Uw naam</label>
+            <label for="naam">Je naam</label>
             <input id="naam" name="naam" type="text" autocomplete="name">
           </div>
           <div class="field">
@@ -593,15 +773,15 @@
             <input id="mail" name="mail" type="email" autocomplete="email">
           </div>
           <div class="field">
-            <label for="bericht">Waar kan ik u mee helpen?</label>
+            <label for="bericht">Waar kan ik je mee helpen?</label>
             <textarea id="bericht" name="bericht"></textarea>
           </div>
-          <button class="btn btn-primary" type="submit">Stuur uw bericht</button>
-          <p class="form-note">Uw gegevens gebruik ik alleen om contact met u op te nemen.</p>
+          <button class="btn btn-primary" type="submit">Verstuur je bericht</button>
+          <p class="form-note">Je gegevens gebruik ik alleen om contact met je op te nemen.</p>
         </div>
         <div class="form-done" role="status">
           <h3>Bericht verstuurd</h3>
-          <p>Dank u wel. Ik neem binnen twee werkdagen contact met u op.</p>
+          <p>Dank je wel. Ik neem binnen twee werkdagen contact met je op.</p>
         </div>
       </form>
     </div>
@@ -612,8 +792,8 @@
 <footer class="site-foot">
   <div class="wrap foot-inner">
     <span>
-      <span class="brand-name">Welkom Thuis</span>
-      <span class="brand-sub">Samen naar een nieuw thuis</span>
+      <span class="brand-name">WelkomThuis</span>
+      <span class="brand-sub">Niet alleen verhuizen, maar opnieuw thuiskomen</span>
     </span>
     <span><a href="mailto:welkomthuis@outlook.be">welkomthuis@outlook.be</a></span>
     <span>Demo-website</span>
@@ -679,10 +859,10 @@
     var messages = {
       '1': 'De <strong>fauteuil</strong> krijgt weer een plek bij het raam, nu in de woon- en eetkamer.',
       '2': 'Het <strong>dressoir</strong> past langs de lange wand van de woon- en eetkamer.',
-      '3': 'De <strong>staande klok</strong> komt naast de doorgang te staan, zichtbaar vanuit uw stoel.',
+      '3': 'De <strong>staande klok</strong> komt naast de doorgang te staan, zichtbaar vanuit je stoel.',
       '4': 'De <strong>eettafel</strong> staat straks midden in de woon- en eetkamer, met het licht van opzij.',
       '5': 'Het <strong>schilderij</strong> hangt weer op ooghoogte, links van het raam.',
-      '6': 'De <strong>boekenkast</strong> past niet in de nieuwe woning. Samen zoeken we er een goede bestemming voor: familie, kringloop of opslag.'
+      '6': 'De <strong>boekenkast</strong> past niet in de nieuwe woning. Samen zoeken we er een nieuwe bestemming voor: familie, kringloop of opslag.'
     };
 
     chips.forEach(function (chip) {
@@ -748,3 +928,4 @@
 </script>
 </body>
 </html>
+

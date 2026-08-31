@@ -13,24 +13,17 @@ Client: Kato Vermeulen · Locale: `nl-BE` (Vlaanderen) · Static site, no build 
 
 **One thing still stops a visitor from reaching Kato.** Fix 1 before anything else.
 
-1. **Turn on form detection in Netlify, then the email notification.**
-   The markup is wired to Netlify Forms (`data-netlify`, `name="contact"`, the
-   hidden `form-name`, honeypot `voorkeur`) and is deployed, but a POST to the
-   live site returns **404** — Netlify has not registered the form. Form
-   detection is opt-in per site and cannot be switched on from this repo:
+1. **Confirm the notification actually delivers.** Form detection is on and the
+   form is registered: a POST to the live site returns 200, and one with an
+   unknown `form-name` still returns 404, so Netlify is matching by name. What
+   is not verified is that a submission reaches a human. Submit the form once
+   and check that the mail arrives where it should — until it does, a visitor
+   still reaches nobody.
 
-       Site configuration -> Forms -> Form detection -> Enable
-       then trigger a new deploy, because detection only runs at deploy time
+   Note the deploy order that caught us out: enabling form detection does not
+   scan the build that is already live. Detection runs **during a deploy**, so
+   any change to the form needs a redeploy before it takes effect.
 
-   After that, submit the form once and confirm it appears under Forms. Then add
-   the email notification (**off by default** — without it submissions sit in the
-   dashboard and nobody is told):
-
-       Forms -> Form notifications -> Add notification -> Email notification
-
-   Until both are done, a visitor reaches nobody. The form does at least fail
-   honestly in the meantime: it shows the error with the phone number rather
-   than a fake confirmation.
 2. **The portrait is a phone selfie taken in a car.** Usable at 340px now that
    there's a higher-resolution copy, but the brand needs a real photo — and there
    are still no project photos at all. It is also a 713 KB PNG; as a JPEG at

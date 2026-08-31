@@ -11,38 +11,30 @@ Client: Kato Vermeulen · Locale: `nl-BE` (Vlaanderen) · Static site, no build 
 
 ## Launch blockers
 
-**One thing still stops a visitor from reaching Kato.** Fix 1 before anything else.
+**None on our side.** The contact form is wired, registered and verified end to
+end — a submission reaches the inbox. What is left sits with the client or with
+a lawyer.
 
-1. **Confirm the notification actually delivers.** Form detection is on and the
-   form is registered: a POST to the live site returns 200, and one with an
-   unknown `form-name` still returns 404, so Netlify is matching by name. What
-   is not verified is that a submission reaches a human. Submit the form once
-   and check that the mail arrives where it should — until it does, a visitor
-   still reaches nobody.
+Before handover:
 
-   Note the deploy order that caught us out: enabling form detection does not
-   scan the build that is already live. Detection runs **during a deploy**, so
-   any change to the form needs a redeploy before it takes effect.
-
-2. **The portrait is a phone selfie taken in a car.** Usable at 340px now that
-   there's a higher-resolution copy, but the brand needs a real photo — and there
-   are still no project photos at all. It is also a 713 KB PNG; as a JPEG at
-   ~800px it would be under 60 KB.
-
-Wanted before launch, but not blocking:
-
+- **A real photograph.** Kato is sending one herself. The current portrait is a
+  phone selfie taken in a car, and at 713 KB it is the heaviest thing on the
+  site; whatever replaces it should go out as a JPEG at ~800px, under 60 KB.
 - **Have `privacy.html` read by someone qualified.** It describes what the site
-  actually does, but a developer wrote it, not a lawyer.
+  actually does, but a developer wrote it, not a lawyer. Point them at the
+  transfer question in particular: Netlify and Postmark are both US companies,
+  so form data leaves the EEA, and the notice says so without naming a transfer
+  mechanism.
 - **Add the rechtsvorm** to the footer identification if WelkomThuis is a company
   rather than an eenmanszaak (BV, VOF, …). Name, address, ondernemingsnummer,
   phone and email are all in place.
 - **Confirm the retention periods** now stated in `privacy.html` — twelve months
   for enquiries that go nowhere, seven years for completed assignments. Those are
   a recommendation, not a decision anyone has signed off.
-- **Name the form processor** in `privacy.html` once the endpoint exists.
 
-Resolved since the first pass: the phone number, the privacy notice, company
-identification, and Google Fonts (now self-hosted — see Structure).
+Note the deploy order that caught us out: enabling Netlify form detection does
+not scan the build that is already live. Detection runs **during a deploy**, so
+any change to the form needs a redeploy before it takes effect.
 
 ## Structure
 

@@ -314,13 +314,23 @@ a:hover{color:var(--pine-deep)}
 }
 
 /* ---------- contact ---------- */
-.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2.5rem,5vw,4.5rem);align-items:start}
+/* De kop en de bereikbaarheid staan bóven het formulier, niet ernaast. Het
+   formulier krijgt daardoor de volle breedte en kan in twee kolommen, wat de
+   sectie een stuk korter maakt dan één smalle kolom van veertien velden. */
+.contact-head{
+  display:grid;grid-template-columns:1.35fr .65fr;
+  gap:clamp(2rem,4vw,3.5rem);align-items:start;
+  margin-bottom:clamp(2.5rem,5vw,3.5rem);
+}
 .contact-intro{margin-top:1.25rem;color:var(--muted)}
-.contact-list{margin:2.25rem 0 0;padding:0;display:grid;gap:1.75rem}
+.contact-list{margin:0;padding:0;display:grid;gap:1.5rem}
 .contact-list dt{font-size:.88rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .contact-list dd{margin:.25rem 0 0}
 .c-value{font-family:var(--display);font-size:clamp(1.5rem,2.6vw,1.9rem);color:var(--pine-deep);display:block;line-height:1.25}
-a.c-value{text-decoration:none}
+/* Het telefoonnummer is de belangrijkste knop van de site. Op 1,5rem zou het
+   raakvlak maar 30px hoog worden; 48px is wat we aanhouden voor een onvaste
+   hand. Zie README, "48 x 48 px touch targets". */
+a.c-value{text-decoration:none;display:inline-flex;align-items:center;min-height:48px}
 a.c-value:hover{text-decoration:underline}
 
 .form{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:clamp(1.75rem,3vw,2.5rem)}
@@ -334,7 +344,76 @@ a.c-value:hover{text-decoration:underline}
 }
 .field textarea{min-height:150px;resize:vertical;line-height:1.6}
 .field input:focus,.field textarea:focus{border-color:var(--pine);background:#fff}
-.form button{width:100%}
+/* ---------- vragen in het contactformulier ---------- */
+.form-intro{margin:0 0 2rem;font-size:1.08rem;color:var(--muted)}
+/* min-width:0 houdt een fieldset binnen zijn kolom; zonder dat neemt hij
+   de breedte van zijn breedste kind aan en loopt het formulier uit */
+.q{margin:0 0 2.25rem;padding:0;border:0;min-width:0}
+.q>legend{padding:0;margin-bottom:.85rem;font-size:1.05rem;font-weight:600;color:var(--ink)}
+.q-hint{margin:-.25rem 0 .75rem;font-size:1rem;color:var(--muted)}
+.q .field:last-child{margin-bottom:0}
+
+/* Keuzelijsten. Zelfde maat en rand als de tekstvelden, zodat het formulier
+   één ding blijft. 58px hoog: ruim boven de 48px die we als minimum
+   aanhouden, ook voor wie met een onvaste hand tikt.
+   Het eigen pijltje is een data-URI in deze stylesheet; CSP staat dat toe
+   via img-src 'self' data:. Zie SECURITY.md par. 2. */
+.field select{
+  width:100%;font-family:var(--body);font-size:1.15rem;color:var(--ink);
+  padding:.95rem 3.25rem .95rem 1rem;min-height:58px;line-height:1.4;
+  background-color:var(--paper);
+  border:2px solid var(--line);border-radius:3px;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%232F4A3C'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 1.1rem center;
+  background-size:18px 12px;
+}
+.field select:hover{border-color:var(--pine)}
+.field select:focus{border-color:var(--pine);background-color:#fff}
+/* In hoog contrast tekent Windows onze achtergrondafbeelding niet, en dan
+   staat er een keuzelijst zonder pijltje. Daar geven we het besturingssysteem
+   zijn eigen weergave terug. */
+@media (forced-colors: active){
+  .field select{appearance:auto;-webkit-appearance:auto;background-image:none;padding-right:1rem}
+}
+
+/* Vraag 1 t/m 6 naast elkaar. minmax(21rem) houdt het op twee kolommen bij
+   deze wrap-breedte: bij drie zou de langste keuze ("Serviceflat of
+   assistentiewoning") in de dichtgeklapte lijst afgekapt worden. */
+.q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(21rem,1fr));gap:1.5rem}
+.q-grid .field{margin-bottom:0}
+
+/* Bericht en contactgegevens delen een rij; het tekstvak rekt mee met de
+   hoogte van de drie velden ernaast, zodat er geen gat overblijft. */
+.form-split{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 2rem;align-items:stretch;margin-top:1.5rem}
+.form-split>.q{margin-bottom:0}
+.field--message{display:flex;flex-direction:column;margin-bottom:0}
+.field--message textarea{flex:1 1 auto;min-height:11rem}
+
+/* Alleen zichtbaar als het versturen mislukt is. Rood is hier niet nodig:
+   de melding staat vlak boven de knop en zegt zelf wat er aan de hand is
+   (zie README, "nooit kleur alleen"). */
+.form-error{
+  display:none;margin:2rem 0 0;padding:1.25rem 1.5rem;
+  background:var(--haze);border-left:4px solid var(--brass);border-radius:3px;
+  color:var(--ink);font-size:1.08rem;
+}
+.is-failed .form-error{display:block}
+
+.form-submit{
+  display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;
+  margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--line);
+}
+.form-submit .btn{flex:none;min-width:15rem}
+.form-submit .form-note{margin:0;flex:1 1 20rem}
+
+.field-extra{margin-top:1rem}
+/* [hidden] is de standaard, maar een display-regel elders wint daar zo van;
+   deze regel houdt verborgen ook echt verborgen. */
+[hidden]{display:none}
+.field-extra label{font-weight:400;color:var(--muted)}
+
 .form-note{font-size:1rem;color:var(--muted);margin-top:1.25rem}
 /* Honeypot: uit beeld, maar niet display:none — dat slaan veel bots over.
    Buiten de leesvolgorde en niet focusbaar, dus onzichtbaar voor wie het
@@ -359,8 +438,6 @@ a.c-value:hover{text-decoration:underline}
 .legal-address{font-style:normal;line-height:1.7}
 .legal-date{font-size:1rem;font-style:italic}
 .legal-back{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line)}
-.legal .todo{display:block;margin-block:1.5rem;line-height:1.5}
-.legal-list .todo{margin-block:.5rem}
 
 /* ---------- footer ---------- */
 .site-foot{background:var(--pine-deep);color:#C3D3C6;padding-block:3rem;font-size:1.05rem}
@@ -377,12 +454,6 @@ a.c-value:hover{text-decoration:underline}
 .foot-note{margin:1.5rem 0 0;font-size:.95rem;color:#8FA694}
 .foot-note code{font-size:.95em}
 
-/* Zichtbare markering voor gegevens die de klant nog moet aanleveren.
-   Expres lelijk: dit hoort nooit ongemerkt live te gaan. */
-.todo{
-  display:inline-block;background:var(--brass);color:#1C2620;
-  padding:.35rem .7rem;border-radius:3px;font-weight:600;
-}
 
 /* ---------- vergelijking: wat WelkomThuis anders maakt ---------- */
 .card--accent{background:var(--haze);border-color:var(--pine)}
@@ -504,7 +575,8 @@ a.c-value:hover{text-decoration:underline}
 
 /* ---------- responsive ---------- */
 @media (max-width:960px){
-  .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}
+  .hero-grid,.about-grid,.contact-head{grid-template-columns:1fr}
+  .form-split{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr}
   .hero-grid .plans{order:-1}
 }

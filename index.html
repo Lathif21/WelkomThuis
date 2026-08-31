@@ -295,12 +295,18 @@
   </section>
 
   <section class="band" id="contact">
-    <div class="wrap contact-grid">
-      <div>
-        <span class="eyebrow">Contact</span>
-        <h2>Plan een vrijblijvend telefoongesprek</h2>
-        <p class="contact-intro">Tijdens een eerste telefoongesprek luister ik naar jouw verhaal, beantwoord ik je vragen en bekijken we samen wat ik voor jou kan betekenen. Laat je gegevens achter, dan neem ik binnen twee werkdagen contact op.</p>
+    <div class="wrap">
+      <div class="contact-head">
+        <div>
+          <span class="eyebrow">Contact</span>
+          <h2>Plan een vrijblijvend telefoongesprek</h2>
+          <p class="contact-intro">Tijdens een eerste telefoongesprek luister ik naar jouw verhaal, beantwoord ik je vragen en bekijken we samen wat ik voor jou kan betekenen. Laat je gegevens achter, dan neem ik binnen twee werkdagen contact op.</p>
+        </div>
         <dl class="contact-list">
+          <div>
+            <dt>Telefoon</dt>
+            <dd><a class="c-value" href="tel:+32475527389">0475 52 73 89</a></dd>
+          </div>
           <div>
             <dt>E-mail</dt>
             <dd><a class="c-value" href="mailto:welkomthuis@outlook.be">welkomthuis@outlook.be</a></dd>
@@ -308,29 +314,128 @@
         </dl>
       </div>
 
-      <!-- method="post" is niet optioneel: bij GET komen naam, telefoon en
+      <!-- Netlify Forms.
+           - name en het verborgen form-name veld moeten gelijk zijn; daaraan
+             herkent Netlify het formulier bij het uitrollen.
+           - data-netlify-honeypot wijst naar ons eigen veld "voorkeur", zodat
+             Netlify inzendingen met een ingevuld honeypot zelf al weggooit.
+           - action is waar iemand zónder JavaScript naartoe gestuurd wordt.
+             Met JavaScript posten we naar "/" (zie site.js), zoals Netlify
+             voorschrijft voor AJAX.
+           method="post" is niet optioneel: bij GET komen naam, telefoon en
            e-mail in de URL, in de serverlogs en in de browsergeschiedenis
-           terecht. Zie SECURITY.md par. 3.
-           TODO launch blocker: action= wijst nog nergens heen. Koppel een echt
-           endpoint of vervang het formulier door een telefoonnummer.
-           Zie README.md par. Launch blockers. -->
-      <form class="form" id="contactForm" method="post" novalidate>
+           terecht. Beide adressen liggen op hetzelfde domein, dus de
+           CSP-regel form-action 'self' kan blijven staan. Zie SECURITY.md par. 3. -->
+      <form class="form" id="contactForm" name="contact" method="post" action="/bedankt"
+            data-netlify="true" data-netlify-honeypot="voorkeur" novalidate>
+        <input type="hidden" name="form-name" value="contact">
         <div class="form-fields">
-          <div class="field">
-            <label for="naam">Je naam</label>
-            <input id="naam" name="naam" type="text" autocomplete="name" maxlength="100">
+          <p class="form-intro">Deze vragen helpen me je situatie te begrijpen voordat we bellen. Je hoeft ze niet allemaal te beantwoorden &mdash; je naam en telefoonnummer zijn genoeg.</p>
+
+          <!-- De gekozen waarde is geen garantie: een POST kan om het formulier
+               heen elke waarde meesturen, ook een die in geen enkele <option>
+               staat. Controleer op de server elk antwoord tegen de lijst
+               hieronder. Zie SECURITY.md par. 3. -->
+          <div class="q-grid">
+            <div class="field">
+              <label for="q-voor-wie">1. Voor wie is de verhuis?</label>
+              <select id="q-voor-wie" name="voor-wie">
+                <option value="">Maak een keuze</option>
+                <option value="mezelf">Voor mezelf</option>
+                <option value="ouders">Voor mijn ouder(s)</option>
+                <option value="familielid">Voor een ander familielid</option>
+                <option value="anders">Anders</option>
+              </select>
+              <!-- Hoort bij de keuze "Anders" hierboven en staat in dezelfde cel,
+                   zodat het raster niet verspringt als het verschijnt. Bewust
+                   zichtbaar in de HTML: zonder JavaScript blijft het staan. -->
+              <div class="field-extra" data-show-for="q-voor-wie" data-show-value="anders">
+                <label for="voor-wie-anders">Anders, namelijk</label>
+                <input id="voor-wie-anders" name="voor-wie-anders" type="text" maxlength="100">
+              </div>
+            </div>
+            <div class="field">
+              <label for="q-naar-type">2. Naar welk type woning wordt verhuisd?</label>
+              <select id="q-naar-type" name="naar-type">
+                <option value="">Maak een keuze</option>
+                <option value="appartement">Appartement</option>
+                <option value="serviceflat">Serviceflat</option>
+                <option value="assistentiewoning">Assistentiewoning</option>
+                <option value="andere">Andere</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="q-oppervlakte">3. Hoe groot is de nieuwe woning ongeveer?</label>
+              <select id="q-oppervlakte" name="oppervlakte">
+                <option value="">Maak een keuze</option>
+                <option value="tot-50">Tot 50 m&sup2;</option>
+                <option value="50-70">50&ndash;70 m&sup2;</option>
+                <option value="70-75">70&ndash;75 m&sup2;</option>
+                <option value="75-80">75&ndash;80 m&sup2;</option>
+                <option value="80-85">80&ndash;85 m&sup2;</option>
+                <option value="85-90">85&ndash;90 m&sup2;</option>
+                <option value="90-95">90&ndash;95 m&sup2;</option>
+                <option value="95-100">95&ndash;100 m&sup2;</option>
+                <option value="meer-dan-100">Meer dan 100 m&sup2;</option>
+                <option value="onbekend">Ik weet het niet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="q-slaapkamers">4. Hoeveel slaapkamers heeft de nieuwe woning?</label>
+              <select id="q-slaapkamers" name="slaapkamers">
+                <option value="">Maak een keuze</option>
+                <option value="studio">Studio</option>
+                <option value="1">1 slaapkamer</option>
+                <option value="2">2 slaapkamers</option>
+                <option value="3">3 slaapkamers</option>
+                <option value="4-of-meer">4 of meer</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="q-vanwaar">5. Vanwaar wordt verhuisd?</label>
+              <select id="q-vanwaar" name="vanwaar">
+                <option value="">Maak een keuze</option>
+                <option value="huis">Huis</option>
+                <option value="appartement">Appartement</option>
+                <option value="serviceflat-assistentiewoning">Serviceflat of assistentiewoning</option>
+                <option value="andere">Andere</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="q-timing">6. Wanneer staat de verhuis gepland?</label>
+              <select id="q-timing" name="timing">
+                <option value="">Maak een keuze</option>
+                <option value="binnen-1-maand">Binnen 1 maand</option>
+                <option value="1-3-maanden">Binnen 1&ndash;3 maanden</option>
+                <option value="3-6-maanden">Binnen 3&ndash;6 maanden</option>
+                <option value="later">Later</option>
+                <option value="onbekend">Nog niet bekend</option>
+              </select>
+            </div>
           </div>
-          <div class="field">
-            <label for="tel">Telefoonnummer</label>
-            <input id="tel" name="tel" type="tel" autocomplete="tel" maxlength="30">
-          </div>
-          <div class="field">
-            <label for="mail">E-mailadres <span class="optional">(niet verplicht)</span></label>
-            <input id="mail" name="mail" type="email" autocomplete="email" maxlength="254">
-          </div>
-          <div class="field">
-            <label for="bericht">Waar kan ik je mee helpen?</label>
-            <textarea id="bericht" name="bericht" maxlength="2000"></textarea>
+
+          <div class="form-split">
+            <div class="field field--message">
+              <label for="bericht">7. Vertel ons alvast iets meer over de verhuis</label>
+              <p class="q-hint" id="bericht-hint">Zijn er specifieke wensen, moeilijkheden of zaken waar we rekening mee moeten houden?</p>
+              <textarea id="bericht" name="bericht" maxlength="2000" aria-describedby="bericht-hint"></textarea>
+            </div>
+
+            <fieldset class="q">
+              <legend>8. Jouw gegevens</legend>
+              <div class="field">
+                <label for="naam">Naam</label>
+                <input id="naam" name="naam" type="text" autocomplete="name" maxlength="100">
+              </div>
+              <div class="field">
+                <label for="tel">Telefoonnummer</label>
+                <input id="tel" name="tel" type="tel" autocomplete="tel" maxlength="30">
+              </div>
+              <div class="field">
+                <label for="mail">E-mailadres <span class="optional">(niet verplicht)</span></label>
+                <input id="mail" name="mail" type="email" autocomplete="email" maxlength="254">
+              </div>
+            </fieldset>
           </div>
 
           <!-- Honeypot in plaats van een CAPTCHA: onzichtbaar voor bezoekers en
@@ -342,9 +447,16 @@
             <input id="voorkeur" name="voorkeur" type="text" tabindex="-1" autocomplete="off">
           </div>
 
-          <button class="btn btn-primary" type="submit">Verstuur je bericht</button>
-          <p class="form-note">Je gegevens gebruik ik alleen om contact met je op te nemen. Lees hoe ik daarmee omga in de <a href="privacy.html">privacyverklaring</a>.</p>
+          <!-- Zichtbaar zodra het versturen mislukt. Doodlopen mag niet: wie
+               hier strandt moet meteen zien dat bellen ook kan. -->
+          <p class="form-error" role="alert">Het versturen is niet gelukt. Probeer het zo nog eens, of bel me gerust op <a href="tel:+32475527389">0475 52 73 89</a>.</p>
+
+          <div class="form-submit">
+            <button class="btn btn-primary" type="submit">Verstuur je bericht</button>
+            <p class="form-note">Je gegevens gebruik ik alleen om contact met je op te nemen. Lees hoe ik daarmee omga in de <a href="privacy.html">privacyverklaring</a>.</p>
+          </div>
         </div>
+
         <div class="form-done" role="status">
           <h3>Bericht verstuurd</h3>
           <p>Dank je wel. Ik neem binnen twee werkdagen contact met je op.</p>
@@ -371,8 +483,11 @@
          economisch recht (boek VI en XII): een bezoeker moet weten met wie hij
          zakendoet en hoe hij die snel bereikt. Zie SECURITY.md par. 4. -->
     <address class="foot-legal">
-      <span class="todo">NOG IN TE VULLEN: maatschappelijke benaming, rechtsvorm, vestigingsadres, ondernemingsnummer (BE 0xxx.xxx.xxx) en telefoonnummer</span>
+      <span>WelkomThuis &mdash; Kato Vermeulen</span>
+      <span>Heirbaan 29, 2640 Mortsel</span>
+      <span>Telefoon: <a href="tel:+32475527389">0475 52 73 89</a></span>
       <span>E-mail: <a href="mailto:welkomthuis@outlook.be">welkomthuis@outlook.be</a></span>
+      <span>BTW-nummer: BE 1041.407.143</span>
     </address>
 
     <p class="foot-note">Demo-website — nog niet klaar voor publicatie. Zie <code>README.md</code>.</p>

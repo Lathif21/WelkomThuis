@@ -51,15 +51,12 @@ _headers              security headers (Netlify / Cloudflare Pages)
 SECURITY.md           injection prevention, CSP, form and GDPR notes
 ```
 
-Two conventions worth knowing before you edit:
+One convention worth knowing before you edit:
 
 - **Form control `id`s carry a `q-` prefix** (`q-voor-wie`, `q-timing`) so they
   cannot collide with the section anchors the nav links to. A duplicate `id`
   makes `getElementById` silently return the wrong element, with no error.
   The `name` attributes have no prefix — those are the contract with the endpoint.
-- **The two plattegrond SVGs have different viewBoxes** (320 and 240 wide) but are
-  shown at the same width. Room labels in the second must stay at 0.75 of the
-  first to look the same size. Change one font-size, change the other.
 
 No framework and no bundler, on purpose: Kato has to be able to get this changed
 years from now, possibly by a different developer. Plain HTML is the most
@@ -77,8 +74,9 @@ re-read `SECURITY.md` first: content stops being trusted at that moment.)
 python3 dev-server.py          # http://127.0.0.1:8000
 ```
 
-Serves the site and catches `POST /api/contact`, so the form can be filled in
-and submitted for real without deploying. Submissions are written to
+Serves the site and catches the form's POST on every path Netlify accepts it
+on (`/`, `/bedankt`), so the form can be filled in and submitted for real
+without deploying. Submissions are written to
 `dev-inzendingen/` (git-ignored) and printed to the terminal; no email is sent.
 
 `python3 -m http.server 8000` still works if you only want the static pages, but
@@ -125,11 +123,8 @@ Derived from the client brief; where they disagree, the brief wins.
   set to Nederlands (België).
 - No euphemisms for ageing, no exclamation marks, no design jargon. Be concrete —
   *"de fauteuil bij het raam"*, not *"uw dierbare bezittingen"*.
-- **Keep the boekenkast that doesn't fit.** The honesty is what makes the rest
-  credible.
-
-Plattegrond copy lives in the `messages` object in `site.js` as `{lead, rest}`
-pairs of plain text — no HTML tags in those strings. See `SECURITY.md`.
+- **Say plainly what will not work.** Naming the limits — what will not fit, what
+  we do not do — is what makes the rest credible.
 
 ## Deploying
 

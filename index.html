@@ -47,75 +47,14 @@
 <main id="main">
 
   <section class="hero" id="top">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow rise d1">Verhuisbegeleiding &amp; interieur</span>
-        <h1 class="rise d1">Niet alleen<br>verhuizen, maar<br>opnieuw thuiskomen.</h1>
-        <p class="hero-lead rise d2">WelkomThuis begeleidt het volledige traject wanneer je van een grote, vertrouwde woning naar een kleinere woning, appartement of serviceflat verhuist. Van bepalen wat meegaat tot het volledig inrichten van je nieuwe woning, zodat die opnieuw als een warme, vertrouwde thuis aanvoelt.</p>
-        <div class="btn-row rise d3">
-          <a class="btn btn-primary" href="#contact">Plan een vrijblijvend telefoongesprek</a>
-        </div>
-        <p class="hero-note rise d3">Een eerste telefoongesprek is gratis en vrijblijvend.</p>
+    <div class="wrap hero-inner">
+      <span class="eyebrow rise d1">Verhuisbegeleiding &amp; interieur</span>
+      <h1 class="rise d1">Niet alleen verhuizen, maar opnieuw thuiskomen.</h1>
+      <p class="hero-lead rise d2">WelkomThuis begeleidt het volledige traject wanneer je van een grote, vertrouwde woning naar een kleinere woning, appartement of serviceflat verhuist. Van bepalen wat meegaat tot het volledig inrichten van je nieuwe woning, zodat die opnieuw als een warme, vertrouwde thuis aanvoelt.</p>
+      <div class="btn-row rise d3">
+        <a class="btn btn-primary" href="#contact">Plan een vrijblijvend telefoongesprek</a>
       </div>
-
-      <div class="plans rise d2">
-        <div class="plans__pair">
-          <div>
-            <p class="plan__cap">Je huidige woning</p>
-            <svg viewBox="0 0 320 260" role="img" aria-label="Plattegrond van de huidige, grotere woning met genummerde meubels">
-              <path class="wall" d="M20 20h280v220H20Z"/>
-              <path class="inner" d="M190 20v120M20 140h280M140 140v100M210 140v100"/>
-              <path class="window" d="M20 55v40M20 105v25M110 20h50M300 60v45"/>
-              <text class="room" x="32" y="38">Woonkamer</text>
-              <text class="room" x="202" y="38">Eetkamer</text>
-              <text class="room" x="32" y="158">Slaapkamer</text>
-              <text class="room" x="152" y="158">Hal</text>
-              <text class="room" x="222" y="158">Keuken</text>
-              <g class="mark" data-obj="1"><circle cx="52" cy="72" r="11"/><text x="52" y="72">1</text></g>
-              <g class="mark" data-obj="2"><circle cx="155" cy="52" r="11"/><text x="155" y="52">2</text></g>
-              <g class="mark" data-obj="3"><circle cx="175" cy="205" r="11"/><text x="175" y="205">3</text></g>
-              <g class="mark" data-obj="4"><circle cx="245" cy="82" r="11"/><text x="245" y="82">4</text></g>
-              <g class="mark" data-obj="5"><circle cx="95" cy="62" r="11"/><text x="95" y="62">5</text></g>
-              <g class="mark" data-obj="6"><circle cx="48" cy="122" r="11"/><text x="48" y="122">6</text></g>
-            </svg>
-          </div>
-
-          <div class="plans__arrow" aria-hidden="true">
-            <svg width="34" height="16" viewBox="0 0 34 16"><path d="M0 8h30M23 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-
-          <div>
-            <p class="plan__cap">Je nieuwe woning</p>
-            <svg viewBox="0 0 240 200" role="img" aria-label="Plattegrond van de nieuwe, kleinere woning met dezelfde genummerde meubels">
-              <path class="wall" d="M20 20h200v160H20Z"/>
-              <path class="inner" d="M150 20v160M150 108h70"/>
-              <path class="window" d="M20 48v42M62 20h46M220 44v38"/>
-              <!-- op twee regels: op één regel loopt dit label tot tegen de
-                   meubelmarkers, en SVG-tekst breekt niet vanzelf af -->
-              <text class="room" x="30" y="34"><tspan x="30">Woon- en</tspan><tspan x="30" dy="1.15em">eetkamer</tspan></text>
-              <text class="room" x="158" y="36">Slaapkamer</text>
-              <text class="room" x="158" y="124">Badkamer</text>
-              <g class="mark" data-obj="1"><circle cx="44" cy="66" r="11"/><text x="44" y="66">1</text></g>
-              <g class="mark" data-obj="2"><circle cx="112" cy="52" r="11"/><text x="112" y="52">2</text></g>
-              <g class="mark" data-obj="3"><circle cx="134" cy="160" r="11"/><text x="134" y="160">3</text></g>
-              <g class="mark" data-obj="4"><circle cx="72" cy="132" r="11"/><text x="72" y="132">4</text></g>
-              <g class="mark" data-obj="5"><circle cx="86" cy="38" r="11"/><text x="86" y="38">5</text></g>
-              <g class="mark" data-obj="6" data-absent="true"><circle cx="196" cy="160" r="11"/><text x="196" y="160">6</text></g>
-            </svg>
-          </div>
-        </div>
-
-        <p class="plans__note" id="planNote" role="status">Bestaande meubels koppelen aan de nieuwe woning. Kies hieronder een meubelstuk om te zien waar het terechtkomt.</p>
-
-        <div class="picker" role="group" aria-label="Kies een meubelstuk">
-          <button class="chip" type="button" data-obj="1" aria-pressed="false"><span class="chip__n">1</span>Fauteuil</button>
-          <button class="chip" type="button" data-obj="2" aria-pressed="false"><span class="chip__n">2</span>Dressoir</button>
-          <button class="chip" type="button" data-obj="3" aria-pressed="false"><span class="chip__n">3</span>Staande klok</button>
-          <button class="chip" type="button" data-obj="4" aria-pressed="false"><span class="chip__n">4</span>Eettafel</button>
-          <button class="chip" type="button" data-obj="5" aria-pressed="false"><span class="chip__n">5</span>Schilderij</button>
-          <button class="chip" type="button" data-obj="6" aria-pressed="false"><span class="chip__n">6</span>Boekenkast</button>
-        </div>
-      </div>
+      <p class="hero-note rise d3">Een eerste telefoongesprek is gratis en vrijblijvend.</p>
     </div>
   </section>
 

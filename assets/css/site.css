@@ -230,7 +230,9 @@ a:hover{color:var(--pine-deep)}
 .contact-list{margin:0;padding:0;display:grid;gap:1.5rem}
 .contact-list dt{font-size:.88rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .contact-list dd{margin:.25rem 0 0}
-.c-value{font-family:var(--display);font-size:clamp(1.5rem,2.6vw,1.9rem);color:var(--pine-deep);display:block;line-height:1.25}
+/* min 1.15rem: 'welkomthuis@outlook.be' is 22 tekens en liep op 320px
+   buiten de kaart op 1.5rem */
+.c-value{font-family:var(--display);font-size:clamp(1.15rem,2.6vw,1.9rem);overflow-wrap:anywhere;color:var(--pine-deep);display:block;line-height:1.25}
 /* Het telefoonnummer is de belangrijkste knop van de site. Op 1,5rem zou het
    raakvlak maar 30px hoog worden; 48px is wat we aanhouden voor een onvaste
    hand. Zie README, "48 x 48 px touch targets". */
@@ -498,6 +500,18 @@ a.c-value:hover{text-decoration:underline}
    invoervelden zijn niet te scannen. */
 .band--midden .band-head{margin-inline:auto;text-align:center}
 .band--midden .afspraak{margin-inline:auto}
+
+/* ---------- direct contact onder stap 2 ---------- */
+.direct{
+  max-width:55rem;margin:1.5rem auto 0;padding:1.35rem clamp(1.25rem,3vw,2rem);
+  background:var(--haze);border:1px solid var(--line);border-radius:4px;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 3rem;
+}
+.direct dt{
+  font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.direct dd{margin:.15rem 0 0}
 
 /* ---------- footer ---------- */
 .site-foot{background:var(--pine-deep);color:#C3D3C6;padding-block:3rem;font-size:1.05rem}

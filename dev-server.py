@@ -42,10 +42,12 @@ TOEGESTAAN = {
     "slaapkamers": {"studio", "1", "2", "3", "4-of-meer"},
     "vanwaar": {"huis", "appartement", "serviceflat-assistentiewoning", "andere"},
     "timing": {"binnen-1-maand", "1-3-maanden", "3-6-maanden", "later", "onbekend"},
+    "dagdeel": {"voormiddag", "namiddag", "vroege-avond"},
 }
 
 # Vrije tekst: alleen een lengtegrens, gelijk aan de maxlength in de HTML.
-MAX = {"voor-wie-anders": 100, "bericht": 2000, "naam": 100, "tel": 30, "mail": 254}
+MAX = {"naam": 100, "tel": 30, "mail": 254, "datum": 10, "richtprijs": 500,
+       "voor-wie-anders": 100, "bericht": 2000}
 
 LABEL = {
     "voor-wie": "1. Voor wie is de verhuis",
@@ -56,10 +58,14 @@ LABEL = {
     "vanwaar": "5. Vanwaar wordt verhuisd",
     "timing": "6. Wanneer gepland",
     "bericht": "7. Bericht",
-    "naam": "8. Naam",
-    "tel": "8. Telefoonnummer",
-    "mail": "8. E-mailadres",
+    "naam": "Naam",
+    "tel": "Telefoonnummer",
+    "mail": "E-mailadres",
+    "datum": "Voorkeursdag",
+    "dagdeel": "Voorkeursmoment",
+    "richtprijs": "Richtprijs uit de calculator",
 }
+
 
 
 def verwerk(velden):

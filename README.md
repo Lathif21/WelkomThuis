@@ -39,7 +39,8 @@ any change to the form needs a redeploy before it takes effect.
 ## Structure
 
 ```
-index.html            single page, semantic sections
+index.html            single page; contact is split in two steps —
+                      #prijs (the estimator) and #contact (scheduling a call)
 dev-server.py         local dev server; also catches the contact form (not deployed)
 bedankt.html          success page for visitors without JavaScript (noindex)
 privacy.html          privacy notice; linked from the footer and beside the form
@@ -51,12 +52,25 @@ _headers              security headers (Netlify / Cloudflare Pages)
 SECURITY.md           injection prevention, CSP, form and GDPR notes
 ```
 
-One convention worth knowing before you edit:
+Conventions worth knowing before you edit:
 
 - **Form control `id`s carry a `q-` prefix** (`q-voor-wie`, `q-timing`) so they
   cannot collide with the section anchors the nav links to. A duplicate `id`
   makes `getElementById` silently return the wrong element, with no error.
   The `name` attributes have no prefix — those are the contract with the endpoint.
+- **Calculator tariffs live in `index.html`**, as `data-prijs` on each checkbox
+  with the same amount in the visible label next to it — change both. Phase 1 is
+  the exception: those rates sit in the `BASIS` table in `site.js`, keyed on the
+  bedroom count. The rates for a studio and for four-plus bedrooms are not in
+  the client's price list; a studio is charged as one bedroom and four-plus is
+  treated as a floor. Both need Kato's sign-off.
+- **The bedroom question is asked once, in two places.** The estimator needs it
+  to calculate; intake question 4 asks the same thing. They are kept in sync
+  both ways (`site.js`), so whichever a visitor fills in, the other follows and
+  the answer is still submitted. Only question 4 carries a `name`.
+- **Grid tracks use `minmax(min(Xrem,100%),1fr)`, never `minmax(Xrem,1fr)`.**
+  A track cannot be narrower than its minimum, so the plain form overflows its
+  container on a 320px screen instead of wrapping. The `min()` lets it shrink.
 
 No framework and no bundler, on purpose: Kato has to be able to get this changed
 years from now, possibly by a different developer. Plain HTML is the most

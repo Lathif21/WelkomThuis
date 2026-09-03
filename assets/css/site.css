@@ -181,7 +181,12 @@ a:hover{color:var(--pine-deep)}
 .band-head p{color:var(--muted);margin-top:1rem;font-size:1.2rem}
 
 /* ---------- services ---------- */
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+/* auto-fit in plaats van een harde sprong van drie naar één: op een tablet
+   is er ruimte voor twee, en die tussenstap scheelde een half scherm scrollen */
+/* minmax(min(Xrem,100%),1fr) en niet minmax(Xrem,1fr): een track kan nooit
+   smaller worden dan zijn minimum, dus op een smal scherm loopt zo'n raster
+   buiten zijn container. De min() laat de kolom wel meekrimpen. */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(18rem,100%),1fr));gap:1.5rem}
 .card{
   background:var(--paper);border:1px solid var(--line);border-radius:4px;
   padding:2.25rem 2rem;display:flex;flex-direction:column;gap:1rem;
@@ -221,11 +226,6 @@ a:hover{color:var(--pine-deep)}
 /* De kop en de bereikbaarheid staan bóven het formulier, niet ernaast. Het
    formulier krijgt daardoor de volle breedte en kan in twee kolommen, wat de
    sectie een stuk korter maakt dan één smalle kolom van veertien velden. */
-.contact-head{
-  display:grid;grid-template-columns:1.35fr .65fr;
-  gap:clamp(2rem,4vw,3.5rem);align-items:start;
-  margin-bottom:clamp(2.5rem,5vw,3.5rem);
-}
 .contact-intro{margin-top:1.25rem;color:var(--muted)}
 .contact-list{margin:0;padding:0;display:grid;gap:1.5rem}
 .contact-list dt{font-size:.88rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
@@ -262,7 +262,8 @@ a.c-value:hover{text-decoration:underline}
    aanhouden, ook voor wie met een onvaste hand tikt.
    Het eigen pijltje is een data-URI in deze stylesheet; CSP staat dat toe
    via img-src 'self' data:. Zie SECURITY.md par. 2. */
-.field select{
+.field select,
+.calc__sub select{
   width:100%;font-family:var(--body);font-size:1.15rem;color:var(--ink);
   padding:.95rem 3.25rem .95rem 1rem;min-height:58px;line-height:1.4;
   background-color:var(--paper);
@@ -279,21 +280,9 @@ a.c-value:hover{text-decoration:underline}
    staat er een keuzelijst zonder pijltje. Daar geven we het besturingssysteem
    zijn eigen weergave terug. */
 @media (forced-colors: active){
-  .field select{appearance:auto;-webkit-appearance:auto;background-image:none;padding-right:1rem}
+  .field select,
+  .calc__sub select{appearance:auto;-webkit-appearance:auto;background-image:none;padding-right:1rem}
 }
-
-/* Vraag 1 t/m 6 naast elkaar. minmax(21rem) houdt het op twee kolommen bij
-   deze wrap-breedte: bij drie zou de langste keuze ("Serviceflat of
-   assistentiewoning") in de dichtgeklapte lijst afgekapt worden. */
-.q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(21rem,1fr));gap:1.5rem}
-.q-grid .field{margin-bottom:0}
-
-/* Bericht en contactgegevens delen een rij; het tekstvak rekt mee met de
-   hoogte van de drie velden ernaast, zodat er geen gat overblijft. */
-.form-split{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 2rem;align-items:stretch;margin-top:1.5rem}
-.form-split>.q{margin-bottom:0}
-.field--message{display:flex;flex-direction:column;margin-bottom:0}
-.field--message textarea{flex:1 1 auto;min-height:11rem}
 
 /* Alleen zichtbaar als het versturen mislukt is. Rood is hier niet nodig:
    de melding staat vlak boven de knop en zegt zelf wat er aan de hand is
@@ -309,14 +298,14 @@ a.c-value:hover{text-decoration:underline}
   display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;
   margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--line);
 }
-.form-submit .btn{flex:none;min-width:15rem}
+/* flex:none betekent ook niet krimpen; met een vast minimum van 15rem
+   stak de knop op 320px buiten de kaart. min() laat hem meekrimpen. */
+.form-submit .btn{flex:none;min-width:min(15rem,100%)}
 .form-submit .form-note{margin:0;flex:1 1 20rem}
 
-.field-extra{margin-top:1rem}
 /* [hidden] is de standaard, maar een display-regel elders wint daar zo van;
    deze regel houdt verborgen ook echt verborgen. */
 [hidden]{display:none}
-.field-extra label{font-weight:400;color:var(--muted)}
 
 .form-note{font-size:1rem;color:var(--muted);margin-top:1.25rem}
 /* Honeypot: uit beeld, maar niet display:none — dat slaan veel bots over.
@@ -343,6 +332,173 @@ a.c-value:hover{text-decoration:underline}
 .legal-date{font-size:1rem;font-style:italic}
 .legal-back{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line)}
 
+/* ---------- prijscalculator ---------- */
+.calc{
+  padding:clamp(1.5rem,3.5vw,2.5rem);
+  background:var(--paper);border:1px solid var(--line);border-radius:4px;
+}
+
+.calc__fase{margin:0;padding:1.4rem 0 0;border:0;border-top:1px solid var(--line);min-width:0}
+.calc__fase:first-of-type{border-top:0;padding-top:0}
+.calc__fase>legend,.calc__kop h3{
+  padding:0;margin:0 0 .6rem;font-family:var(--body);
+  font-size:.82rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--pine);
+}
+.calc__kop{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem .9rem}
+.calc__vast{
+  font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--haze);color:var(--pine-deep);padding:.2rem .5rem;border-radius:3px;
+  margin-bottom:.6rem;
+}
+.calc__uitleg{margin:0 0 .8rem;font-size:1.02rem;color:var(--muted)}
+.calc__basis{
+  margin:0;padding:.75rem 1rem;background:var(--white);
+  border:1px solid var(--line);border-radius:3px;font-size:1.05rem;
+}
+.calc__basis strong{color:var(--pine-deep)}
+
+/* Een rij is helemaal aanklikbaar, niet alleen het vakje. */
+.calc__optie{
+  display:flex;align-items:center;gap:.85rem;
+  min-height:56px;padding:.7rem .9rem;margin-bottom:.5rem;
+  background:var(--white);border:2px solid var(--line);border-radius:3px;
+  cursor:pointer;transition:border-color .18s ease,background .18s ease;
+}
+.calc__optie:last-child{margin-bottom:0}
+.calc__optie:hover{border-color:var(--pine)}
+.calc__optie input{width:24px;height:24px;flex:none;margin:0;accent-color:var(--pine)}
+.calc__naam{flex:1 1 auto;font-size:1.05rem;line-height:1.35}
+.calc__prijs{
+  flex:none;font-weight:600;color:var(--pine-deep);white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+/* het vinkje toont de keuze al; de rand is extra nadruk, nooit de enige */
+.calc__optie:has(input:checked){border-color:var(--pine);background:var(--haze)}
+.calc__optie:has(input:focus-visible){outline:3px solid var(--brass);outline-offset:3px}
+.calc__optie--sub{margin-left:1.75rem}
+
+.calc__sub{margin:0 0 .5rem;padding:.9rem 1rem;background:var(--white);
+  border:1px solid var(--line);border-radius:3px}
+.calc__sub label{display:block;font-size:1rem;color:var(--muted);margin-bottom:.5rem}
+
+/* uitkomst */
+.calc__uitkomst{
+  margin-top:1.75rem;padding:clamp(1.25rem,2.5vw,1.75rem);
+  background:var(--pine);color:#fff;border-radius:4px;
+}
+.calc__totaal-label{
+  margin:0;font-size:.78rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:#C3D3C6;
+}
+/* min 1.5rem: op 320px liep 'EUR 2.150 - EUR 2.400' anders buiten de kaart */
+.calc__totaal{
+  margin:.2rem 0 0;font-family:var(--display);font-size:clamp(1.5rem,4.4vw,2.6rem);
+  font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums;
+}
+/* een bedrag breekt nooit in zichzelf; tussen de twee bedragen mag het wel */
+.calc__bedrag{white-space:nowrap}
+.calc__open{display:block;font-family:var(--body);font-size:.95rem;font-weight:500;color:#C3D3C6;margin-top:.35rem}
+/* 'Nog te berekenen' is tekst, geen bedrag: kleiner en rustiger */
+.calc__totaal.is-leeg{font-size:clamp(1.35rem,3vw,1.7rem);color:#D8E4DA}
+.calc__verdeling{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(15rem,100%),1fr));
+  gap:1.25rem 2rem;margin-top:1.5rem;padding-top:1.35rem;
+  border-top:1px solid rgba(195,211,198,.3);
+}
+.calc__verdeling h4{
+  margin:0 0 .6rem;font-family:var(--body);color:#fff;
+  font-size:.78rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+}
+.calc__verdeling ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.calc__verdeling li{position:relative;padding-left:1.3rem;font-size:1rem;color:#E4EDE6;line-height:1.4}
+.calc__verdeling li::before{
+  content:"";position:absolute;left:0;top:.62em;width:.45rem;height:.25rem;
+  border-left:2px solid var(--brass);border-bottom:2px solid var(--brass);
+  transform:rotate(-45deg);
+}
+.calc__verdeling li.is-leeg{padding-left:0;color:#9DB2A2;font-style:italic}
+.calc__verdeling li.is-leeg::before{display:none}
+.calc__hint{
+  margin:.6rem 0 0;font-size:1.02rem;color:#D8E4DA;line-height:1.5;max-width:46ch;
+}
+.calc__hint a{color:#fff;text-underline-offset:.2em}
+.calc__uitkomst.is-berekend .calc__hint{display:none}
+.calc__voetnoot{margin:1.35rem 0 0;font-size:.98rem;color:#C3D3C6;line-height:1.55}
+
+@media (max-width:560px){
+  .calc__optie{flex-wrap:wrap}
+  .calc__prijs{width:100%;padding-left:calc(24px + .85rem)}
+}
+
+/* ---------- stap 2: gesprek inplannen ---------- */
+/* Twee kaarten onder elkaar, nooit naast elkaar: rekenen en contact opnemen
+   zijn losse beslissingen, en naast elkaar vragen ze allebei tegelijk om
+   aandacht. */
+/* Een formulier op volle wrapbreedte geeft invoervelden van een meter breed.
+   48rem is de leesbare maat: lang genoeg voor een e-mailadres, kort genoeg om
+   in één oogopslag te overzien. */
+.afspraak{
+  max-width:55rem;
+  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  padding:clamp(1.5rem,3.5vw,2.5rem);
+}
+.afspraak__velden{display:block}
+
+.wanneer{margin:0 0 1.5rem;padding:0;border:0;min-width:0}
+.wanneer>legend{
+  padding:0;margin-bottom:.75rem;font-family:var(--body);
+  font-size:1.05rem;font-weight:600;color:var(--ink);
+}
+/* twee smalle velden naast elkaar; dat blijft één vraag, geen twee */
+.wanneer__paar{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(13rem,100%),1fr));gap:0 1.25rem}
+.wanneer__paar .field:last-child{margin-bottom:1.5rem}
+
+/* ---------- ingeklapte intakevragen ---------- */
+/* <details> is native: werkt zonder JavaScript, en de velden erin worden
+   ook meeverstuurd als het blok dicht staat. */
+.meer{margin:.5rem 0 1.75rem;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.meer>summary{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;
+  min-height:56px;padding:.85rem 1.15rem;cursor:pointer;
+  font-size:1.08rem;font-weight:600;color:var(--pine-deep);
+  list-style:none;
+}
+.meer>summary::-webkit-details-marker{display:none}
+.meer>summary::before{
+  content:"";flex:none;width:.6rem;height:.6rem;margin-right:.15rem;
+  border-right:2.5px solid var(--pine);border-bottom:2.5px solid var(--pine);
+  transform:rotate(-45deg);transition:transform .18s ease;
+}
+.meer[open]>summary::before{transform:rotate(45deg)}
+.meer>summary:hover{background:var(--haze)}
+.meer>summary:focus-visible{outline:3px solid var(--brass);outline-offset:-3px}
+.meer__optioneel{
+  font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--haze);color:var(--muted);padding:.2rem .5rem;border-radius:3px;
+}
+.meer__inhoud{padding:.25rem 1.15rem 1.35rem;border-top:1px solid var(--line)}
+.meer__intro{margin:1rem 0 1.5rem;font-size:1.02rem;color:var(--muted);max-width:60ch}
+
+/* twee kolommen voor de korte vragen; minmax houdt de langste keuze leesbaar */
+/* hoogstens twee kolommen: bij drie wordt het een raster om doorheen te
+   zoeken in plaats van een lijst om door te lopen */
+.q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr));gap:0 1.5rem}
+/* De ene vraag past op één regel, de andere op twee. Zonder dit staan de
+   keuzelijsten in een rij op verschillende hoogtes en oogt het rommelig. */
+.q-grid .field{display:flex;flex-direction:column}
+.q-grid .field>select{margin-top:auto}
+.field-extra{margin-top:-.5rem}
+.field-extra label{font-weight:400;color:var(--muted)}
+.field-hint{margin:-.9rem 0 1.5rem;font-size:.98rem;color:var(--pine);font-style:italic}
+
+/* Stap 2 staat gecentreerd. Het is de afsluiting van de pagina, en een smal
+   formulier tegen de linkerrand met een lege rechterhelft oogt onaf. De
+   velden binnen de kaart blijven links uitgelijnd: gecentreerde labels en
+   invoervelden zijn niet te scannen. */
+.band--midden .band-head{margin-inline:auto;text-align:center}
+.band--midden .afspraak{margin-inline:auto}
+
 /* ---------- footer ---------- */
 .site-foot{background:var(--pine-deep);color:#C3D3C6;padding-block:3rem;font-size:1.05rem}
 .foot-inner{display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem;align-items:center;justify-content:space-between}
@@ -357,7 +513,6 @@ a.c-value:hover{text-decoration:underline}
 }
 .foot-note{margin:1.5rem 0 0;font-size:.95rem;color:#8FA694}
 .foot-note code{font-size:.95em}
-
 
 /* ---------- vergelijking: wat WelkomThuis anders maakt ---------- */
 .card--accent{background:var(--haze);border-color:var(--pine)}
@@ -376,7 +531,7 @@ a.c-value:hover{text-decoration:underline}
 .prose+.prose{margin-top:1.25rem}
 
 /* ---------- traject: drie fases ---------- */
-.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:start}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr));gap:1.5rem;align-items:start}
 .phase{
   background:var(--white);border:1px solid var(--line);border-radius:4px;
   padding:2rem 1.85rem 2.25rem;height:100%;
@@ -447,7 +602,8 @@ a.c-value:hover{text-decoration:underline}
    links, wat als een gat las; en de regels liepen door tot ver voorbij de
    60 tekens die je op 20px nog comfortabel volgt. */
 .origin{
-  max-width:60ch;margin-top:clamp(3.5rem,7vw,5rem);
+  /* max-width:60ch; */
+  margin-top:clamp(3.5rem,7vw,5rem);
   padding-top:clamp(2.5rem,5vw,3.5rem);border-top:1px solid var(--line);
 }
 .origin h2{font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:1.5rem}
@@ -461,7 +617,6 @@ a.c-value:hover{text-decoration:underline}
 }
 
 @media (max-width:960px){
-  .phases{grid-template-columns:1fr}
   .audience{grid-template-columns:1fr}
 }
 .prose-after{margin-top:clamp(2.5rem,5vw,3.5rem)}
@@ -476,9 +631,7 @@ a.c-value:hover{text-decoration:underline}
 
 /* ---------- responsive ---------- */
 @media (max-width:960px){
-  .about-grid,.contact-head{grid-template-columns:1fr}
-  .form-split{grid-template-columns:1fr}
-  .cards{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
 }
 @media (max-width:700px){
   body{font-size:1.18rem}
@@ -487,16 +640,16 @@ a.c-value:hover{text-decoration:underline}
   .btn{width:100%}
 }
 /* vanaf hier klapt het menu achter de burgerknop (425px, 320px, …) */
-@media (max-width:480px){
+/* Zes menu-items passen pas naast het merk vanaf ongeveer 1000px. Daaronder
+   klapt het menu achter de knop, anders wordt de plakkende kopbalk twee
+   regels hoog en eet die het halve scherm op een tablet. */
+@media (max-width:1000px){
   /* merk en knop blijven op één regel; het menu valt eronder uit */
   .head-inner{
     flex-wrap:nowrap;justify-content:space-between;text-align:left;
     gap:.75rem;padding-block:.85rem;
   }
   .brand{min-width:0}
-  .brand svg{width:38px;height:38px}
-  .brand-name{font-size:1.35rem}
-  .brand-sub{font-size:.7rem;letter-spacing:.12em}
   .nav-toggle{display:inline-flex}
 
   /* dichtgeklapt is de hoogte 0; open groeit hij naar zijn eigen hoogte */
@@ -516,6 +669,11 @@ a.c-value:hover{text-decoration:underline}
   .site-nav li{border-top:1px solid var(--line)}
   .site-nav li:first-child{border-top:0}
   .site-nav a{display:flex;align-items:center;min-height:56px;padding:.9rem .5rem;font-size:1.15rem}
+}
+@media (max-width:480px){
+  .brand svg{width:38px;height:38px}
+  .brand-name{font-size:1.35rem}
+  .brand-sub{font-size:.7rem;letter-spacing:.12em}
 }
 @media (max-width:360px){
   /* op de smalste schermen wijkt de ondertitel, zodat de knop naast het merk past */

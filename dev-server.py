@@ -39,7 +39,7 @@ TOEGESTAAN = {
     "naar-type": {"appartement", "serviceflat", "assistentiewoning", "andere"},
     "oppervlakte": {"tot-50", "50-70", "70-75", "75-80", "80-85", "85-90",
                     "90-95", "95-100", "meer-dan-100", "onbekend"},
-    "slaapkamers": {"studio", "1", "2", "3", "4-of-meer"},
+    "slaapkamers": {"studio", "1", "2", "3-of-meer"},
     "vanwaar": {"huis", "appartement", "serviceflat-assistentiewoning", "andere"},
     "timing": {"binnen-1-maand", "1-3-maanden", "3-6-maanden", "later", "onbekend"},
     "dagdeel": {"voormiddag", "namiddag", "vroege-avond"},

@@ -17,9 +17,12 @@ a lawyer.
 
 Before handover:
 
-- **A real photograph.** Kato is sending one herself. The current portrait is a
-  phone selfie taken in a car, and at 713 KB it is the heaviest thing on the
-  site; whatever replaces it should go out as a JPEG at ~800px, under 60 KB.
+- **A real photograph.** The portrait is now the original from `Website
+  draft.docx` (477x358, 40 KB) instead of an 867x648 upscale of it — Kato
+  spotted that the upscale looked AI-processed, and it was. It is still a phone
+  selfie taken in a car, so a proper photo would still be an improvement, and
+  there are no project photos at all. The source caps at 477px wide, so do not
+  enlarge it again; replace it.
 - **Have `privacy.html` read by someone qualified.** It describes what the site
   actually does, but a developer wrote it, not a lawyer. Point them at the
   transfer question in particular: Netlify and Postmark are both US companies,
@@ -61,10 +64,11 @@ Conventions worth knowing before you edit:
 - **Calculator tariffs live in `index.html`**, as `data-prijs` on each checkbox
   with the same amount in the visible label next to it — change both. Phase 1 is
   the exception: those rates sit in the `BASIS` table in `site.js`, keyed on the
-  bedroom count. The rates for a studio and for four-plus bedrooms are not in
-  the client's price list; a studio is charged as one bedroom and four-plus is
-  treated as a floor. Both need Kato's sign-off.
-- **The bedroom question is asked once, in two places.** The estimator needs it
+  room count. The list now stops at "3 (slaap)kamers of meer", on Kato's
+  instruction, so there is no open-ended top tier any more. A studio is still
+  not in her price list and is charged as one room — the one rate that needs
+  her sign-off.
+- **The room question is asked once, in two places.** The estimator needs it
   to calculate; intake question 4 asks the same thing. They are kept in sync
   both ways (`site.js`), so whichever a visitor fills in, the other follows and
   the answer is still submitted. Only question 4 carries a `name`.
@@ -75,8 +79,7 @@ Conventions worth knowing before you edit:
 No framework and no bundler, on purpose: Kato has to be able to get this changed
 years from now, possibly by a different developer. Plain HTML is the most
 portable thing that exists, there are no dependencies to patch, and the page is
-62 KB of markup, CSS and script plus 119 KB of fonts. The portrait is currently
-larger than all of that combined.
+about 70 KB of markup, CSS and script plus 119 KB of fonts and a 40 KB portrait.
 
 Revisit that when there's a real reason — a second page, a second language, or
 Kato editing content herself. Not before. (If content ever becomes editable,
@@ -127,9 +130,11 @@ it on their own device and say nothing.
 Derived from the client brief; where they disagree, the brief wins.
 
 - **WelkomThuis** — one word, capital W and T.
-- **"je", never "u"** — the brief's own choice, because half the readers are the
-  daughter organising this for her mother. If it ever changes, it changes
-  everywhere at once.
+- **"u", never "je"** — changed on Kato's instruction in September 2026, after
+  she supplied new copy written in the formal form. It changed everywhere at
+  once: index, privacy and bedankt. Watch the verbs when editing — Dutch drops
+  the -t in inversion with "je" ("lees je") but keeps it with "u" ("leest u"),
+  and first person never takes it ("ik bel u", not "ik belt u").
 - **"wij" for the service, "ik" for the person.** *"Wij begeleiden het volledige
   traject"* / *"Ik ben Kato Vermeulen."*
 - **Flemish, not NL Dutch:** serviceflat (not aanleunwoning), de verhuis (not de

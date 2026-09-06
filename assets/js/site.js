@@ -79,6 +79,76 @@
   }
 
   /* ---------------------------------------------------------------
+   * Verplichte velden
+   *
+   * Het formulier heeft geen novalidate meer, dus zonder JavaScript
+   * controleert de browser zelf en komt er geen lege inzending door.
+   * Draait deze code wel, dan vervangen we de zwevende browserballon door
+   * een regel tekst onder het veld zelf — die blijft staan, is groot genoeg
+   * om te lezen en wordt door een schermlezer voorgelezen.
+   * Zie README par. Accessibility: "errors as text beside the field".
+   * ------------------------------------------------------------- */
+  (function () {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+
+    var velden = Array.prototype.slice.call(form.querySelectorAll('[required]'));
+    if (!velden.length) return;
+
+    function melding(veld) {
+      var id = veld.id + '-fout';
+      var el = document.getElementById(id);
+      if (!el) {
+        el = document.createElement('span');
+        el.id = id;
+        el.className = 'veldfout';
+        el.setAttribute('role', 'alert');
+        veld.parentNode.appendChild(el);
+      }
+      return el;
+    }
+
+    function toonFout(veld, tekst) {
+      var el = melding(veld);
+      while (el.firstChild) el.removeChild(el.firstChild);
+      el.appendChild(document.createTextNode(tekst));
+      veld.classList.add('is-gemeld');
+      veld.setAttribute('aria-describedby', el.id);
+      veld.setAttribute('aria-invalid', 'true');
+    }
+
+    function wisFout(veld) {
+      var el = document.getElementById(veld.id + '-fout');
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+      veld.classList.remove('is-gemeld');
+      veld.removeAttribute('aria-describedby');
+      veld.removeAttribute('aria-invalid');
+    }
+
+    var TEKST = {
+      naam: 'Vul uw naam in, dan weten we hoe we u mogen aanspreken.',
+      tel: 'Vul uw telefoonnummer in, zodat we u kunnen terugbellen.'
+    };
+
+    velden.forEach(function (veld) {
+      /* invalid vuurt vlak voor de browserballon; die onderdrukken we */
+      veld.addEventListener('invalid', function (e) {
+        e.preventDefault();
+        toonFout(veld, TEKST[veld.id] || 'Dit veld is nog leeg.');
+      });
+      veld.addEventListener('input', function () {
+        if (veld.checkValidity()) wisFout(veld);
+      });
+    });
+
+    /* de eerste fout krijgt de cursor, anders zoekt iemand waar het misging */
+    form.addEventListener('submit', function () {
+      var eerste = form.querySelector('[aria-invalid="true"]');
+      if (eerste) eerste.focus();
+    });
+  })();
+
+  /* ---------------------------------------------------------------
    * Vervolgvelden bij een keuzelijst
    *
    * Een veld met data-show-for="<id van de select>" en
@@ -214,13 +284,16 @@
     var basisTekst = document.getElementById('calcBasis');
     var totaalEl = document.getElementById('calcTotaal');
     var wijLijst = document.getElementById('calcWij');
-    var zelfLijst = document.getElementById('calcZelf');
     var uitkomst = calc.querySelector('.calc__uitkomst');
     var samenvatting = document.getElementById('calcSamenvatting');
     var aantalVeld = document.getElementById('calcAantalVeld');
     var aantalKeuze = document.getElementById('calc-aantal');
     var aanwezigRij = document.getElementById('calcAanwezig');
     var meubels = document.getElementById('calc-meubels');
+    /* fase 3 is een radiogroep: de duurste optie omvat de goedkoopste */
+    var coord = Array.prototype.slice.call(
+      calc.querySelectorAll('input[name="calc-coordinatie"]')
+    );
     var nuts = document.getElementById('calc-nuts');
     if (!slaapkamers || !totaalEl || !basisTekst) return;
 
@@ -228,11 +301,10 @@
      * één slaapkamer. Vanaf vier is het maatwerk, dus daar is het bedrag
      * een ondergrens en geen vaste prijs. */
     var BASIS = {
-      'studio': { prijs: 1200, tekst: 'studio, gerekend als \u00e9\u00e9n slaapkamer' },
-      '1': { prijs: 1200, tekst: '1 slaapkamer' },
-      '2': { prijs: 1500, tekst: '2 slaapkamers' },
-      '3': { prijs: 2000, tekst: '3 slaapkamers' },
-      '4-of-meer': { prijs: 2000, tekst: '4 slaapkamers of meer', open: true }
+      'studio': { prijs: 1200, tekst: 'studio, gerekend als \u00e9\u00e9n kamer' },
+      '1': { prijs: 1200, tekst: '1 (slaap)kamer' },
+      '2': { prijs: 1500, tekst: '2 (slaap)kamers' },
+      '3-of-meer': { prijs: 2000, tekst: '3 (slaap)kamers of meer' }
     };
 
     var opties = Array.prototype.slice.call(
@@ -290,7 +362,6 @@
       var delen = [];
 
       leeg(wijLijst);
-      leeg(zelfLijst);
       leeg(basisTekst);
 
       if (basis) {
@@ -310,8 +381,8 @@
       opties.forEach(function (inp) {
         var rij = inp.parentNode;
         if (rij.hidden) return;
+        if (!inp.checked) return;
         var naam = naamVan(inp);
-        if (!inp.checked) { regel(zelfLijst, naam); return; }
 
         if (inp.getAttribute('data-op-maat')) {
           open = true;
@@ -332,8 +403,16 @@
         delen.push(naam + (aantal > 1 ? ' x' + aantal : '') + ': ' + euro(bedrag));
       });
 
+      coord.forEach(function (r) {
+        if (!r.checked || !r.getAttribute('data-prijs')) return;
+        var naam = naamVan(r);
+        var bedrag = parseInt(r.getAttribute('data-prijs'), 10) || 0;
+        totaal += bedrag;
+        regel(wijLijst, naam);
+        delen.push(naam + ': ' + euro(bedrag));
+      });
+
       if (!wijLijst.children.length) regel(wijLijst, 'Nog niets gekozen', 'is-leeg');
-      if (!zelfLijst.children.length) regel(zelfLijst, 'Niets \u2014 wij nemen alles over', 'is-leeg');
 
       leeg(totaalEl);
       if (!basis) {
@@ -375,6 +454,7 @@
     slaapkamers.addEventListener('change', reken);
     if (aantalKeuze) aantalKeuze.addEventListener('change', reken);
     opties.forEach(function (inp) { inp.addEventListener('change', reken); });
+    coord.forEach(function (r) { r.addEventListener('change', reken); });
     reken();
   })();
 

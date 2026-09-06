@@ -209,7 +209,10 @@ a:hover{color:var(--pine-deep)}
   aspect-ratio:4/5;max-width:340px;overflow:hidden;
   background:var(--haze);border:1px solid var(--line);border-radius:4px;
 }
-.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;display:block}
+/* De foto is liggend (477x358), het kader staand (4:5). Bij object-fit:cover
+   wordt de volle hoogte gebruikt en de breedte bijgesneden, dus alleen de
+   horizontale positie doet iets: 45% houdt het gezicht in het midden. */
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:45% center;display:block}
 
 /* ---------- quote ---------- */
 .quote{background:var(--pine);padding-block:clamp(4rem,7vw,6rem)}
@@ -243,6 +246,13 @@ a.c-value:hover{text-decoration:underline}
 .field{margin-bottom:1.5rem}
 .field label{display:block;font-size:1.05rem;font-weight:600;margin-bottom:.5rem;color:var(--ink)}
 .optional{font-weight:400;color:var(--muted)}
+/* Nooit alleen een sterretje: dat zegt niets als je het niet kent. */
+.verplicht{font-weight:400;color:var(--pine)}
+/* Foutmelding vlak bij het veld waar ze over gaat. */
+.veldfout{
+  display:block;margin:.4rem 0 0;font-size:1rem;font-weight:600;color:#8C3A2A;
+}
+.field input:invalid.is-gemeld,.field select:invalid.is-gemeld{border-color:#8C3A2A}
 .field input,.field textarea{
   width:100%;font-family:var(--body);font-size:1.15rem;color:var(--ink);
   padding:.95rem 1rem;min-height:58px;background:var(--paper);
@@ -340,12 +350,14 @@ a.c-value:hover{text-decoration:underline}
   background:var(--paper);border:1px solid var(--line);border-radius:4px;
 }
 
-.calc__fase{margin:0;padding:1.4rem 0 0;border:0;border-top:1px solid var(--line);min-width:0}
+/* Meer lucht boven elke fase: ze stonden tegen de tekst van het vorige blok
+   aan te plakken. En een zwaardere kop, zodat de fases opvallen. */
+.calc__fase{margin:0;padding:2.25rem 0 0;border:0;border-top:1px solid var(--line);min-width:0}
 .calc__fase:first-of-type{border-top:0;padding-top:0}
 .calc__fase>legend,.calc__kop h3{
-  padding:0;margin:0 0 .6rem;font-family:var(--body);
-  font-size:.82rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--pine);
+  padding:0;margin:0 0 .7rem;font-family:var(--display);
+  font-size:clamp(1.2rem,2.2vw,1.45rem);font-weight:600;letter-spacing:0;
+  text-transform:none;color:var(--pine-deep);
 }
 .calc__kop{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem .9rem}
 .calc__vast{
@@ -404,8 +416,7 @@ a.c-value:hover{text-decoration:underline}
 /* 'Nog te berekenen' is tekst, geen bedrag: kleiner en rustiger */
 .calc__totaal.is-leeg{font-size:clamp(1.35rem,3vw,1.7rem);color:#D8E4DA}
 .calc__verdeling{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(15rem,100%),1fr));
-  gap:1.25rem 2rem;margin-top:1.5rem;padding-top:1.35rem;
+  margin-top:1.5rem;padding-top:1.35rem;
   border-top:1px solid rgba(195,211,198,.3);
 }
 .calc__verdeling h4{
@@ -529,14 +540,17 @@ a.c-value:hover{text-decoration:underline}
 .foot-note code{font-size:.95em}
 
 /* ---------- vergelijking: wat WelkomThuis anders maakt ---------- */
-.card--accent{background:var(--haze);border-color:var(--pine)}
-.card--accent h3{color:var(--pine-deep)}
-.card--accent p{color:var(--ink)}
+/* Dit blok is het antwoord op de twee ernaast, dus mag het er duidelijk
+   uitspringen: volvlak pine in plaats van een lichte tint. */
+.card--accent{background:var(--pine);border-color:var(--pine);color:#fff}
+.card--accent h3{color:#fff}
+.card--accent p{color:#E4EDE6}
+.card--accent svg{color:var(--brass)}
 .card__tag{
   font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
   color:var(--muted);
 }
-.card--accent .card__tag{color:var(--pine)}
+.card--accent .card__tag{color:var(--brass)}
 /* de tag hoort bij de kop eronder, dus die twee staan dichter bij elkaar */
 .card__tag+h3{margin-top:-.55rem}
 

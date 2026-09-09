@@ -54,15 +54,33 @@
 }
 
 :root{
-  --paper:#F2F4F0;
+  /* Warme neutralen op een onveranderd merkgroen. De oude neutralen hadden
+     een koele grijsgroene inslag (#F2F4F0, #5A6960, #CBD4C9); samen lazen die
+     klinisch, en dat is de verkeerde toon voor iemand die zijn huis achterlaat.
+     --pine en --pine-deep blijven exact gelijk: het logo staat hard-coded in
+     index.html, privacy.html, bedankt.html en favicon.svg. */
+  --paper:#F5F2EC;
   --white:#FFFFFF;
-  --haze:#E3E8E1;
+  --haze:#EBE5D8;
   --pine:#2F4A3C;
   --pine-deep:#22382D;
-  --ink:#1C2620;
-  --muted:#5A6960;
-  --brass:#B08A3E;
-  --line:#CBD4C9;
+  --ink:#211E19;
+  /* --muted is de kleur van bijna elke alinea (.card p, .audience p, .prose p,
+     .band-head p). Op #5A6960 haalde die 5,24:1 tegen 7:1 uit README.md — de
+     eis die er voor deze doelgroep het meest toe doet. Nu 8,38:1 op --paper,
+     9,36:1 op wit en 7,46:1 op --haze; die laatste is de krapste en bepaalt
+     dus hoe donker deze kleur minstens moet zijn. */
+  --muted:#4B463D;
+  /* Messing in twee sterktes. Eén waarde kan niet tegelijk 3:1 halen op een
+     lichte ondergrond en 4,5:1 op het donkergroene blok; --brass-licht is er
+     voor tekst en iconen óp pine (.card--accent). */
+  --brass:#9A7430;
+  --brass-licht:#D4AC5C;
+  /* --line is de decoratieve haarlijn, --rand de omtrek van een invulveld of
+     knop. WCAG 1.4.11 vraagt 3:1 voor die laatste; op #CBD4C9 was dat 1,37:1,
+     waardoor je op een klein scherm nauwelijks zag waar een veld begon. */
+  --line:#C9C0AC;
+  --rand:#8E8674;
 
   --display:"Faustina",Georgia,serif;
   --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -86,7 +104,14 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-h1,h2,h3{font-family:var(--display);color:var(--pine-deep);line-height:1.15;margin:0;font-weight:600}
+/* Nederlandse samenstellingen worden lang — "binnenhuisarchitect" is 331px
+   breed in een kolom van 265px — en een woord dat niet past duwt niet alleen
+   zichzelf, maar de hele pagina breder dan het scherm. Op 320px liep de
+   pagina daardoor 46px over en kon je zijwaarts scrollen. Afbreken op
+   lettergrepen mag: het document staat op lang="nl-BE", dus de browser
+   gebruikt het Nederlandse woordafbreekpatroon. break-word is de vangnet
+   voor browsers zonder dat patroon. */
+h1,h2,h3{font-family:var(--display);color:var(--pine-deep);line-height:1.15;margin:0;font-weight:600;overflow-wrap:break-word;hyphens:auto}
 h1{font-size:clamp(2.7rem,6vw,4.5rem);letter-spacing:-.01em}
 h2{font-size:clamp(2rem,4vw,2.9rem);letter-spacing:-.005em}
 h3{font-size:clamp(1.4rem,2.2vw,1.7rem)}
@@ -121,7 +146,7 @@ a:hover{color:var(--pine-deep)}
 }
 .brand{display:flex;align-items:center;gap:.85rem;text-decoration:none;color:inherit}
 .brand svg{width:44px;height:44px;flex:none}
-.brand-name{font-family:var(--display);font-size:1.6rem;font-weight:600;color:var(--pine-deep);line-height:1.1;display:block}
+.brand-name{font-family:var(--display);font-size:1.6rem;font-weight:600;color:var(--pine-deep);line-height:1.1;display:block;overflow-wrap:break-word}
 .brand-sub{display:block;font-family:var(--body);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
 
 .site-nav ul{display:flex;flex-wrap:wrap;gap:.25rem;list-style:none;margin:0;padding:0}
@@ -135,7 +160,7 @@ a:hover{color:var(--pine-deep)}
 .nav-toggle{
   display:none;align-items:center;justify-content:center;
   width:56px;height:56px;flex:none;padding:0;cursor:pointer;
-  background:var(--white);border:2px solid var(--line);border-radius:3px;
+  background:var(--white);border:2px solid var(--rand);border-radius:3px;
   transition:background .18s ease,border-color .18s ease;
 }
 .nav-toggle:hover{border-color:var(--pine);background:var(--haze)}
@@ -256,7 +281,7 @@ a.c-value:hover{text-decoration:underline}
 .field input,.field textarea{
   width:100%;font-family:var(--body);font-size:1.15rem;color:var(--ink);
   padding:.95rem 1rem;min-height:58px;background:var(--paper);
-  border:2px solid var(--line);border-radius:3px;
+  border:2px solid var(--rand);border-radius:3px;
 }
 .field textarea{min-height:150px;resize:vertical;line-height:1.6}
 .field input:focus,.field textarea:focus{border-color:var(--pine);background:#fff}
@@ -279,7 +304,7 @@ a.c-value:hover{text-decoration:underline}
   width:100%;font-family:var(--body);font-size:1.15rem;color:var(--ink);
   padding:.95rem 3.25rem .95rem 1rem;min-height:58px;line-height:1.4;
   background-color:var(--paper);
-  border:2px solid var(--line);border-radius:3px;cursor:pointer;
+  border:2px solid var(--rand);border-radius:3px;cursor:pointer;
   appearance:none;-webkit-appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%232F4A3C'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;
@@ -350,10 +375,21 @@ a.c-value:hover{text-decoration:underline}
   background:var(--paper);border:1px solid var(--line);border-radius:4px;
 }
 
-/* Meer lucht boven elke fase: ze stonden tegen de tekst van het vorige blok
-   aan te plakken. En een zwaardere kop, zodat de fases opvallen. */
+/* Elke fase krijgt een streep boven zijn titel, en overal dezelfde ruimte
+   eronder, zodat de witruimte optisch bij de vólgende titel hoort.
+
+   Hier stond eerst een uitzondering op :first-of-type, en die matchte twee
+   elementen in plaats van één: fase 1 is een <div> en fase 2 de eerste
+   <fieldset>, dus "eerste van zijn soort" gold voor beide. Ze verloren allebei
+   hun streep én hun ruimte erboven, waardoor de titel van fase 2 tegen de
+   inhoud van fase 1 plakte. Dat waren de twee klachten van Kato.
+
+   :first-child raakt wél alleen fase 1. Die houdt geen eigen streep: de
+   bovenrand van het kader staat er al, op nagenoeg dezelfde afstand van de
+   titel (2,5rem kaderpadding tegen 2,25rem hier), en een tweede lijn een
+   centimeter daaronder leest als een fout. */
 .calc__fase{margin:0;padding:2.25rem 0 0;border:0;border-top:1px solid var(--line);min-width:0}
-.calc__fase:first-of-type{border-top:0;padding-top:0}
+.calc__fase:first-child{border-top:0;padding-top:0}
 .calc__fase>legend,.calc__kop h3{
   padding:0;margin:0 0 .7rem;font-family:var(--display);
   font-size:clamp(1.2rem,2.2vw,1.45rem);font-weight:600;letter-spacing:0;
@@ -376,7 +412,7 @@ a.c-value:hover{text-decoration:underline}
 .calc__optie{
   display:flex;align-items:center;gap:.85rem;
   min-height:56px;padding:.7rem .9rem;margin-bottom:.5rem;
-  background:var(--white);border:2px solid var(--line);border-radius:3px;
+  background:var(--white);border:2px solid var(--rand);border-radius:3px;
   cursor:pointer;transition:border-color .18s ease,background .18s ease;
 }
 .calc__optie:last-child{margin-bottom:0}
@@ -430,7 +466,7 @@ a.c-value:hover{text-decoration:underline}
   border-left:2px solid var(--brass);border-bottom:2px solid var(--brass);
   transform:rotate(-45deg);
 }
-.calc__verdeling li.is-leeg{padding-left:0;color:#9DB2A2;font-style:italic}
+.calc__verdeling li.is-leeg{padding-left:0;color:#ABBFAF;font-style:italic}
 .calc__verdeling li.is-leeg::before{display:none}
 .calc__hint{
   margin:.6rem 0 0;font-size:1.02rem;color:#D8E4DA;line-height:1.5;max-width:46ch;
@@ -545,12 +581,12 @@ a.c-value:hover{text-decoration:underline}
 .card--accent{background:var(--pine);border-color:var(--pine);color:#fff}
 .card--accent h3{color:#fff}
 .card--accent p{color:#E4EDE6}
-.card--accent svg{color:var(--brass)}
+.card--accent svg{color:var(--brass-licht)}
 .card__tag{
   font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
   color:var(--muted);
 }
-.card--accent .card__tag{color:var(--brass)}
+.card--accent .card__tag{color:var(--brass-licht)}
 /* de tag hoort bij de kop eronder, dus die twee staan dichter bij elkaar */
 .card__tag+h3{margin-top:-.55rem}
 
@@ -590,7 +626,34 @@ a.c-value:hover{text-decoration:underline}
 }
 
 /* ---------- voor wie ---------- */
-.audience{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+/* Eén kolom zolang er geen foto naast staat, twee zodra die er is. Hier stond
+   een vaste 1.1fr .9fr, maar het kader in de rechterkolom is er op Kato's vraag
+   uit gehaald; die 0.9fr bleef daarna leeg staan, en dát is de witruimte
+   rechts van de tekst. auto-fit laat een kolom zonder inhoud verdwijnen. */
+.audience{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(20rem,100%),1fr));
+  gap:clamp(2rem,5vw,4rem);align-items:start;justify-items:center;
+}
+.audience>*{width:100%;max-width:44rem}
+.audience p{max-width:38rem}
+
+/* Illustratie naast "Voor wie". Met opzet een lijntekening en geen foto: een
+   verzonnen woonkamerfoto zou lezen als een project van WelkomThuis, en dat
+   is het niet. Dit is zichtbaar een tekening, in dezelfde stijl als de iconen
+   bij "Ons verschil". Zodra er een echte foto is, vervangt die dit blok.
+
+   De kleuren komen uit de tokens, dus de tekening gaat mee als het palet
+   wijzigt. Geen style="" op de elementen: het CSP staat geen inline stijl toe.
+   De tekening is decoratief en staat daarom op aria-hidden; hij voegt niets
+   toe dat niet in de alinea's ernaast staat. */
+.audience__ill{max-width:30rem;align-self:center}
+.audience__ill svg{display:block;width:100%;height:auto}
+.ill-lijn{fill:none;stroke:var(--pine);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ill-lijn--dun{stroke-width:1.8}
+/* na .ill-lijn, zodat de vulling het van fill:none overneemt */
+.ill-wit{fill:var(--white)}
+.ill-vlak{fill:var(--haze)}
+.ill-warm{fill:var(--brass-licht)}
 .audience p{color:var(--muted)}
 .questions{
   background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--brass);

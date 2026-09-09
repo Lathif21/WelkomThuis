@@ -72,6 +72,35 @@ Conventions worth knowing before you edit:
   to calculate; intake question 4 asks the same thing. They are kept in sync
   both ways (`site.js`), so whichever a visitor fills in, the other follows and
   the answer is still submitted. Only question 4 carries a `name`.
+- **Colour lives only in the `:root` tokens** in `site.css`, and every token is
+  there because a measured pair needs it. Two splits are load-bearing:
+  `--brass` (dark gold, for light grounds and the focus ring) versus
+  `--brass-licht` (for text and icons *on* `--pine`), and `--line` (decorative
+  hairline) versus `--rand` (the outline of an input or button, which WCAG
+  1.4.11 wants at 3:1). Collapsing either pair back into one value drops a
+  requirement — one value cannot be both 3:1 on paper and 4.5:1 on dark green.
+- **`--muted` is body text, not decoration.** It colours `.card p`,
+  `.audience p`, `.prose p`, `.band-head p` and most other paragraphs, so it is
+  held to the 7:1 rule below and has to clear it against `--paper`, `--white`
+  *and* `--haze`. It sat at 5.24:1 until September 2026.
+- **The `#voor-wie` illustration is an inline SVG, drawn deliberately rather
+  than photographed.** A synthetic photo of a living room would read as a
+  WelkomThuis project; a line drawing makes no such claim. It is styled through
+  the `.ill-*` classes so it follows the palette, and carries no `style=`
+  attributes because the CSP has no `unsafe-inline`. It is `aria-hidden` — it
+  says nothing the adjacent paragraphs do not. Replace it when a real photo
+  exists; `.audience` is already a two-column grid that collapses when the
+  second child is absent.
+- **Headings hyphenate (`hyphens:auto`), and that is load-bearing, not
+  cosmetic.** Dutch compounds get long: "binnenhuisarchitect" measures 331px in
+  a 265px column at 320px wide, and a single unbreakable word widens the whole
+  document, not just its own box — the page scrolled sideways by 46px. The
+  document is `lang="nl-BE"`, so the browser hyphenates on real syllable
+  boundaries; `overflow-wrap:break-word` is the fallback.
+- **`--pine` and `--pine-deep` are the brand mark and are frozen.** The logo is
+  hard-coded as `#2F4A3C` / `#B08A3E` in `index.html`, `privacy.html`,
+  `bedankt.html` and `assets/img/favicon.svg`, and `apple-touch-icon.png` is a
+  raster. Changing the green means editing four files and regenerating a PNG.
 - **Grid tracks use `minmax(min(Xrem,100%),1fr)`, never `minmax(Xrem,1fr)`.**
   A track cannot be narrower than its minimum, so the plain form overflows its
   container on a 320px screen instead of wrapping. The `min()` lets it shrink.
@@ -110,8 +139,12 @@ WCAG 2.2 AA, deliberately.
 
 - **20px / 1.25rem body text minimum**, line-height 1.7. Not 16px. The default
   has to be comfortable without anyone discovering browser zoom.
-- **7:1 contrast for body text** (AAA), 4.5:1 floor for everything. Highest-value
-  single change for ageing eyes. The brass accent is decorative — never small text.
+- **7:1 contrast for body text** (AAA), 4.5:1 floor for everything, 3:1 for the
+  boundary of any control. Highest-value single change for ageing eyes. The
+  brass accent is decorative on light grounds — never small text; on `--pine`
+  use `--brass-licht`, which is held to 4.5:1 because `.card__tag` is text.
+  All 25 pairs the site actually renders are measured and pass; re-measure
+  before changing a token, not after.
 - **48 × 48 px touch targets**, 8px apart. WCAG asks 24px; that isn't enough for
   an unsteady hand.
 - **Visible focus everywhere.** Defined once on `:focus-visible`. Don't remove an

@@ -6,8 +6,9 @@ Betreft: de lijst "Aanpassingen website"
 Alle negen punten zijn verwerkt. Hieronder staat per punt wat er precies is
 gebeurd, en waar er nog een beslissing van jou nodig is.
 
-De aanpassingen staan **klaar maar nog niet online**. Zeg maar wanneer ze live
-mogen, dan zetten we ze in één keer door.
+Deze aanpassingen **staan inmiddels online**. Een tweede ronde feedback is
+apart beantwoord in `antwoord-feedback-2.md` (kleurenpalet, "Ons verschil",
+de foto bij "Voor wie" en de prijscalculator).
 
 ---
 

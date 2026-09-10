@@ -634,11 +634,25 @@ a.c-value:hover{text-decoration:underline}
 .band--midden .afspraak{margin-inline:auto}
 
 /* ---------- direct contact onder stap 2 ---------- */
+/* Drie gelijke kolommen in plaats van een flexrij. Met flex-wrap paste
+   Instagram er niet meer bij en viel het als enige op een tweede regel, los
+   uitgelijnd van de twee erboven. Als rooster staan de drie naast elkaar en
+   zakken ze samen naar één kolom als het scherm te smal wordt. */
 .direct{
-  max-width:55rem;margin:1.5rem auto 0;padding:1.35rem clamp(1.25rem,3vw,2rem);
+  max-width:68rem;margin:1.5rem auto 0;padding:1.35rem clamp(1.25rem,3vw,2rem);
   background:var(--haze);border:1px solid var(--line);border-radius:4px;
-  display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 3rem;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr));
+  gap:1.25rem 2rem;
 }
+.direct>div{text-align:center}
+/* Het icoon staat op aria-hidden: de <dt> zegt al "Instagram", dus een
+   schermlezer zou het anders dubbel voorlezen. */
+/* Kleiner dan de losse .c-value elders: in drie kolommen naast elkaar brak
+   "welkomthuis@outlook.be" anders middenin af op de overflow-wrap die als
+   vangnet op .c-value staat. */
+.direct .c-value{font-size:clamp(1.1rem,2vw,1.6rem)}
+.c-value--ig{display:inline-flex;align-items:center;gap:.5rem}
+.ig-icoon{width:1em;height:1em;flex:none}
 .direct dt{
   font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   color:var(--muted);
@@ -653,10 +667,16 @@ a.c-value:hover{text-decoration:underline}
 .site-foot .brand-sub{color:#C6BBB1}
 .foot-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
 .foot-nav a{display:inline-flex;align-items:center;min-height:48px}
+/* De ondernemingsgegevens stonden als zes regels onder elkaar in één smalle
+   kolom links, met de hele rechterhelft leeg. Nu verdeeld over kolommen: zes
+   items gaan gelijk op in twee of drie, dus er blijft geen halve rij over. */
 .foot-legal{
   margin-top:2rem;padding-top:1.75rem;border-top:1px solid rgba(195,211,198,.28);
-  display:grid;gap:.5rem;font-style:normal;font-size:1rem;line-height:1.6;
+  display:grid;grid-template-columns:1fr;gap:.5rem 2.5rem;
+  font-style:normal;font-size:1rem;line-height:1.6;
 }
+@media (min-width:40rem){.foot-legal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:62rem){.foot-legal{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .foot-note{margin:1.5rem 0 0;font-size:.95rem;color:#C6BBB1}
 .foot-note code{font-size:.95em}
 

@@ -107,6 +107,26 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=HERE, **kw)
 
+    # Tijdens ontwikkelen nooit cachen. SimpleHTTPRequestHandler stuurt
+    # Last-Modified en antwoordt op een herhaald verzoek met "304 Not
+    # Modified", waarna de browser zijn eigen oude kopie gebruikt. Bij een
+    # aanpassing in site.css zie je dan de vorige versie en lijkt de wijziging
+    # niet aangekomen -- dat kost makkelijk een half uur zoeken naar een fout
+    # die er niet is.
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-store, must-revalidate")
+        super().end_headers()
+
+    def send_head(self):
+        # De voorwaardelijke verzoeken eruit halen, anders komt het 304-pad
+        # alsnog in actie voordat Cache-Control er iets aan kan doen. Dit hoort
+        # in send_head en niet in do_GET: send_head doet die controle, en zowel
+        # GET als HEAD komen er langs.
+        for kop in ("If-Modified-Since", "If-None-Match"):
+            if kop in self.headers:
+                del self.headers[kop]
+        return super().send_head()
+
     # Netlify onderschept een POST op elk pad van de site. Lokaal bootsen we
     # dat na voor de adressen die het formulier gebruikt: "/" met JavaScript,
     # "/bedankt" zonder.

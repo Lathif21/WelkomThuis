@@ -281,19 +281,6 @@ a:hover{color:var(--pine-deep)}
   min-height:48px;color:var(--pine);
 }
 .cards__link svg{width:2rem;height:2rem;display:block}
-
-/* Kato vroeg om "de twee hiernaast". Dat klopt zolang de drie blokken naast
-   elkaar staan, maar onder 62rem stapelen ze en staan de andere twee er juist
-   bóven -- dan zou "hiernaast" een nieuwe fout zijn in plaats van een
-   verbetering. Daarom wisselt alleen dat ene woord mee met de opmaak, op
-   dezelfde grens als het kaartrooster hierboven.
-   Wat display:none is wordt ook niet voorgelezen, dus een schermlezer hoort
-   er precies één, niet allebei. */
-.richting-boven{display:none}
-@media (max-width:61.99rem){
-  .richting-naast{display:none}
-  .richting-boven{display:inline}
-}
 @media (min-width:62rem){
   /* minmax(0,1fr) en niet 1fr: anders kan een kaart niet krimpen onder de
      breedte van zijn inhoud en loopt de rij buiten het scherm. */

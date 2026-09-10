@@ -91,12 +91,26 @@ Conventions worth knowing before you edit:
   says nothing the adjacent paragraphs do not. Replace it when a real photo
   exists; `.audience` is already a two-column grid that collapses when the
   second child is absent.
-- **Headings hyphenate (`hyphens:auto`), and that is load-bearing, not
-  cosmetic.** Dutch compounds get long: "binnenhuisarchitect" measures 331px in
-  a 265px column at 320px wide, and a single unbreakable word widens the whole
-  document, not just its own box — the page scrolled sideways by 46px. The
-  document is `lang="nl-BE"`, so the browser hyphenates on real syllable
-  boundaries; `overflow-wrap:break-word` is the fallback.
+- **Long words in headings need a `&shy;` by hand.** Dutch compounds get long:
+  "binnenhuisarchitect" measures 331px in a 265px column at 320px wide, and a
+  single unbreakable word widens the whole document, not just its own box — the
+  page scrolled sideways by 46px until this was handled. Do not reach for
+  `hyphens:auto` to fix it: **Chromium ships no Dutch hyphenation pattern**, so
+  `lang="nl-BE"` with `hyphens:auto` behaves there exactly like `hyphens:none`
+  (measured; `lang="en"` does break). It is left on only because Firefox does
+  carry the pattern.
+  So the break points are in the markup, as `&shy;` on the compound seam:
+  `binnenhuis&shy;architect`, `verhuis&shy;firma`, `Prijs&shy;simulatie`,
+  `Contact&shy;gegevens`, `nuts&shy;voorzieningen`, `Privacy&shy;verklaring`.
+  **Add one to any new heading word over roughly twelve letters** — without it
+  that heading can push the page wider than the screen.
+  Two things deliberately absent from `h1,h2,h3`: `overflow-wrap:break-word`,
+  because it makes a break opportunity of *every* letter and the line-filler
+  then prefers the longest fit, so it overrode the good break and produced
+  "binnenhuis­a / rchitect" — the break Kato reported; and hyphenation above
+  48rem, where `hyphens:none` makes the browser ignore the `&shy;` entirely,
+  since a wide screen has room and a hyphen in a large heading reads as a
+  mistake.
 - **`--pine` and `--pine-deep` are the brand mark and are frozen.** The logo is
   hard-coded as `#2F4A3C` / `#B08A3E` in `index.html`, `privacy.html`,
   `bedankt.html` and `assets/img/favicon.svg`, and `apple-touch-icon.png` is a

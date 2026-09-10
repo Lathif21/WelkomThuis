@@ -120,12 +120,41 @@ body{
 
 /* Nederlandse samenstellingen worden lang — "binnenhuisarchitect" is 331px
    breed in een kolom van 265px — en een woord dat niet past duwt niet alleen
-   zichzelf, maar de hele pagina breder dan het scherm. Op 320px liep de
-   pagina daardoor 46px over en kon je zijwaarts scrollen. Afbreken op
-   lettergrepen mag: het document staat op lang="nl-BE", dus de browser
-   gebruikt het Nederlandse woordafbreekpatroon. break-word is de vangnet
-   voor browsers zonder dat patroon. */
-h1,h2,h3{font-family:var(--display);color:var(--pine-deep);line-height:1.15;margin:0;font-weight:600;overflow-wrap:break-word;hyphens:auto}
+   zichzelf, maar de hele pagina breder dan het scherm.
+
+   Let op waar het afbreken vandaan komt: hyphens:auto doet voor Nederlands
+   in Chromium NIETS. Die browser heeft geen Nederlands afbreekpatroon, dus
+   lang="nl-BE" met hyphens:auto gedraagt zich daar exact als hyphens:none
+   (nagemeten: hetzelfde overlopen, terwijl lang="en" wel afbreekt). Al het
+   afbreken kwam dus van overflow-wrap, en dat knipt op een willekeurige
+   letter: "binnenhuisarchitec / t". Precies wat Kato opmerkte.
+
+   Daarom staan de afbreekpunten nu met de hand in de opmaak, als &shy; op de
+   naad van de samenstelling: binnenhuis&shy;architect, verhuis&shy;firma. Een
+   browser kiest zo'n zacht streepje boven een willekeurige breuk, dus die
+   lelijke knip komt niet meer voor. hyphens:auto blijft staan omdat Firefox
+   het Nederlandse patroon wél meelevert; overflow-wrap blijft als laatste
+   vangnet voor een lang woord zonder &shy;.
+
+   Op de koppen staat overflow-wrap er juist NIET, en dat is het punt: het
+   maakt een breekpunt van elke letter, en de regelvuller neemt dan de langste
+   reeks die past. "binnenhuisa" past net iets beter dan "binnenhuis-" met het
+   streepje erbij, dus het vangnet overrulede het nette breekpunt en knipte
+   "binnenhuis{shy}a / rchitect". Zonder overflow-wrap is &shy; de enige
+   breekkans binnen het woord en valt de knip waar hij hoort.
+
+   Gevolg voor wie hier later een kop wijzigt: een nieuwe samenstelling van
+   meer dan een twaalftal letters heeft zelf een &shy; nodig, anders kan hij
+   de pagina breder maken dan het scherm. Zie README.md. */
+h1,h2,h3{font-family:var(--display);color:var(--pine-deep);line-height:1.15;margin:0;font-weight:600;hyphens:auto}
+/* Afbreken alleen waar het moet. Vanaf 48rem is er ruimte genoeg en hoeft er
+   geen streepje in een grote kop te staan; hyphens:none laat de browser de
+   &shy; daar volledig negeren. Onder 48rem is het wel nodig, en dan valt de
+   knip op de naad van de samenstelling. Zo staat er nooit een streepje in een
+   kop die ook heel had gekund -- en dat was de klacht. */
+@media (min-width:48rem){
+  h1,h2,h3{hyphens:none}
+}
 h1{font-size:clamp(2.7rem,6vw,4.5rem);letter-spacing:-.01em}
 h2{font-size:clamp(2rem,4vw,2.9rem);letter-spacing:-.005em}
 h3{font-size:clamp(1.4rem,2.2vw,1.7rem)}
@@ -227,8 +256,12 @@ a:hover{color:var(--pine-deep)}
 .band--donker .band-head h2{color:#fff}
 .band--donker .band-head p{color:var(--donker-zacht)}
 .band--donker .eyebrow{color:var(--brass-licht)}
-.band-head{max-width:52ch;margin-bottom:clamp(2.5rem,5vw,3.5rem)}
-.band-head p{color:var(--muted);margin-top:1rem;font-size:1.2rem}
+/* 52ch was te smal: de kop viel uiteen in vier regels met "dan een" als
+   losse regel, terwijl er rechts nog de helft van de pagina vrij was. Niet
+   helemaal tot de rand — een leesregel van 90 tekens leest slecht — maar wel
+   ruimer. De alinea blijft daarbinnen apart begrensd. */
+.band-head{max-width:68ch;margin-bottom:clamp(2.5rem,5vw,3.5rem)}
+.band-head p{color:var(--muted);margin-top:1rem;font-size:1.2rem;max-width:62ch}
 
 /* ---------- services ---------- */
 /* auto-fit in plaats van een harde sprong van drie naar één: op een tablet

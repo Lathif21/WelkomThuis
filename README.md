@@ -75,10 +75,17 @@ Conventions worth knowing before you edit:
 - **Colour lives only in the `:root` tokens** in `site.css`, and every token is
   there because a measured pair needs it. Two splits are load-bearing:
   `--brass` (dark gold, for light grounds and the focus ring) versus
-  `--brass-licht` (for text and icons *on* `--pine`), and `--line` (decorative
-  hairline) versus `--rand` (the outline of an input or button, which WCAG
-  1.4.11 wants at 3:1). Collapsing either pair back into one value drops a
-  requirement — one value cannot be both 3:1 on paper and 4.5:1 on dark green.
+  `--brass-licht` (for text and icons on a dark surface — `.card--accent`,
+  which is `--donker`), and `--line` (decorative hairline) versus `--rand`
+  (the outline of an input or button, which WCAG 1.4.11 wants at 3:1).
+  Collapsing either pair back into one value drops a requirement — one value
+  cannot be both 3:1 on paper and 4.5:1 on a dark ground.
+- **`--donker` is the WelkomThuis card's background**, dark warm taupe rather
+  than green, on Kato's instruction: that block still has to be the one that
+  stands out of the three, and dark between two light cards does that. Warm
+  charcoal `#222528`, deep terracotta `#4A2E2B` and dark sage `#2A342B` all
+  measure 12.2:1 to 15.4:1 for white and 5.3:1 to 6.7:1 for the ochre, so the
+  tone is a free choice.
 - **`--muted` is body text, not decoration.** It colours `.card p`,
   `.audience p`, `.prose p`, `.band-head p` and most other paragraphs, so it is
   held to the 7:1 rule below and has to clear it against `--paper`, `--white`
@@ -155,8 +162,8 @@ WCAG 2.2 AA, deliberately.
   has to be comfortable without anyone discovering browser zoom.
 - **7:1 contrast for body text** (AAA), 4.5:1 floor for everything, 3:1 for the
   boundary of any control. Highest-value single change for ageing eyes. The
-  brass accent is decorative on light grounds — never small text; on `--pine`
-  use `--brass-licht`, which is held to 4.5:1 because `.card__tag` is text.
+  brass accent is decorative on light grounds — never small text; on a dark
+  surface use `--brass-licht`, held to 4.5:1 because `.card__tag` is text.
   All 25 pairs the site actually renders are measured and pass; re-measure
   before changing a token, not after.
 - **48 × 48 px touch targets**, 8px apart. WCAG asks 24px; that isn't enough for

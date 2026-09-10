@@ -54,47 +54,39 @@
 }
 
 :root{
-  /* PROEF: "Bordeaux" - diep bordeauxrood als draagkleur, warm zand als
-     ondergrond, oker als accent. Bordeaux en oker is een klassiek paar; het
-     leest als stof en hout in plaats van als kantoor.
-
-     #5B1E28 en niet het voorgestelde #6B2D38: op die eerste haalt de oker
-     #D4A359 maar 4,46:1, net onder de 4,5 die het labeltje op het donkere
-     blok nodig heeft omdat het tekst is. Op #5B1E28 wordt dat 5,53:1 en
-     klopt alles.
-
-     De neutralen zijn meegedraaid naar warm. Ze stonden koel (grijsblauwe
-     veldranden, blauwgrijze tekst) uit de vorige proef, en dat vecht met
-     bordeaux. */
-  --paper:#F7F5F0;
+  /* Het merkgroen blijft. De proeven met leisteenblauw en met bordeaux zijn
+     teruggedraaid: Kato bedoelde met haar vraag over de kleur alleen de
+     achtergrond van het WelkomThuis-blok bij "Ons verschil", niet het palet.
+     Dat blok is nu --donker in plaats van groen; de rest blijft zoals het
+     online staat. */
+  --paper:#F5F2EC;
   --white:#FFFFFF;
-  --haze:#EFEAE0;
-  --pine:#5B1E28;
-  --pine-deep:#46151D;
-  --ink:#241D1E;
+  --haze:#EBE5D8;
+  --pine:#2F4A3C;
+  --pine-deep:#22382D;
+  --ink:#211E19;
   /* --muted is de kleur van bijna elke alinea (.card p, .audience p, .prose p,
      .band-head p). Op #5A6960 haalde die 5,24:1 tegen 7:1 uit README.md — de
      eis die er voor deze doelgroep het meest toe doet. Nu 8,38:1 op --paper,
      9,36:1 op wit en 7,46:1 op --haze; die laatste is de krapste en bepaalt
      dus hoe donker deze kleur minstens moet zijn. */
-  --muted:#4E4446;
+  --muted:#4B463D;
   /* Messing in twee sterktes. Eén waarde kan niet tegelijk 3:1 halen op een
      lichte ondergrond en 4,5:1 op het donkergroene blok; --brass-licht is er
      voor tekst en iconen óp pine (.card--accent). */
-  --brass:#9C742D;
-  --brass-licht:#D4A359;
+  --brass:#9A7430;
+  --brass-licht:#D4AC5C;
   /* --line is de decoratieve haarlijn, --rand de omtrek van een invulveld of
      knop. WCAG 1.4.11 vraagt 3:1 voor die laatste; op #CBD4C9 was dat 1,37:1,
      waardoor je op een klein scherm nauwelijks zag waar een veld begon. */
-  --line:#B5AD9B;
-  --rand:#8A7A7B;
-  /* Donkere sectie als visuele adempauze tussen de lichte leesblokken.
-     Warm taupe; ruil deze regel om voor een van de andere voorstellen:
-     warm charcoal #222528, deep terracotta #4A2E2B, dark sage #2A342B.
-     Alle vier gemeten: wit haalt er 12,2:1 tot 15,4:1 op, oker 5,3:1 tot
-     6,7:1, dus de keuze is puur smaak en kost geen leesbaarheid. */
+  --line:#B8AF9A;
+  --rand:#8E8674;
+  /* De donkere achtergrond van het WelkomThuis-blok. Warm taupe; ruil deze
+     regel om voor een van de andere voorstellen: warm charcoal #222528,
+     deep terracotta #4A2E2B, dark sage #2A342B. Alle vier gemeten: wit haalt
+     er 12,2:1 tot 15,4:1 op en oker 5,3:1 tot 6,7:1, dus de keuze is puur
+     smaak en kost geen leesbaarheid. */
   --donker:#2D2624;
-  --donker-zacht:#D9D2CC;
 
   --display:"Faustina",Georgia,serif;
   --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -246,16 +238,6 @@ a:hover{color:var(--pine-deep)}
 .band{padding-block:var(--gap)}
 .band-white{background:var(--white);border-block:1px solid var(--line)}
 
-/* Donkere sectie. Alleen de kop en de inleiding staan hier licht-op-donker:
-   dat is korte, grote tekst. De fasekaarten houden hun witte achtergrond,
-   zodat de lange opsommingen donker-op-licht blijven. Dat is geen detail --
-   bij staar en astigmatisme, allebei gewoon boven de zeventig, gaat lichte
-   tekst op een donkere ondergrond uitlopen, en juist de lijstjes zijn hier
-   het echte leeswerk. */
-.band--donker{background:var(--donker);border-block:0}
-.band--donker .band-head h2{color:#fff}
-.band--donker .band-head p{color:var(--donker-zacht)}
-.band--donker .eyebrow{color:var(--brass-licht)}
 /* 52ch was te smal: de kop viel uiteen in vier regels met "dan een" als
    losse regel, terwijl er rechts nog de helft van de pagina vrij was. Niet
    helemaal tot de rand — een leesregel van 90 tekens leest slecht — maar wel
@@ -327,7 +309,7 @@ a:hover{color:var(--pine-deep)}
 }
 .quote cite{
   display:block;margin-top:2rem;font-family:var(--body);font-style:normal;
-  font-size:1.02rem;letter-spacing:.1em;text-transform:uppercase;color:#DCC7CB;
+  font-size:1.02rem;letter-spacing:.1em;text-transform:uppercase;color:#D3C9BF;
 }
 
 /* ---------- contact ---------- */
@@ -386,7 +368,7 @@ a.c-value:hover{text-decoration:underline}
   background-color:var(--paper);
   border:2px solid var(--rand);border-radius:3px;cursor:pointer;
   appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%235B1E28'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%232F4A3C'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;
   background-position:right 1.1rem center;
   background-size:18px 12px;
@@ -468,8 +450,8 @@ a.c-value:hover{text-decoration:underline}
    bovenrand van het kader staat er al, op nagenoeg dezelfde afstand van de
    titel (2,5rem kaderpadding tegen 2,25rem hier), en een tweede lijn een
    centimeter daaronder leest als een fout. */
-.calc__fase{margin:0;padding:2.25rem 0 0;border:0;border-top:1px solid var(--line);min-width:0}
-.calc__fase:first-child{border-top:0;padding-top:0}
+.calc__fase{margin:1.75rem 0 0;padding:2.25rem 0 0;border:0;border-top:1px solid var(--line);min-width:0}
+.calc__fase:first-child{margin-top:0;border-top:0;padding-top:0}
 /* Een <legend> wordt door de browser ÓP de bovenrand van de fieldset gezet:
    de streep loopt dan door de titel heen en verder naar rechts, op halve
    texthoogte. Dat is precies wat Kato beschreef als "de scheiding staat na
@@ -526,7 +508,7 @@ a.c-value:hover{text-decoration:underline}
 }
 .calc__totaal-label{
   margin:0;font-size:.78rem;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:#DCC7CB;
+  text-transform:uppercase;color:#D3C9BF;
 }
 /* min 1.5rem: op 320px liep 'EUR 2.150 - EUR 2.400' anders buiten de kaart */
 .calc__totaal{
@@ -535,9 +517,9 @@ a.c-value:hover{text-decoration:underline}
 }
 /* een bedrag breekt nooit in zichzelf; tussen de twee bedragen mag het wel */
 .calc__bedrag{white-space:nowrap}
-.calc__open{display:block;font-family:var(--body);font-size:.95rem;font-weight:500;color:#DCC7CB;margin-top:.35rem}
+.calc__open{display:block;font-family:var(--body);font-size:.95rem;font-weight:500;color:#D3C9BF;margin-top:.35rem}
 /* 'Nog te berekenen' is tekst, geen bedrag: kleiner en rustiger */
-.calc__totaal.is-leeg{font-size:clamp(1.35rem,3vw,1.7rem);color:#EBDCDF}
+.calc__totaal.is-leeg{font-size:clamp(1.35rem,3vw,1.7rem);color:#EAE3DC}
 .calc__verdeling{
   margin-top:1.5rem;padding-top:1.35rem;
   border-top:1px solid rgba(195,211,198,.3);
@@ -547,20 +529,20 @@ a.c-value:hover{text-decoration:underline}
   font-size:.78rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
 }
 .calc__verdeling ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
-.calc__verdeling li{position:relative;padding-left:1.3rem;font-size:1rem;color:#F1E7E9;line-height:1.4}
+.calc__verdeling li{position:relative;padding-left:1.3rem;font-size:1rem;color:#EAE3DC;line-height:1.4}
 .calc__verdeling li::before{
   content:"";position:absolute;left:0;top:.62em;width:.45rem;height:.25rem;
   border-left:2px solid var(--brass);border-bottom:2px solid var(--brass);
   transform:rotate(-45deg);
 }
-.calc__verdeling li.is-leeg{padding-left:0;color:#C4A9AE;font-style:italic}
+.calc__verdeling li.is-leeg{padding-left:0;color:#BCAFA4;font-style:italic}
 .calc__verdeling li.is-leeg::before{display:none}
 .calc__hint{
-  margin:.6rem 0 0;font-size:1.02rem;color:#EBDCDF;line-height:1.5;max-width:46ch;
+  margin:.6rem 0 0;font-size:1.02rem;color:#EAE3DC;line-height:1.5;max-width:46ch;
 }
 .calc__hint a{color:#fff;text-underline-offset:.2em}
 .calc__uitkomst.is-berekend .calc__hint{display:none}
-.calc__voetnoot{margin:1.35rem 0 0;font-size:.98rem;color:#DCC7CB;line-height:1.55}
+.calc__voetnoot{margin:1.35rem 0 0;font-size:.98rem;color:#D3C9BF;line-height:1.55}
 
 @media (max-width:560px){
   .calc__optie{flex-wrap:wrap}
@@ -648,26 +630,29 @@ a.c-value:hover{text-decoration:underline}
 .direct dd{margin:.15rem 0 0}
 
 /* ---------- footer ---------- */
-.site-foot{background:var(--pine-deep);color:#DCC7CB;padding-block:3rem;font-size:1.05rem}
+.site-foot{background:var(--pine-deep);color:#D3C9BF;padding-block:3rem;font-size:1.05rem}
 .foot-inner{display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem;align-items:center;justify-content:space-between}
 .site-foot a{color:#fff}
 .site-foot .brand-name{color:#fff;font-size:1.35rem}
-.site-foot .brand-sub{color:#AE9497}
+.site-foot .brand-sub{color:#A99C90}
 .foot-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
 .foot-nav a{display:inline-flex;align-items:center;min-height:48px}
 .foot-legal{
   margin-top:2rem;padding-top:1.75rem;border-top:1px solid rgba(195,211,198,.28);
   display:grid;gap:.5rem;font-style:normal;font-size:1rem;line-height:1.6;
 }
-.foot-note{margin:1.5rem 0 0;font-size:.95rem;color:#AE9497}
+.foot-note{margin:1.5rem 0 0;font-size:.95rem;color:#A99C90}
 .foot-note code{font-size:.95em}
 
 /* ---------- vergelijking: wat WelkomThuis anders maakt ---------- */
 /* Dit blok is het antwoord op de twee ernaast, dus mag het er duidelijk
    uitspringen: volvlak pine in plaats van een lichte tint. */
-.card--accent{background:var(--pine);border-color:var(--pine);color:#fff}
+/* Kato's vraag: dit blok een donkere achtergrond in plaats van groen. Het
+   moet nog steeds het opvallendste van de drie zijn -- dat was de vraag uit
+   de vorige ronde -- en donker tussen twee lichte kaarten doet dat. */
+.card--accent{background:var(--donker);border-color:var(--donker);color:#fff}
 .card--accent h3{color:#fff}
-.card--accent p{color:#F1E7E9}
+.card--accent p{color:#EAE3DC}
 .card--accent svg{color:var(--brass-licht)}
 .card__tag{
   font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;

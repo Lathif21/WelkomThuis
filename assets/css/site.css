@@ -244,18 +244,6 @@ a:hover{color:var(--pine-deep)}
 .band{padding-block:var(--gap)}
 .band-white{background:var(--white);border-block:1px solid var(--line)}
 
-/* Donkere sectie. Licht-op-donker geldt alleen voor de kop en de inleiding --
-   korte, grote tekst. Alles wat op een lichte kaart in zo'n sectie staat,
-   keert hieronder terug naar donkere tekst. */
-.band--donker{background:var(--donker);border-block:0}
-.band--donker h2,.band--donker h3{color:#fff}
-.band--donker p{color:#EAE3DC}
-.band--donker .eyebrow{color:var(--brass-licht)}
-.band--donker .phase{background:var(--white);border-color:transparent}
-.band--donker .phase h3{color:var(--pine-deep)}
-.band--donker .phase p,.band--donker .phase li{color:var(--ink)}
-.band--donker .phase__when{color:var(--muted)}
-.band--donker .phase__list .is-optional{color:var(--muted)}
 
 /* 52ch was te smal: de kop viel uiteen in vier regels met "dan een" als
    losse regel, terwijl er rechts nog de helft van de pagina vrij was. Niet
@@ -866,3 +854,23 @@ a.c-value:hover{text-decoration:underline}
   .nav-toggle,.nav-toggle__bars span,.site-nav{transition:none}
   .site-nav>ul,.site-nav.is-open>ul{transition:none}
 }
+
+/* ---------- donkere sectie ---------- */
+/* Staat met opzet achteraan. .band--donker p en .about-body p hebben dezelfde
+   soortelijkheid, dus wie het laatst staat wint. Stond dit blok bovenaan bij
+   .band-white, dan hield .about-body p{color:var(--muted)} het -- donkergrijs
+   op donker taupe, ruim onleesbaar. Precies dat ging hier eerst mis.
+
+   Licht-op-donker geldt alleen voor de kop en de inleiding: korte, grote
+   tekst. Alles wat op een lichte kaart binnen zo'n sectie staat, keert
+   hieronder terug naar donkere tekst -- de lijsten in "Het traject" zijn daar
+   het eigenlijke leeswerk. */
+.band--donker{background:var(--donker);border-block:0}
+.band--donker h2,.band--donker h3{color:#fff}
+.band--donker p,.band--donker .about-body p,.band--donker .band-head p{color:#EAE3DC}
+.band--donker .eyebrow{color:#E0BC76}
+.band--donker .phase{background:var(--white);border-color:transparent}
+.band--donker .phase h3{color:var(--pine-deep)}
+.band--donker .phase li{color:var(--ink)}
+.band--donker .phase__when,.band--donker .phase__list .is-optional{color:var(--muted)}
+.band--donker .phase__foot{color:var(--muted)}

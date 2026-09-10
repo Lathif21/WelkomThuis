@@ -54,22 +54,31 @@
 }
 
 :root{
-  /* VARIANT B: donkere achtergrond, groen blijft.
+  /* Bordeaux als draagkleur, met donkere secties.
 
-     Twee volle secties krijgen een donkere ondergrond -- "Het traject" en
-     "Over mij" -- naast het citaatblok, de voettekst en het WelkomThuis-blok
-     die al donker waren. Daarmee is ruwweg de helft van de pagina donker.
+     --pine is het merkbordeaux: knoppen, koppen, links, het citaatblok, de
+     voettekst, de fasenummers, het logo in drie pagina's plus favicon.svg en
+     het pijltje van de keuzelijsten.
 
-     Wat er NIET donker wordt: de blokken waar echt gelezen wordt. Bij staar
-     en astigmatisme, allebei gewoon boven de zeventig, gaat lichte tekst op
-     een donkere ondergrond uitlopen. Vandaar dat de fasekaarten in "Het
-     traject" hun witte achtergrond houden: de lijsten zijn daar het eigenlijke
-     leeswerk, en die blijven donker-op-licht. */
+     #5B1E28 en niet het eerder voorgestelde #6B2D38: op die laatste haalt de
+     oker #D4AC5C maar 4,4:1, net onder de 4,5 die een labeltje op een donker
+     vlak nodig heeft omdat het tekst is. Op #5B1E28 wordt dat 5,9:1.
+
+     --donker (warm taupe) is de tweede donkere kleur: de achtergrond van het
+     WelkomThuis-blok bij "Ons verschil" en van de secties "Het traject" en
+     "Over mij". Bewust een andere kleur dan bordeaux, zodat een donkere sectie
+     en een bordeauxrood blok niet in elkaar overlopen.
+
+     Wat NIET donker wordt: de blokken waar echt gelezen wordt. Bij staar en
+     astigmatisme, allebei gewoon boven de zeventig, gaat lichte tekst op een
+     donkere ondergrond uitlopen. De fasekaarten in "Het traject" houden
+     daarom hun witte achtergrond -- de lijsten zijn daar het eigenlijke
+     leeswerk en blijven donker-op-licht. */
   --paper:#F5F2EC;
   --white:#FFFFFF;
   --haze:#EBE5D8;
-  --pine:#2F4A3C;
-  --pine-deep:#22382D;
+  --pine:#5B1E28;
+  --pine-deep:#46151D;
   --ink:#211E19;
   /* --muted is de kleur van bijna elke alinea (.card p, .audience p, .prose p,
      .band-head p). Op #5A6960 haalde die 5,24:1 tegen 7:1 uit README.md — de
@@ -81,7 +90,7 @@
      lichte ondergrond en 4,5:1 op het donkergroene blok; --brass-licht is er
      voor tekst en iconen óp pine (.card--accent). */
   --brass:#9A7430;
-  --brass-licht:#D4AC5C;
+  --brass-licht:#E0BC76;
   /* --line is de decoratieve haarlijn, --rand de omtrek van een invulveld of
      knop. WCAG 1.4.11 vraagt 3:1 voor die laatste; op #CBD4C9 was dat 1,37:1,
      waardoor je op een klein scherm nauwelijks zag waar een veld begon. */
@@ -375,7 +384,7 @@ a.c-value:hover{text-decoration:underline}
   background-color:var(--paper);
   border:2px solid var(--rand);border-radius:3px;cursor:pointer;
   appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%232F4A3C'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%235B1E28'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;
   background-position:right 1.1rem center;
   background-size:18px 12px;
@@ -641,14 +650,14 @@ a.c-value:hover{text-decoration:underline}
 .foot-inner{display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem;align-items:center;justify-content:space-between}
 .site-foot a{color:#fff}
 .site-foot .brand-name{color:#fff;font-size:1.35rem}
-.site-foot .brand-sub{color:#A99C90}
+.site-foot .brand-sub{color:#C6BBB1}
 .foot-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
 .foot-nav a{display:inline-flex;align-items:center;min-height:48px}
 .foot-legal{
   margin-top:2rem;padding-top:1.75rem;border-top:1px solid rgba(195,211,198,.28);
   display:grid;gap:.5rem;font-style:normal;font-size:1rem;line-height:1.6;
 }
-.foot-note{margin:1.5rem 0 0;font-size:.95rem;color:#A99C90}
+.foot-note{margin:1.5rem 0 0;font-size:.95rem;color:#C6BBB1}
 .foot-note code{font-size:.95em}
 
 /* ---------- vergelijking: wat WelkomThuis anders maakt ---------- */
@@ -868,7 +877,7 @@ a.c-value:hover{text-decoration:underline}
 .band--donker{background:var(--donker);border-block:0}
 .band--donker h2,.band--donker h3{color:#fff}
 .band--donker p,.band--donker .about-body p,.band--donker .band-head p{color:#EAE3DC}
-.band--donker .eyebrow{color:#E0BC76}
+.band--donker .eyebrow{color:var(--brass-licht)}
 .band--donker .phase{background:var(--white);border-color:transparent}
 .band--donker .phase h3{color:var(--pine-deep)}
 .band--donker .phase li{color:var(--ink)}

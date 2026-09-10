@@ -54,16 +54,20 @@
 }
 
 :root{
-  /* Het merkgroen blijft. De proeven met leisteenblauw en met bordeaux zijn
-     teruggedraaid: Kato bedoelde met haar vraag over de kleur alleen de
-     achtergrond van het WelkomThuis-blok bij "Ons verschil", niet het palet.
-     Dat blok is nu --donker in plaats van groen; de rest blijft zoals het
-     online staat. */
+  /* VARIANT A: bordeaux in plaats van groen.
+
+     Alleen het merkgroen wisselt van kleur. De ondergrond, de tekstkleuren,
+     het oker, de lijnen en het donkere WelkomThuis-blok blijven exact zoals
+     in de groene versie, zodat je precies één ding vergelijkt.
+
+     #5B1E28 en niet het eerder voorgestelde #6B2D38: op die laatste haalt de
+     oker #D4AC5C maar 4,4:1, net onder de 4,5 die het labeltje op een donker
+     vlak nodig heeft omdat het tekst is. Op #5B1E28 wordt dat 5,9:1. */
   --paper:#F5F2EC;
   --white:#FFFFFF;
   --haze:#EBE5D8;
-  --pine:#2F4A3C;
-  --pine-deep:#22382D;
+  --pine:#5B1E28;
+  --pine-deep:#46151D;
   --ink:#211E19;
   /* --muted is de kleur van bijna elke alinea (.card p, .audience p, .prose p,
      .band-head p). Op #5A6960 haalde die 5,24:1 tegen 7:1 uit README.md — de
@@ -368,7 +372,7 @@ a.c-value:hover{text-decoration:underline}
   background-color:var(--paper);
   border:2px solid var(--rand);border-radius:3px;cursor:pointer;
   appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%232F4A3C'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='18'%20height='12'%20viewBox='0%200%2018%2012'%3E%3Cpath%20d='M1%201l8%209%208-9'%20fill='none'%20stroke='%235B1E28'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;
   background-position:right 1.1rem center;
   background-size:18px 12px;

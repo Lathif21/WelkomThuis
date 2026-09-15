@@ -1,3 +1,5 @@
 dev-inzendingen/
 .vscode/
 Website draft.docx
+# logopakket om te versturen; de bestanden zelf staan in brand/
+*.zip

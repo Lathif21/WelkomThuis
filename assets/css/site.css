@@ -547,7 +547,11 @@ a.c-value:hover{text-decoration:underline}
   border-left:2px solid var(--brass);border-bottom:2px solid var(--brass);
   transform:rotate(-45deg);
 }
-.calc__verdeling li.is-leeg{padding-left:0;color:#BCAFA4;font-style:italic}
+/* Zelfde kleur als een gewone regel: 'nog niets gekozen' onderscheidt zich
+   door cursief, niet door kleur. De eerdere lichtere tint haalde 4,53:1 op
+   --pine, onder de 7:1 voor kleine tekst -- onopgemerkt omdat de controles
+   maten voordat site.js deze regel tekende. */
+.calc__verdeling li.is-leeg{padding-left:0;color:#EAE3DC;font-style:italic}
 .calc__verdeling li.is-leeg::before{display:none}
 .calc__hint{
   margin:.6rem 0 0;font-size:1.02rem;color:#EAE3DC;line-height:1.5;max-width:46ch;

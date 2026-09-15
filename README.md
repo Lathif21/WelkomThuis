@@ -17,6 +17,12 @@ a lawyer.
 
 Before handover:
 
+- **Make the GitHub repository private.** It is public, and it holds the
+  `antwoord-feedback*.md` letters to Kato — pricing questions, the gaps in the
+  privacy notice, the US data transfer. `_redirects` stops the website serving
+  them; it does nothing for GitHub, and git history keeps them even if the files
+  are deleted. Netlify keeps deploying from a private repository through its
+  GitHub app.
 - **A real photograph.** The portrait is now the original from `Website
   draft.docx` (477x358, 40 KB) instead of an 867x648 upscale of it — Kato
   spotted that the upscale looked AI-processed, and it was. It is still a phone
@@ -208,6 +214,58 @@ Derived from the client brief; where they disagree, the brief wins.
   we do not do — is what makes the rest credible.
 
 ## Deploying
+
+### Going live on welkomthuis-interieur.be
+
+Chosen September 2026. `welkomthuis.be` was taken — it forwards to a
+real-estate agency, so anyone typing the obvious name lands there — and
+`welkomthuis-interieur.be` matches Kato's Instagram, `@welkomthuis_interieur`
+(a domain cannot hold an underscore; the hyphen is the equivalent).
+
+Prepared on the branch **`domein-welkomthuis-interieur`**, not on `main`:
+canonical links, Open Graph tags with a 1200x630 share image, LocalBusiness
+structured data, `sitemap.xml` and `robots.txt`.
+
+**All of that names the domain, so it must not reach `main` until the domain
+actually resolves to this site.** Shipped early, every page would declare a
+canonical address that does not exist, the sitemap would list unreachable
+URLs, and link previews would point at an image that cannot load.
+
+In this order:
+
+1. **Register** `welkomthuis-interieur.be` at a `.be` registrar, in Kato's name
+   — the registrant is the legal owner. Also register `welkomthuisinterieur.be`
+   (no hyphen); `_redirects` already forwards it, because people who hear the
+   address spoken often drop the hyphen.
+2. **Netlify → Domain management → Add a domain**: `welkomthuis-interieur.be`,
+   set as primary. Add `welkomthuisinterieur.be` as a domain alias.
+3. **DNS** at the registrar: either hand the nameservers to Netlify DNS (the
+   simplest), or enter the records Netlify shows for the bare domain and `www`.
+4. **Wait for HTTPS.** Netlify issues the certificate itself. Do not skip ahead:
+   `_headers` sends HSTS with `includeSubDomains`, so once a browser sees the
+   domain over HTTPS it refuses plain HTTP there for a year, on every subdomain.
+5. **Merge the branch into `main` and push.**
+6. Submit `https://welkomthuis-interieur.be/sitemap.xml` in Google Search
+   Console, and create a Google Business Profile with exactly the name,
+   address and phone number the site shows. For someone searching
+   *verhuisbegeleiding Mortsel*, that profile does more than the domain does.
+
+The contact address stays `welkomthuis@outlook.be`; a mailbox on the domain is
+optional and can come later.
+
+The structured data is inline JSON-LD, which looks like it should trip
+`script-src 'self'` and does not: it is a data block and is never executed.
+Verified in Chrome with the real header from `_headers` — an ordinary inline
+script was blocked, the JSON-LD raised no violation and stayed readable. Keep it
+to facts the page visibly shows.
+
+The share image is `assets/img/welkomthuis-deelbeeld.png`. That folder is
+cached for a year as immutable, so a changed image needs a new filename or
+nobody will see it. Keep it under ~300 KB (WhatsApp drops larger previews) and
+keep the logo inside the central 630x630 square, since some apps crop to a
+square.
+
+### Hosting
 
 Netlify, at <https://welkom-thuis-fc9ee6.netlify.app/>. `_headers` is picked up
 automatically; translate the same directives for nginx or Apache if the host ever

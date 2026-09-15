@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Alleen de pagina's die in zoekresultaten horen. bedankt.html niet: die
+     is noindex en zegt alleen iets tegen wie net het formulier verstuurde.
+     De adressen moeten gelijk zijn aan de canonical-link in elke pagina. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://welkomthuis-interieur.be/</loc>
+    <lastmod>2026-09-15</lastmod>
+  </url>
+  <url>
+    <loc>https://welkomthuis-interieur.be/privacy.html</loc>
+    <lastmod>2026-09-15</lastmod>
+  </url>
+</urlset>

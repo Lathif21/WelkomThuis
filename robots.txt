@@ -1,0 +1,7 @@
+# Alles mag gelezen worden. bedankt.html staat hier bewust NIET uitgesloten:
+# die pagina heeft zelf <meta name="robots" content="noindex">, en een
+# zoekmachine die de pagina niet mag openen, ziet die noindex ook nooit.
+User-agent: *
+Allow: /
+
+Sitemap: https://welkomthuis-interieur.be/sitemap.xml

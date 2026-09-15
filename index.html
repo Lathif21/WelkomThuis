@@ -5,6 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WelkomThuis — Niet alleen verhuizen, maar opnieuw thuiskomen</title>
 <meta name="description" content="WelkomThuis begeleidt het volledige traject bij een verhuis naar een kleinere woning of serviceflat: van bepalen wat meegaat tot het inrichten van uw nieuwe thuis.">
+<!-- Het vaste adres van de site. Zoekmachines tellen zo alles bij elkaar op
+     één adres, ook als dezelfde pagina via het Netlify-adres of het adres
+     zonder streepje bereikbaar is. Moet gelijk zijn aan sitemap.xml. -->
+<link rel="canonical" href="https://welkomthuis-interieur.be/">
+<!-- Voorbeeld bij het delen van de link (WhatsApp, Facebook, e-mail). De
+     adressen moeten volledig zijn: een deeldienst weet niet van welke site
+     hij leest. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_BE">
+<meta property="og:site_name" content="WelkomThuis">
+<meta property="og:title" content="WelkomThuis — Niet alleen verhuizen, maar opnieuw thuiskomen">
+<meta property="og:description" content="WelkomThuis begeleidt het volledige traject bij een verhuis naar een kleinere woning of serviceflat: van bepalen wat meegaat tot het inrichten van uw nieuwe thuis.">
+<meta property="og:url" content="https://welkomthuis-interieur.be/">
+<meta property="og:image" content="https://welkomthuis-interieur.be/assets/img/welkomthuis-deelbeeld.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logo van WelkomThuis: een huisje met een hartje en de woorden Opnieuw thuiskomen">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Bedrijfsgegevens in een vorm die Google rechtstreeks leest. Dit zijn
+     gegevens, geen script: het blok wordt nooit uitgevoerd, dus de CSP
+     (script-src 'self') houdt het niet tegen. Nagemeten in Chrome met de
+     echte CSP: een gewoon inline script werd geblokkeerd, dit blok gaf geen
+     schending en bleef leesbaar. Alleen gegevens die ook zichtbaar op de
+     site staan. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://welkomthuis-interieur.be/#bedrijf",
+  "name": "WelkomThuis",
+  "description": "WelkomThuis begeleidt het volledige traject bij een verhuis naar een kleinere woning of serviceflat: van bepalen wat meegaat tot het inrichten van uw nieuwe thuis.",
+  "url": "https://welkomthuis-interieur.be/",
+  "logo": "https://welkomthuis-interieur.be/brand/welkomthuis-logo.png",
+  "image": "https://welkomthuis-interieur.be/assets/img/welkomthuis-deelbeeld.png",
+  "founder": {
+    "@type": "Person",
+    "name": "Kato Vermeulen"
+  },
+  "telephone": "+32475527389",
+  "email": "welkomthuis@outlook.be",
+  "vatID": "BE1041407143",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Heirbaan 29",
+    "postalCode": "2640",
+    "addressLocality": "Mortsel",
+    "addressCountry": "BE"
+  },
+  "sameAs": [
+    "https://www.instagram.com/welkomthuis_interieur/"
+  ]
+}
+</script>
 <link rel="stylesheet" href="assets/css/site.css">
 <!-- Favicon. De .ico staat er voor oudere browsers en voor het standaard
      verzoek naar /favicon.ico; de SVG is scherp op elke maat. -->

@@ -1,0 +1,28 @@
+# Interne bestanden niet serveren. Netlify publiceert de hele map, dus
+# zonder deze regels waren de feedbackbrieven aan Kato gewoon via de site te
+# lezen, net als de ontwikkelnotities en de lokale testserver.
+# 404! = afgedwongen: het uitroepteken is nodig omdat het bestand er echt
+# staat; zonder zou Netlify het bestand zelf serveren en de regel negeren.
+#
+# Een NIEUW intern bestand in de hoofdmap moet hier bij, anders staat het
+# online. Zie README.md.
+/README.md                /404.html  404!
+/SECURITY.md              /404.html  404!
+/antwoord-feedback.md     /404.html  404!
+/antwoord-feedback-2.md   /404.html  404!
+/dev-server.py            /404.html  404!
+
+# Het adres zonder streepje leidt door naar het hoofdadres. Wie het adres
+# hoort uitspreken, laat het streepje vaak weg; zo komt die toch goed aan.
+#
+# Dit werkt pas als welkomthuisinterieur.be in Netlify als extra domein aan
+# deze site is gekoppeld. Tot dan past geen enkele regel en doet dit niets.
+#
+# 301 = definitief verhuisd, zodat zoekmachines alleen het hoofdadres
+# onthouden. Het uitroepteken dwingt de doorverwijzing ook af voor paden waar
+# wel een bestand staat, anders zou Netlify dat bestand op het oude adres
+# gewoon serveren.
+https://welkomthuisinterieur.be/*       https://welkomthuis-interieur.be/:splat  301!
+http://welkomthuisinterieur.be/*        https://welkomthuis-interieur.be/:splat  301!
+https://www.welkomthuisinterieur.be/*   https://welkomthuis-interieur.be/:splat  301!
+http://www.welkomthuisinterieur.be/*    https://welkomthuis-interieur.be/:splat  301!

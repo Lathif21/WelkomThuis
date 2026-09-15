@@ -57,6 +57,14 @@ SECURITY.md           injection prevention, CSP, form and GDPR notes
 
 Conventions worth knowing before you edit:
 
+- **Netlify publishes this whole folder, so an internal file at the root is
+  public unless `_redirects` blocks it.** `README.md`, `SECURITY.md`, the
+  `antwoord-feedback*.md` letters to Kato and `dev-server.py` return a forced
+  404 there. Until September 2026 they were all readable on the live site. A
+  new internal file at the root needs its own line, or it goes online. Keep
+  the `!` on those lines: without it Netlify serves the real file and ignores
+  the rule. Note this only covers the website — it does nothing for the
+  GitHub repository, which is a separate question of who can see the repo.
 - **Form control `id`s carry a `q-` prefix** (`q-voor-wie`, `q-timing`) so they
   cannot collide with the section anchors the nav links to. A duplicate `id`
   makes `getElementById` silently return the wrong element, with no error.

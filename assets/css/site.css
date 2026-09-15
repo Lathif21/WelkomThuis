@@ -440,6 +440,11 @@ a.c-value:hover{text-decoration:underline}
 .legal-dl dt{font-weight:600;color:var(--pine-deep)}
 .legal-dl dd{margin:.2rem 0 0;color:var(--muted)}
 .legal-address{font-style:normal;line-height:1.7}
+/* Een webadres is één woord zonder breekpunt. "www.gegevensbeschermingsautoriteit.be"
+   is 357px breed in een kolom van 265px, en duwde op een telefoon van 320px de
+   hele privacypagina 72px breder dan het scherm. Adressen en e-mails in de
+   juridische tekst mogen daarom overal afbreken. */
+.legal a{overflow-wrap:anywhere}
 .legal-date{font-size:1rem;font-style:italic}
 .legal-back{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line)}
 

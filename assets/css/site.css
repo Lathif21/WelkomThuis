@@ -351,7 +351,8 @@ a.c-value:hover{text-decoration:underline}
 .veldfout{
   display:block;margin:.4rem 0 0;font-size:1rem;font-weight:600;color:#8C3A2A;
 }
-.field input:invalid.is-gemeld,.field select:invalid.is-gemeld{border-color:#8C3A2A}
+.field input:invalid.is-gemeld,.field select:invalid.is-gemeld,
+.field textarea:invalid.is-gemeld{border-color:#8C3A2A}
 .field input,.field textarea{
   width:100%;font-family:var(--body);font-size:1.15rem;color:var(--ink);
   padding:.95rem 1rem;min-height:58px;background:var(--paper);
@@ -612,9 +613,9 @@ a.c-value:hover{text-decoration:underline}
 .meer[open]>summary::before{transform:rotate(45deg)}
 .meer>summary:hover{background:var(--haze)}
 .meer>summary:focus-visible{outline:3px solid var(--brass);outline-offset:-3px}
-.meer__optioneel{
+.meer__verplicht{
   font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  background:var(--haze);color:var(--muted);padding:.2rem .5rem;border-radius:3px;
+  background:var(--haze);color:var(--pine-deep);padding:.2rem .5rem;border-radius:3px;
 }
 .meer__inhoud{padding:.25rem 1.15rem 1.35rem;border-top:1px solid var(--line)}
 .meer__intro{margin:1rem 0 1.5rem;font-size:1.02rem;color:var(--muted);max-width:60ch}

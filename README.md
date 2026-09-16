@@ -80,6 +80,19 @@ Conventions worth knowing before you edit:
   to calculate; intake question 4 asks the same thing. They are kept in sync
   both ways (`site.js`), so whichever a visitor fills in, the other follows and
   the answer is still submitted. Only question 4 carries a `name`.
+- **The seven intake questions and the preferred call day are required**, on
+  Kato's instruction (September 2026); they were optional until then, which is
+  why the block is still worded as an invitation. *Welk moment?* beside the
+  date stays optional, because "Maakt niet uit" is a real answer there rather
+  than an empty field. Two things follow from making the questions required.
+  The `<details>` around them now carries `open`: a required field inside a
+  closed `<details>` cannot be focused, so the browser refuses to submit and
+  shows nothing at all — `site.js` reopens the block if a visitor collapses it
+  and submits anyway. And "Anders, namelijk" under question 1 carries
+  `data-verplicht` rather than `required`, because without JavaScript that
+  field is always on screen; `site.js` switches `required` on only while the
+  field is shown, so it never demands an answer to a question that was not
+  asked.
 - **Colour lives only in the `:root` tokens** in `site.css`, and every token is
   there because a measured pair needs it. Two splits are load-bearing:
   `--brass` (dark gold, for light grounds and the focus ring) versus
@@ -158,8 +171,10 @@ without deploying. Submissions are written to
 then the form will 404 on submit.
 
 `dev-server.py` is a development tool, not part of the site — don't deploy it.
-Its honeypot check, allow-list and length caps are the ones the real endpoint
-needs too, so use it as the reference when writing the host's function.
+Its honeypot check, required-field check, allow-list and length caps are the
+ones the real endpoint needs too, so use it as the reference when writing the
+host's function. An incomplete POST comes back as `422` with the names of the
+empty fields, and nothing is written to `dev-inzendingen/`.
 
 ## Accessibility — this is the spec, not a nice-to-have
 
@@ -219,6 +234,12 @@ Netlify redirects there itself. Both are same-origin, so the CSP rule
 `form-action 'self'` stays as it is. Netlify detects the form by parsing the
 deployed HTML — if you rename the form, change `name`, the hidden `form-name`
 and `data-netlify-honeypot` together or submissions stop being recorded.
+
+Netlify records whatever is posted to it and does not check the required
+fields. For a visitor that is the browser's job (`required` in the HTML), and
+that covers everyone filling in the form. A script can post around it, so if
+half-empty submissions ever start arriving, move the form to a function and
+copy the checks from `dev-server.py`.
 
 Before launch: blockers above resolved, form tested end-to-end from a real phone,
 favicon, Open Graph tags, `sitemap.xml`, Lighthouse 100 on Accessibility, and

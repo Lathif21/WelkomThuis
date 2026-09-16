@@ -12,7 +12,8 @@ Dit verstuurt GEEN e-mail. Inzendingen komen als tekstbestand in
 dev-inzendingen/ terecht en worden ook in de terminal getoond. Zo zie je
 precies wat een echt endpoint zou ontvangen.
 
-De controles hieronder (honeypot, toegestane waarden, lengtes) zijn wat de
+De controles hieronder (honeypot, verplichte velden, toegestane waarden,
+lengtes) zijn wat de
 echte server ook moet doen — een POST kan het formulier volledig overslaan
 en elke waarde meesturen. Zie SECURITY.md par. 3. Gebruik dit bestand als
 naslag bij het schrijven van de functie bij de host; het is verder geen
@@ -65,6 +66,24 @@ LABEL = {
     "dagdeel": "Voorkeursmoment",
     "richtprijs": "Richtprijs uit de calculator",
 }
+
+# Wat ingevuld moet zijn. De browser houdt dit al tegen via required in de
+# HTML, maar een POST kan het formulier volledig overslaan -- dan is dit de
+# enige controle die er nog is. Sinds de intake verplicht werd staan de zeven
+# vragen hier ook bij, en de voorkeursdag. E-mail en dagdeel blijven vrij:
+# "Maakt niet uit" is bij het dagdeel een antwoord op zichzelf.
+VERPLICHT = ["naam", "tel", "datum", "voor-wie", "naar-type", "oppervlakte",
+             "slaapkamers", "vanwaar", "timing", "bericht"]
+
+
+def ontbreekt(schoon):
+    """Verplichte velden die leeg zijn of in verwerk() sneuvelden."""
+    leeg = [n for n in VERPLICHT if not schoon.get(n)]
+    # Vraag 1 heeft een vervolgveld; dat telt alleen mee bij "anders",
+    # precies zoals het formulier het toont.
+    if schoon.get("voor-wie") == "anders" and not schoon.get("voor-wie-anders"):
+        leeg.append("voor-wie-anders")
+    return leeg
 
 
 
@@ -162,6 +181,18 @@ class Handler(SimpleHTTPRequestHandler):
             return
 
         schoon, geweigerd = verwerk(velden)
+
+        # Een halve aanvraag is geen aanvraag: niets bewaren, wel zeggen wat
+        # er ontbreekt. De pagina toont bij een mislukte POST zijn eigen
+        # foutregel met het telefoonnummer.
+        leeg = ontbreekt(schoon)
+        if leeg:
+            print("\n  ONVOLLEDIG -> geweigerd: " + ", ".join(leeg), flush=True)
+            if geweigerd:
+                print("  GEWEIGERD: " + "; ".join(geweigerd), flush=True)
+            self._fout(leeg)
+            return
+
         tekst = als_tekst(schoon)
 
         os.makedirs(INBOX, exist_ok=True)
@@ -181,6 +212,25 @@ class Handler(SimpleHTTPRequestHandler):
             print("GEWEIGERD: " + "; ".join(geweigerd))
         print("=" * 62 + "\n")
         self._klaar(velden)
+
+    def _fout(self, leeg):
+        """422 met de namen van de lege velden, voor wie rechtstreeks post."""
+        wil_json = "application/json" in (self.headers.get("Accept") or "")
+        if wil_json:
+            body = json.dumps({"ok": False, "leeg": leeg}).encode()
+            ctype = "application/json"
+        else:
+            # Platte tekst, nooit de ingestuurde waarden terug op het scherm.
+            body = ("Deze velden zijn verplicht en nog leeg:\n\n"
+                    + "\n".join("- " + LABEL.get(n, n) for n in leeg)
+                    + "\n\nGa terug in de browser en vul ze aan.\n"
+                    ).encode("utf-8")
+            ctype = "text/plain; charset=utf-8"
+        self.send_response(422)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
 
     def _klaar(self, velden, bot=False):
         wil_json = "application/json" in (self.headers.get("Accept") or "")

@@ -407,13 +407,15 @@
             </div>
           </div>
 
-          <!-- Dag en moment zijn samen één vraag, dus staan ze onder één kop. -->
+          <!-- Dag en moment zijn samen één vraag, dus staan ze onder één kop.
+               De dag is verplicht; het moment niet, want "Maakt niet uit" is
+               daar een echt antwoord en niet het uitblijven van een keuze. -->
           <fieldset class="wanneer">
             <legend>Wanneer bellen we u het best?</legend>
             <div class="wanneer__paar">
               <div class="field">
-                <label for="datum">Welke dag?</label>
-                <input id="datum" name="datum" type="date">
+                <label for="datum">Welke dag? <span class="verplicht">(verplicht)</span></label>
+                <input id="datum" name="datum" type="date" required>
               </div>
               <div class="field">
                 <label for="dagdeel">Welk moment?</label>
@@ -427,40 +429,46 @@
             </div>
           </fieldset>
 
-          <!-- De intakevragen uit de klantbriefing. Ingeklapt zodat de kaart
-               rustig blijft, maar volledig aanwezig: een dichtgeklapte
-               <details> stuurt zijn velden gewoon mee bij het versturen, ook
-               zonder JavaScript. Wil je ze standaard open, zet dan "open" op
-               het <details>-element.
+          <!-- De intakevragen uit de klantbriefing. Alle zeven zijn verplicht,
+               dus staat het blok open: een dichtgeklapte <details> verbergt
+               zijn velden en de browser weigert te focussen op een leeg
+               verplicht veld dat niemand ziet. Klapt iemand het toch dicht en
+               verstuurt hij, dan zet site.js het weer open bij de eerste fout.
                Vraag 4 stelt dezelfde vraag als de calculator hierboven; die
                twee houden elkaar bij (zie site.js). -->
-          <details class="meer">
-            <summary>Wilt u alvast meer vertellen over de verhuis? <span class="meer__optioneel">Optioneel</span></summary>
+          <details class="meer" open>
+            <summary>Wilt u alvast meer vertellen over de verhuis? <span class="meer__verplicht">Verplicht</span></summary>
             <div class="meer__inhoud">
-              <p class="meer__intro">Deze vragen helpen me uw situatie te begrijpen voordat we bellen. U hoeft ze niet allemaal te beantwoorden.</p>
+              <p class="meer__intro">Deze vragen helpen me uw situatie te begrijpen voordat we bellen. Ze zijn alle zeven verplicht; zonder antwoord kan het formulier niet verstuurd worden. Weet u iets nog niet, kies dan &ldquo;Ik weet het niet&rdquo; of &ldquo;Nog niet bekend&rdquo;.</p>
 
               <!-- De gekozen waarde is geen garantie: een POST kan om het
                    formulier heen elke waarde meesturen. Controleer op de
                    server elk antwoord tegen de lijst. Zie SECURITY.md par. 3. -->
               <div class="q-grid">
                 <div class="field">
-                  <label for="q-voor-wie">1. Voor wie is de verhuis?</label>
-                  <select id="q-voor-wie" name="voor-wie">
+                  <label for="q-voor-wie">1. Voor wie is de verhuis? <span class="verplicht">(verplicht)</span></label>
+                  <select id="q-voor-wie" name="voor-wie" required>
                     <option value="">Maak een keuze</option>
                     <option value="mezelf">Voor mezelf</option>
                     <option value="ouders">Voor mijn ouder(s)</option>
                     <option value="familielid">Voor een ander familielid</option>
                     <option value="anders">Anders</option>
                   </select>
+                  <!-- Verplicht zodra vraag 1 op "Anders" staat, en alleen dan.
+                       Daarom data-verplicht in plaats van required: site.js zet
+                       het aan en uit met het veld mee. Staat de code uit, dan
+                       blijft dit veld gewoon staan en vrij te laten -- met een
+                       vast required zou het formulier dan van iedereen een
+                       antwoord eisen op een vraag die niet gesteld is. -->
                   <div class="field-extra" data-show-for="q-voor-wie" data-show-value="anders">
-                    <label for="voor-wie-anders">Anders, namelijk</label>
-                    <input id="voor-wie-anders" name="voor-wie-anders" type="text" maxlength="100">
+                    <label for="voor-wie-anders">Anders, namelijk <span class="verplicht">(verplicht)</span></label>
+                    <input id="voor-wie-anders" name="voor-wie-anders" type="text" maxlength="100" data-verplicht>
                   </div>
                 </div>
 
                 <div class="field">
-                  <label for="q-naar-type">2. Naar welk type woning wordt verhuisd?</label>
-                  <select id="q-naar-type" name="naar-type">
+                  <label for="q-naar-type">2. Naar welk type woning wordt verhuisd? <span class="verplicht">(verplicht)</span></label>
+                  <select id="q-naar-type" name="naar-type" required>
                     <option value="">Maak een keuze</option>
                     <option value="appartement">Appartement</option>
                     <option value="serviceflat">Serviceflat</option>
@@ -470,8 +478,8 @@
                 </div>
 
                 <div class="field">
-                  <label for="q-oppervlakte">3. Hoe groot is de nieuwe woning ongeveer?</label>
-                  <select id="q-oppervlakte" name="oppervlakte">
+                  <label for="q-oppervlakte">3. Hoe groot is de nieuwe woning ongeveer? <span class="verplicht">(verplicht)</span></label>
+                  <select id="q-oppervlakte" name="oppervlakte" required>
                     <option value="">Maak een keuze</option>
                     <option value="tot-50">Tot 50 m&sup2;</option>
                     <option value="50-70">50&ndash;70 m&sup2;</option>
@@ -487,8 +495,8 @@
                 </div>
 
                 <div class="field">
-                  <label for="q-slaapkamers">4. Hoeveel (slaap)kamers heeft de nieuwe woning?</label>
-                  <select id="q-slaapkamers" name="slaapkamers">
+                  <label for="q-slaapkamers">4. Hoeveel (slaap)kamers heeft de nieuwe woning? <span class="verplicht">(verplicht)</span></label>
+                  <select id="q-slaapkamers" name="slaapkamers" required>
                     <option value="">Maak een keuze</option>
                     <option value="studio">Studio, geen aparte kamer</option>
                     <option value="1">1 (slaap)kamer</option>
@@ -499,8 +507,8 @@
                 </div>
 
                 <div class="field">
-                  <label for="q-vanwaar">5. Vanwaar wordt verhuisd?</label>
-                  <select id="q-vanwaar" name="vanwaar">
+                  <label for="q-vanwaar">5. Vanwaar wordt verhuisd? <span class="verplicht">(verplicht)</span></label>
+                  <select id="q-vanwaar" name="vanwaar" required>
                     <option value="">Maak een keuze</option>
                     <option value="huis">Huis</option>
                     <option value="appartement">Appartement</option>
@@ -510,8 +518,8 @@
                 </div>
 
                 <div class="field">
-                  <label for="q-timing">6. Wanneer staat de verhuis gepland?</label>
-                  <select id="q-timing" name="timing">
+                  <label for="q-timing">6. Wanneer staat de verhuis gepland? <span class="verplicht">(verplicht)</span></label>
+                  <select id="q-timing" name="timing" required>
                     <option value="">Maak een keuze</option>
                     <option value="binnen-1-maand">Binnen 1 maand</option>
                     <option value="1-3-maanden">Binnen 1&ndash;3 maanden</option>
@@ -523,9 +531,9 @@
               </div>
 
               <div class="field">
-                <label for="bericht">7. Vertel ons alvast iets meer over de verhuis</label>
+                <label for="bericht">7. Vertel ons alvast iets meer over de verhuis <span class="verplicht">(verplicht)</span></label>
                 <p class="q-hint" id="bericht-hint">Zijn er specifieke wensen, moeilijkheden of zaken waar we rekening mee moeten houden?</p>
-                <textarea id="bericht" name="bericht" maxlength="2000" aria-describedby="bericht-hint"></textarea>
+                <textarea id="bericht" name="bericht" maxlength="2000" aria-describedby="bericht-hint" required></textarea>
               </div>
             </div>
           </details>

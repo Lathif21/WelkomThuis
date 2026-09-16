@@ -84,15 +84,26 @@
    * Het formulier heeft geen novalidate meer, dus zonder JavaScript
    * controleert de browser zelf en komt er geen lege inzending door.
    * Draait deze code wel, dan vervangen we de zwevende browserballon door
-   * een regel tekst onder het veld zelf — die blijft staan, is groot genoeg
+   * een regel tekst onder het veld zelf -- die blijft staan, is groot genoeg
    * om te lezen en wordt door een schermlezer voorgelezen.
    * Zie README par. Accessibility: "errors as text beside the field".
+   *
+   * Sinds de intakevragen verplicht zijn staan er ook velden bij die in een
+   * <details> zitten. Een leeg verplicht veld in een dichtgeklapt blok kan de
+   * browser niet tonen: hij weigert dan stil te versturen en niemand ziet
+   * waarom. Daarom klappen we het blok open voor we de fout tonen.
    * ------------------------------------------------------------- */
   (function () {
     var form = document.getElementById('contactForm');
     if (!form) return;
 
-    var velden = Array.prototype.slice.call(form.querySelectorAll('[required]'));
+    /* data-verplicht hoort bij een veld dat alleen bij een bepaald antwoord
+     * verplicht is; de code hieronder zet daar required op zodra het veld
+     * aan de beurt is. Het staat hier al in de lijst, anders krijgt het geen
+     * foutregel maar de browserballon. */
+    var velden = Array.prototype.slice.call(
+      form.querySelectorAll('[required], [data-verplicht]')
+    );
     if (!velden.length) return;
 
     function melding(veld) {
@@ -108,12 +119,33 @@
       return el;
     }
 
+    /* Sommige velden hebben al een uitleg onder zich (vraag 7 heeft er een).
+     * Die mag niet verdwijnen achter de foutmelding, dus zetten we de twee
+     * achter elkaar en onthouden we de oorspronkelijke verwijzing. */
+    function beschrijving(veld, foutId) {
+      var basis = veld.getAttribute('data-beschrijving');
+      if (basis === null) {
+        basis = veld.getAttribute('aria-describedby') || '';
+        veld.setAttribute('data-beschrijving', basis);
+      }
+      return basis ? basis + ' ' + foutId : foutId;
+    }
+
+    /* Een veld in een dichtgeklapte <details> is onzichtbaar; eerst open. */
+    function maakZichtbaar(veld) {
+      var ouder = veld.parentNode;
+      while (ouder && ouder.tagName) {
+        if (ouder.tagName === 'DETAILS') ouder.open = true;
+        ouder = ouder.parentNode;
+      }
+    }
+
     function toonFout(veld, tekst) {
       var el = melding(veld);
       while (el.firstChild) el.removeChild(el.firstChild);
       el.appendChild(document.createTextNode(tekst));
       veld.classList.add('is-gemeld');
-      veld.setAttribute('aria-describedby', el.id);
+      veld.setAttribute('aria-describedby', beschrijving(veld, el.id));
       veld.setAttribute('aria-invalid', 'true');
     }
 
@@ -121,30 +153,54 @@
       var el = document.getElementById(veld.id + '-fout');
       if (el && el.parentNode) el.parentNode.removeChild(el);
       veld.classList.remove('is-gemeld');
-      veld.removeAttribute('aria-describedby');
+      var basis = veld.getAttribute('data-beschrijving');
+      if (basis) veld.setAttribute('aria-describedby', basis);
+      else veld.removeAttribute('aria-describedby');
       veld.removeAttribute('aria-invalid');
     }
 
+    /* Per veld een zin die zegt wat er moet gebeuren. "Dit veld is verplicht"
+     * zegt alleen dat het misging, niet wat de bezoeker nu moet doen. */
     var TEKST = {
       naam: 'Vul uw naam in, dan weten we hoe we u mogen aanspreken.',
-      tel: 'Vul uw telefoonnummer in, zodat we u kunnen terugbellen.'
+      tel: 'Vul uw telefoonnummer in, zodat we u kunnen terugbellen.',
+      datum: 'Kies een dag waarop we u mogen bellen.',
+      'q-voor-wie': 'Laat weten voor wie de verhuis is.',
+      'voor-wie-anders': 'Vul kort in voor wie de verhuis dan is.',
+      'q-naar-type': 'Kies naar welk type woning verhuisd wordt.',
+      'q-oppervlakte': 'Kies hoe groot de nieuwe woning ongeveer is. Weet u dat niet, kies dan de laatste optie.',
+      'q-slaapkamers': 'Kies hoeveel (slaap)kamers de nieuwe woning heeft.',
+      'q-vanwaar': 'Kies vanwaar er verhuisd wordt.',
+      'q-timing': 'Kies wanneer de verhuis gepland staat. Weet u dat nog niet, kies dan de laatste optie.',
+      bericht: 'Vertel in het kort wat we over deze verhuis moeten weten.'
     };
+
+    /* invalid vuurt voor elk leeg veld apart; alleen het eerste krijgt de
+     * cursor, anders springt de pagina naar het laatste veld en zoekt iemand
+     * waar het misging. Focussen na afloop van de ronde, vandaar de timeout. */
+    var eerste = null;
 
     velden.forEach(function (veld) {
       /* invalid vuurt vlak voor de browserballon; die onderdrukken we */
       veld.addEventListener('invalid', function (e) {
         e.preventDefault();
+        maakZichtbaar(veld);
         toonFout(veld, TEKST[veld.id] || 'Dit veld is nog leeg.');
+        if (!eerste) {
+          eerste = veld;
+          window.setTimeout(function () {
+            if (eerste) eerste.focus();
+            eerste = null;
+          }, 0);
+        }
       });
+      /* keuzelijsten melden zich met change, tekstvelden met input */
       veld.addEventListener('input', function () {
         if (veld.checkValidity()) wisFout(veld);
       });
-    });
-
-    /* de eerste fout krijgt de cursor, anders zoekt iemand waar het misging */
-    form.addEventListener('submit', function () {
-      var eerste = form.querySelector('[aria-invalid="true"]');
-      if (eerste) eerste.focus();
+      veld.addEventListener('change', function () {
+        if (veld.checkValidity()) wisFout(veld);
+      });
     });
   })();
 
@@ -178,7 +234,11 @@
          * een antwoord in de mail dat de bezoeker niet meer op het scherm
          * zag. Wissen doen we niet: wie zich bedenkt en terugkomt, vindt
          * zijn tekst nog terug. */
-        invoer.forEach(function (i) { i.disabled = !toon; });
+        invoer.forEach(function (i) {
+          i.disabled = !toon;
+          /* en verplicht is het alleen zolang het op het scherm staat */
+          if (i.getAttribute('data-verplicht') !== null) i.required = toon;
+        });
       }
 
       sync();

@@ -1,0 +1,12 @@
+# Alles mag gelezen worden. De bedankpagina houdt zichzelf uit de
+# zoekresultaten met een robots-meta in de pagina zelf; dat is de betrouwbare
+# manier, want een Disallow hier zou de pagina alleen ongelezen laten en niet
+# ongeindexeerd.
+User-agent: *
+Allow: /
+
+# De interne bestanden staan hier bewust niet. Ze zijn al afgeschermd in
+# _redirects, en een lijst met paden in robots.txt is openbaar -- dat wijst
+# een nieuwsgierige bezoeker juist de weg.
+
+Sitemap: https://welkomthuisinterieur.com/sitemap.xml

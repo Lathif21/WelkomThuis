@@ -1,5 +1,11 @@
+# De sha256 in script-src hoort bij het ld+json-blok in index.html: de
+# bedrijfsgegevens voor Google. Dat is geen code die draait, maar een
+# datablok -- de hash staat er zodat het onder deze CSP hoe dan ook
+# gelezen wordt, zonder 'unsafe-inline' open te zetten. Verandert er een
+# teken in dat blok, dan moet de hash opnieuw berekend worden, anders
+# verdwijnen de gegevens stil. Zie README par. SEO.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-OlsWwbQBD6+LGV29HLvsKinVCammW+i537mSPkWo0nQ='; style-src 'self'; img-src 'self' data:; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

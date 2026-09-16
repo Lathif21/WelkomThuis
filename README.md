@@ -242,5 +242,38 @@ half-empty submissions ever start arriving, move the form to a function and
 copy the checks from `dev-server.py`.
 
 Before launch: blockers above resolved, form tested end-to-end from a real phone,
-favicon, Open Graph tags, `sitemap.xml`, Lighthouse 100 on Accessibility, and
-tested on a real iPhone and a real Android — not devtools.
+Lighthouse 100 on Accessibility, and tested on a real iPhone and a real Android
+— not devtools. (Favicon, Open Graph and `sitemap.xml` are done.)
+
+## SEO
+
+`robots.txt` and `sitemap.xml` sit at the root and are deliberately *not* in
+`_redirects` — unlike the other root files, these two are meant to be public.
+A new page needs a `<url>` entry in the sitemap; `bedankt.html` stays out of it
+because it carries `noindex`.
+
+Every page carries a `rel="canonical"` to `welkomthuisinterieur.com`. The site
+is also reachable at `welkom-thuis-fc9ee6.netlify.app`, and without the
+canonical a search engine can index that address instead — two copies of the
+same page, competing with each other.
+
+`index.html` carries a `LocalBusiness` block in JSON-LD: name, address, phone,
+VAT number, Instagram. Every value in it is also visible in the footer, which
+is the rule — structured data that claims something the page does not say is
+treated as deceptive. **That block is pinned by a `sha256` in the CSP** in
+`_headers`. It is a data block rather than executable code, so browsers should
+read it regardless, but the hash makes that certain without opening up
+`'unsafe-inline'`. Change one character in the block and the hash must be
+regenerated, or the business details silently stop being read:
+
+```bash
+python -c "import io,re,hashlib,base64;s=io.open('index.html',encoding='utf-8').read();m=re.search(r'<script type=\"application/ld\+json\">(.*?)</script>',s,re.S);print('sha256-'+base64.b64encode(hashlib.sha256(m.group(1).encode()).digest()).decode())"
+```
+
+**The business is called "WelkomThuis", one word, everywhere on the page.**
+People search for it as three words — "welkom thuis interieur" — which the page
+never says, and the domain and the Instagram handle both carry "interieur"
+while the site itself does not. `alternateName` in the JSON-LD is the honest
+half-measure: it associates the phrase without overruling the naming decision
+in 14bbf07. Putting "Interieur" back into the visible name is Kato's call, not
+a technical one.

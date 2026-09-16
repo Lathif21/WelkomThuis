@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Twee pagina's: de site zelf en de privacyverklaring. De bedankpagina
+     hoort hier niet in, die staat op noindex. Komt er een pagina bij, dan
+     hoort ze hier ook bij. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://welkomthuisinterieur.com/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://welkomthuisinterieur.com/privacy.html</loc>
+    <lastmod>2026-09-17</lastmod>
+    <priority>0.3</priority>
+  </url>
+</urlset>

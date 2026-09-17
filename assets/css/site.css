@@ -623,14 +623,33 @@ a.c-value:hover{text-decoration:underline}
 /* twee kolommen voor de korte vragen; minmax houdt de langste keuze leesbaar */
 /* hoogstens twee kolommen: bij drie wordt het een raster om doorheen te
    zoeken in plaats van een lijst om door te lopen */
-.q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr));gap:0 1.5rem}
-/* De ene vraag past op één regel, de andere op twee. Zonder dit staan de
-   keuzelijsten in een rij op verschillende hoogtes en oogt het rommelig. */
+.q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr));gap:0 1.5rem;container-type:inline-size}
 .q-grid .field{display:flex;flex-direction:column}
-.q-grid .field>select{margin-top:auto}
-.field-extra{margin-top:-.5rem}
+/* De ene vraagtitel past op één regel, de andere op twee, en dan beginnen de
+   keuzelijsten ernaast op verschillende hoogtes. De titels krijgen daarom de
+   hoogte van twee regels, zodat de lijsten op dezelfde lijn staan.
+   Dit stond eerder als margin-top:auto op de lijst zelf. Dat duwde de lijst
+   naar de ONDERKANT van het vak, wat hetzelfde lijkt zolang elke vraag op
+   zijn lijst eindigt -- maar zodra er iets onder komt (het vervolgveld bij
+   vraag 1, de uitleg bij vraag 4) wordt dat vak veel hoger en zweefde de
+   lijst ernaast als los onderdeel onder zijn titel.
+   Een containervraag, geen mediavraag: het gaat om de breedte van het raster
+   zelf, en dat is precies wanneer auto-fit een tweede kolom maakt. Kent een
+   browser containervragen niet, dan staat elke lijst gewoon onder zijn eigen
+   titel -- krap, maar nooit scheef. */
+@container (min-width:35rem){
+  .q-grid .field>label{min-height:calc(2 * 1.7 * 1.05rem)}
+}
+/* Het vervolgveld bij vraag 1 en de uitleg bij vraag 4 stonden op een
+   negatieve bovenmarge, bedoeld om ze dicht tegen de keuzelijst erboven te
+   trekken. Maar een <select> heeft zelf geen ondermarge, dus was er niets om
+   weg te halen en schoven ze er dwars overheen: het label van het
+   vervolgveld lag op de onderrand van de lijst, en de uitleg werd er
+   doorstreept. Allebei stonden ze normaal verborgen, dus het viel pas op
+   toen iemand vraag 1 op "Anders" zette met de calculator al ingevuld. */
+.field-extra{margin-top:.85rem}
 .field-extra label{font-weight:400;color:var(--muted)}
-.field-hint{margin:-.9rem 0 1.5rem;font-size:.98rem;color:var(--pine);font-style:italic}
+.field-hint{margin:.6rem 0 0;font-size:.98rem;color:var(--pine);font-style:italic}
 
 /* Stap 2 staat gecentreerd. Het is de afsluiting van de pagina, en een smal
    formulier tegen de linkerrand met een lege rechterhelft oogt onaf. De

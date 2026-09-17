@@ -245,6 +245,52 @@ Before launch: blockers above resolved, form tested end-to-end from a real phone
 Lighthouse 100 on Accessibility, and tested on a real iPhone and a real Android
 — not devtools. (Favicon, Open Graph and `sitemap.xml` are done.)
 
+## E-mailmelding
+
+`netlify/functions/melding.mjs` sends the notification through Postmark. It
+hangs off Netlify's `formSubmitted` event, which fires only **after** a
+submission is verified, so spam never reaches it, and a failed email can never
+cost an enquiry — Netlify has already stored it before the function starts.
+
+**Why not Netlify's built-in email notification.** It sends from a
+`netlify.com` address with no way to change it. Outlook files generic machine
+mail from an unfamiliar domain under Junk, which is exactly what happened:
+Kato's first notifications landed there. Postmark sends from
+`welkomthuisinterieur.com` with DKIM on our own DNS, which is the difference a
+spam filter actually looks at. The privacy notice already named Postmark as a
+processor before any of this existed, so this makes the notice true rather
+than needing a change — see `privacy.html`, "Wie krijgt ze nog te zien?".
+
+**Three environment variables**, set in Netlify under Project configuration →
+Environment variables. Without any one of them the function logs that it was
+skipped and returns; it never throws, because the submission is already safe:
+
+| Variable | Value |
+|---|---|
+| `POSTMARK_SERVER_TOKEN` | the *Server API token* from Postmark (not the account token) |
+| `MELDING_VAN` | `noreply@welkomthuisinterieur.com` — must be on a domain Postmark has verified |
+| `MELDING_NAAR` | `welkomthuis@outlook.be` |
+
+**No npm.** The function calls Postmark's REST API with `fetch`, which is in
+the Node version Netlify runs. There is no `package.json` anywhere in this
+repo and adding one for this would be the only reason it exists.
+
+**The email is composed here, not by Netlify.** That matters for a second
+reason: Netlify derives its own field names from the label text, so its
+notifications read "Uw naam (verplicht)" on every line. `LABEL` in the
+function maps the `name` attributes to clean labels instead. A field added to
+the form and not to `LABEL` still comes through, under "Overige velden" — it
+is never silently dropped.
+
+Plain text only, never HTML: a visitor's message inside an HTML mail is
+injection in the recipient's inbox. Anything that reaches a header is
+flattened to one line first, and `Reply-To` is only set when the visitor's
+address actually parses as one. See SECURITY.md.
+
+**`_redirects` hides the function source.** `netlify/functions/` sits inside
+the published root, so without that rule `melding.mjs` is readable as a file
+on the live site.
+
 ## SEO
 
 `robots.txt` and `sitemap.xml` sit at the root and are deliberately *not* in

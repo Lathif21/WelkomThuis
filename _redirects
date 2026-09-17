@@ -11,6 +11,11 @@
 /antwoord-feedback.md     /404.html  404!
 /antwoord-feedback-2.md   /404.html  404!
 /dev-server.py            /404.html  404!
+# De broncode van de Netlify-functie. Die map ligt in de gepubliceerde
+# hoofdmap, dus zonder deze regel is melding.mjs als bestand te lezen.
+# Er staat geen sleutel in -- die komt uit een omgevingsvariabele -- maar
+# de code van een mailversturend ding hoort niet open te liggen.
+/netlify/*                /404.html  404!
 
 # Het adres zonder streepje leidt door naar het hoofdadres. Wie het adres
 # hoort uitspreken, laat het streepje vaak weg; zo komt die toch goed aan.

@@ -156,7 +156,9 @@
           </svg>
           <span class="card__tag">WelkomThuis</span>
           <h3>Begeleidt het volledige traject</h3>
-          <p>De twee hiernaast samen: van uitkiezen wat meegaat, over de verhuis zelf, tot het inrichten van uw nieuwe woning. Eén aanspreekpunt voor het hele traject.</p>
+          <!-- "de twee vorige" en niet "hiernaast": op een telefoon staan de
+               drie kaarten onder elkaar, en dan staat er niets naast. -->
+          <p>De twee vorige samen: van uitkiezen wat meegaat, over de verhuis zelf, tot het inrichten van uw nieuwe woning. Eén aanspreekpunt voor het hele traject.</p>
         </article>
       </div>
     </div>
@@ -450,7 +452,22 @@
             </div>
             <div class="field">
               <label for="tel">Telefoonnummer <span class="verplicht">(verplicht)</span></label>
-              <input id="tel" name="tel" type="tel" autocomplete="tel" maxlength="30" required>
+              <!-- Cijfers en de tekens die in een telefoonnummer voorkomen, en
+                   verder niets. De lookahead eist minstens zes cijfers, zodat
+                   "+" of "()" alleen niet volstaat. Letters houdt site.js al
+                   tegen tijdens het typen; dit patroon is de controle die ook
+                   zonder JavaScript werkt. De server controleert het nog eens:
+                   een POST kan om het formulier heen. Zie SECURITY.md par. 3.
+                   inputmode="tel" geeft op een telefoon het cijferklavier.
+
+                   Elk leesteken in de tekenklasse staat met een backslash,
+                   ook waar dat overbodig lijkt. De browser compileert dit
+                   attribuut met de v-vlag, en die verbiedt ( ) . / en - kaal
+                   binnen een klasse. Een patroon dat niet compileert wordt
+                   NIET gemeld: het wordt stil genegeerd en het veld staat dan
+                   zonder enige controle. Precies dat gebeurde hier eerst. -->
+              <input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel"
+                     maxlength="30" pattern="(?=(?:\D*\d){6,})[0-9\s+\(\)\.\/\-]{6,30}" required>
             </div>
             <div class="field">
               <label for="mail">E-mailadres <span class="optional">(niet verplicht)</span></label>

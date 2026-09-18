@@ -175,6 +175,21 @@
       bericht: 'Vertel in het kort wat we over deze verhuis moeten weten.'
     };
 
+    /* Een veld kan ook ingevuld zijn en tóch niet kloppen. Dan is "dit veld is
+     * nog leeg" onzin: de bezoeker ziet zijn antwoord staan en snapt er niets
+     * van. Deze zinnen horen bij een ingevuld maar afgekeurd veld. */
+    var TEKST_ONGELDIG = {
+      tel: 'Een telefoonnummer bestaat uit cijfers. Bijvoorbeeld 0475 52 73 89.',
+      mail: 'Dit e-mailadres mist iets. Controleer of er een @ en een punt in staan.',
+      datum: 'Kies een dag van vandaag of later.'
+    };
+
+    function welkeTekst(veld) {
+      var v = veld.validity;
+      if (!v.valueMissing && TEKST_ONGELDIG[veld.id]) return TEKST_ONGELDIG[veld.id];
+      return TEKST[veld.id] || 'Dit veld is nog leeg.';
+    }
+
     /* invalid vuurt voor elk leeg veld apart; alleen het eerste krijgt de
      * cursor, anders springt de pagina naar het laatste veld en zoekt iemand
      * waar het misging. Focussen na afloop van de ronde, vandaar de timeout. */
@@ -185,7 +200,7 @@
       veld.addEventListener('invalid', function (e) {
         e.preventDefault();
         maakZichtbaar(veld);
-        toonFout(veld, TEKST[veld.id] || 'Dit veld is nog leeg.');
+        toonFout(veld, welkeTekst(veld));
         if (!eerste) {
           eerste = veld;
           window.setTimeout(function () {
@@ -201,6 +216,46 @@
       veld.addEventListener('change', function () {
         if (veld.checkValidity()) wisFout(veld);
       });
+    });
+  })();
+
+  /* ---------------------------------------------------------------
+   * Telefoonnummer: geen letters
+   *
+   * Het veld heeft een pattern, dus zonder deze code komt een nummer met
+   * letters er nog steeds niet doorheen -- het wordt dan pas bij het
+   * versturen gemeld. Hier halen we ze er meteen uit, zodat iemand niet een
+   * heel nummer typt om daarna te horen dat het fout is.
+   *
+   * Wissen en niet weigeren: plakt iemand een nummer uit zijn adresboek met
+   * "GSM: " ervoor, dan blijft het nummer staan en verdwijnt alleen wat er
+   * niet in hoort.
+   * ------------------------------------------------------------- */
+  (function () {
+    var tel = document.getElementById('tel');
+    if (!tel) return;
+
+    /* Dezelfde tekens als in het pattern in de HTML. Wijzigt het ene, wijzig
+     * dan het andere mee. */
+    var MAG_NIET = /[^0-9\s+().\/-]/g;
+
+    tel.addEventListener('input', function () {
+      var oud = tel.value;
+      var nieuw = oud.replace(MAG_NIET, '');
+      if (nieuw === oud) return;
+
+      /* De cursor staat na het typen ergens in het midden; zonder dit springt
+       * hij naar het eind en typt iemand de rest van zijn nummer achteraan. */
+      var caret = tel.selectionStart;
+      var verwijderdVoorCaret = oud.slice(0, caret).replace(MAG_NIET, '').length;
+      tel.value = nieuw;
+      if (tel.setSelectionRange) {
+        try {
+          tel.setSelectionRange(verwijderdVoorCaret, verwijderdVoorCaret);
+        } catch (e) {
+          /* sommige browsers staan dit niet toe op type="tel"; dan maar niet */
+        }
+      }
     });
   })();
 

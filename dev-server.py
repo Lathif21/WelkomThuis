@@ -50,6 +50,15 @@ TOEGESTAAN = {
 MAX = {"naam": 100, "tel": 30, "mail": 254, "datum": 10, "richtprijs": 500,
        "voor-wie-anders": 100, "bericht": 2000}
 
+# Velden die ook een vórm moeten hebben, niet alleen een lengte. Het
+# telefoonnummer haalt hetzelfde patroon als het pattern-attribuut in de HTML:
+# cijfers en de tekens die in een nummer voorkomen, met minstens zes cijfers.
+# Wijzigt het daar, wijzig het hier mee -- de browser is niet de plek waar dit
+# vastligt. Zie SECURITY.md par. 3.
+FORMAAT = {
+    "tel": re.compile(r"^(?=(?:\D*\d){6,})[0-9\s+().\/-]{6,30}$"),
+}
+
 LABEL = {
     "voor-wie": "1. Voor wie is de verhuis",
     "voor-wie-anders": "1. Anders, namelijk",
@@ -102,10 +111,14 @@ def verwerk(velden):
             else:
                 geweigerd.append("%s=%r (niet in de optielijst)" % (naam, waarde[:40]))
         elif naam in MAX:
-            if len(waarde) <= MAX[naam]:
-                schoon[naam] = waarde
-            else:
+            if len(waarde) > MAX[naam]:
                 geweigerd.append("%s (%d tekens, max %d)" % (naam, len(waarde), MAX[naam]))
+            elif naam in FORMAAT and not FORMAAT[naam].match(waarde):
+                # Niet opnemen: een afgekeurd verplicht veld valt hierna door
+                # de mand bij ontbreekt(), en de inzending wordt geweigerd.
+                geweigerd.append("%s=%r (verkeerde vorm)" % (naam, waarde[:40]))
+            else:
+                schoon[naam] = waarde
         else:
             geweigerd.append("%s (onbekend veld)" % naam)
     return schoon, geweigerd
